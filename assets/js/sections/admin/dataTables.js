@@ -313,9 +313,11 @@ function fixtureListTable() {
                     type: tabledetails
                 }
             },
+            rowId: 'match_id',
             order: [0, "asc"],
             aoColumns: [
                 {data: "matchday_name", bVisible: false},
+                {data: "match_id", bVisible: false},
                 {data: "team1", bSortable: false, className: "not-mobile"},
                 {data: "score", bSortable: false, className: "dt-center"},
                 {data: "team2", bSortable: false, className: "not-mobile, dt-right"}],
@@ -383,6 +385,7 @@ function editMatch(matchid){
         });
     
     if($('#editMatchForm').length && $.fn.formValidation){
+        var fixturetable = $('#editLeague').DataTable();
         var editmatch = $('#editMatchForm');
         $('#editMatchForm').find('[name="playername[]"]').selectpicker().change(function(e){
             $('#editMatchForm').formValidation('revalidateField', 'playername[]');
@@ -614,54 +617,20 @@ function editMatch(matchid){
                     type: 'POST',
                     data: $form.serialize(),
                     dataType: "json",
-                    success:function(response){
+                    success: function(response) {
                         $('.modal-content').waitMe("hide");
+                        fv.disableSubmitButtons(false);
                         if(response.success){
-                                                  
-                            $('.match-box-teams').find('.home-score').html(response.showscore.homescore);
-                            $('.match-box-teams').find('.away-score').html(response.showscore.awayscore);
-                                                       
-                            $.each(response.showscorers, function(i, val){
-                                $('.match-box-events').find('.match-scorers').append(
-                                    '<a href="#" class="event animated slideInDown">'+
-                                        '<div class="scorer '+(val.teamid === scoreTeam1 ? 'right' : 'left')+'">'
-                                            +(val.teamid === scoreTeam1 ?
-                                            '<span>'+ val.timescore +'</span>'+
-                                            '<img class="event-icon" src="'+ base +'assets/img/icons/soccerball.png">'+
-                                            '<img class="player-image" src="'+ val.urlimage + val.playerimage +'.png" onerror="imgError(this);">'+
-                                            val.playername
-                                            :
-                                            '<img class="player-image" src="'+ val.urlimage + val.playerimage +'.png" onerror="imgError(this);">'+
-                                            val.playername+
-                                            '<img class="event-icon" src="'+ base +'assets/img/icons/soccerball.png">'+
-                                            '<span>'+ val.timescore +'</span>')+
-                                        '</div>'+   
-                                    '</a>'
-                                );
+                            showscore = response.showscore;
+                            var newdata = ({
+                                matchday_name: showscore.matchday,
+                                match_id: showscore.matchid,
+                                team1: showscore.team1,
+                                score: '<a href="javascript:editMatch('+showscore.matchid+')"><strong>'+showscore.homescore+' - '+showscore.awayscore+'</strong></a>',
+                                team2: showscore.team2
                             });
-                            
-                             $.each(response.showevents, function(i, val){
-                                $('.match-box-events').find('.match-events').append(
-                                    '<a href="#" class="event animated slideInDown">'+
-                                        '<div class="eventype '+(val.teamid === scoreTeam1 ? 'right' : 'left')+'">'
-                                            +(val.teamid === scoreTeam1 ?
-                                            '<span>'+ val.timevent +'</span>'+
-                                            '<img class="event-icon" src="'+ base +'assets/img/icons/'+val.evicon+'">'+
-                                            '<img class="player-image" src="'+ val.urlimage + val.playerimage +'.png" onerror="imgError(this);">'+
-                                            val.playername
-                                            :
-                                            '<img class="player-image" src="'+ val.urlimage + val.playerimage +'.png" onerror="imgError(this);">'+
-                                            val.playername+
-                                            '<img class="event-icon" src="'+ base +'assets/img/icons/'+val.evicon+'">'+
-                                            '<span>'+ val.timevent +'</span>')+
-                                        '</div>'+   
-                                    '</a>'
-                                );
-                            }); 
-                                             
-                            $('.score-container .advice-text, .score-container .unplayed').remove();
-                            $('.match-box-teams .score, .match-box-teams .match-info').removeClass('hide');
-                            $('.float-button').hide();
+                            var nodeTeamtable = fixturetable.row('#'+ showscore.matchid +'').data(newdata).draw().node();
+                            $(nodeTeamtable).effect('highlight', {color: "#e8f0fe"}, 3000);
                         }
                         $form.parents('.bootbox').modal('hide');
                         $.notify({message: updateSuccessMessage});

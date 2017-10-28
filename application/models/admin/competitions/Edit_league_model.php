@@ -113,9 +113,13 @@ class Edit_league_model extends CI_Model{
             $this ->db-> where('event_match_id', $matchid);    
             $this->db->delete('lex_matchevents');            
         }      
-        $this->db->select('match_score1, match_score2');
-        $this->db->from('lex_matches'); 
+        $this->db->select('d.match_id as matchid, b1.team_name as team1, b2.team_name as team2, d.match_score1 as score1, d.match_score2 as score2, c.matchday_name');
+        $this->db->from('lex_matches as d'); 
+        $this->db->join('lex_matchday as c', 'd.match_matchday_id = c.matchday_id');
+        $this->db->join('lex_teams as b1', 'd.match_team1_id = b1.team_id');
+        $this->db->join('lex_teams as b2', 'd.match_team2_id = b2.team_id');
         $this->db->where('match_id', $matchid);
+        $this->db->group_by('match_id');
         $query = $this->db->get();
         return $query->result();
     }

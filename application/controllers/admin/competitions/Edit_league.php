@@ -206,10 +206,25 @@ class Edit_league extends CI_Controller {
         }
         }else{$data2='';}
         
-        $this->edit_league_model->updatescore($matchid, $score1, $score2, $data, $data2, $playerid, $evplayerid);
+        $getscore = $this->edit_league_model->updatescore($matchid, $score1, $score2, $data, $data2, $playerid, $evplayerid);
         
-        
-        
+        foreach($getscore as $val){
+            $showscore = array(
+                'homescore' => $val->score1,
+                'awayscore' => $val->score2,
+                'matchid' => $val->matchid,
+                'matchday' => $val->matchday_name,
+                'team1' => $val->team1,
+                'team2' => $val->team2
+            );
+        }
+        $response = array(
+            'success' => true,
+            'errors'  => '',                
+            'showscore' => $showscore,
+        );
+        header('Content-Type: application/json');
+        echo json_encode($response);
     }       
         
     public function upload_handler(){

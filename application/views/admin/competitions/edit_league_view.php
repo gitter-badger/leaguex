@@ -89,6 +89,7 @@
                         <table class="table dataTable width-full responsive nowrap" id="editLeague">
                             <thead>
                                 <th>Day</th>
+                                <th style="visibility:hidden"></th>
                                 <th><?php echo lang( 'admin_eleague_header_table_home_team');?></th>
                                 <th><?php echo lang( 'admin_eleague_header_table_score');?></th>
                                 <th><?php echo lang( 'admin_eleague_header_table_away_team');?></th>
