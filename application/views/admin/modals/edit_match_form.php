@@ -28,7 +28,15 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="modresult-addscore">
-                    <h5><?php echo lang('addresult_title_goal_scorers');?></h5>
+                    <div class="add-scorer">
+                        <div class="scorer-title m-r-a"><?php echo lang('addresult_title_goal_scorers');?></div>
+                        <div class="add-link btn btn-fab btn-fab-mini no-shadow no-color-bg"><i class="material-icons">add_circle</i></div>
+                    </div>
+                    <div class="no-scorers-wrap">
+                        <div class="no-scorers-container">
+                            <div class="no-scorers"> <img src="<?= base_url().'assets/img/no-scorer.png'?>"></div>
+                        </div>
+                    </div>
                     <div class="modresult-scorer">
                         <div class="scorer hide" id="addresultTemplate">
                             <div class="scorer-container">
@@ -52,18 +60,21 @@
                                 <div class="player-remove withripple"><i class="material-icons">clear</i></div>
                             </div>
                         </div>
-                        <div class="add-scorer">
-                            <div class="scorer-container" style="background-color: #f1f1f1; box-shadow: none;">
-                                <div class="add-link"><a href="javascript:void(0)"><?php echo lang('addresult_title_add_scorer');?></a></div>
-                            </div>
-                        </div>
                     </div>
                     <div class="assignedresult-scorer"></div>
                 </div>
             </div>
             <div class="col-sm-12">
                 <div class="modresult-addevent">
-                    <h5><?php echo lang('addresult_title_events');?></h5>
+                    <div class="add-event">
+                        <div class="event-title m-r-a"><?php echo lang('addresult_title_events');?></div>
+                        <div class="add-link btn btn-fab btn-fab-mini no-shadow no-color-bg"><i class="material-icons">add_circle</i></div>
+                    </div>
+                     <div class="no-events-wrap">
+                        <div class="no-events-container">
+                            <div class="no-event"> <img src="<?= base_url().'assets/img/no-events.png'?>"></div>
+                        </div>
+                    </div>
                     <div class="modresult-event">
                         <div class="event hide" id="addeventTemplate">
                             <div class="event-container">
@@ -82,11 +93,6 @@
                                 </div>
                                 <div class="event-player-remove withripple"><i class="material-icons">clear</i></div>
                                 <input id="eventscore" data-team="" type="hidden" value="1">
-                            </div>
-                        </div>
-                        <div class="add-event">
-                            <div class="event-container" style="background-color: #f1f1f1; box-shadow: none;">
-                                <div class="add-link"><a href="javascript:void(0)"><?php echo lang('addresult_title_add_event');?></a></div>
                             </div>
                         </div>
                     </div>

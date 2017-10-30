@@ -691,7 +691,7 @@ label.checkbox-inline .checkbox-material .check {
     padding-top: 8px;
     overflow-x: hidden;
     overflow-y: auto;
-    max-height: 430px;
+    height: 430px;
     background-color: #f1f1f1;
 }
 .bootbox-body {
@@ -2902,19 +2902,43 @@ tbody .icon-link>i {
 .modresult-addevent {
     margin-bottom: 10px;
 }
-.modresult-addscore h5,
-.modresult-addevent h5 {
-    color: rgba(0, 0, 0, 0.54);
-    font-size: 16px;
-    font-weight: 400;
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
 .modresult-addscore .scorer,
 .modresult-addscore .add-scorer,
 .modresult-addevent .event,
 .modresult-addevent .add-event {
     min-height: 48px;
+}
+.modresult-addscore .add-scorer,
+.modresult-addevent .add-event{
+    webkit-box-align: center;
+    box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    box-pack: justify;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+.add-scorer .scorer-title,
+.add-event .event-title{
+    color: #444;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 400;
+    position: relative;
+    text-align: center;
+}
+.add-scorer .add-link,
+.add-event .add-link{
+    margin: 0 3px 0 0;
+}
+.add-scorer .add-link i,
+.add-event .add-link i{
+    color: #f44336;
 }
 .modresult-addscore .scorer .scorer-container,
 .modresult-addscore .add-scorer .scorer-container,
@@ -2966,12 +2990,6 @@ tbody .icon-link>i {
     font-weight: 400;
     display: block;
 }
-.add-scorer .add-link a,
-.add-event .add-link a {
-    font-size: 13px;
-    text-decoration: underline;
-    color: rgba(0,0,0,0.54);
-}
 .scorer .playername,
 .event .eventplayername {
     min-width: 0;
@@ -3018,6 +3036,7 @@ tbody .icon-link>i {
     cursor: pointer;
     display: none;
     top: 30px;
+    padding-top: 2px;
 }
 .edit-button {
     position: relative;
@@ -3222,11 +3241,15 @@ tbody .icon-link>i {
     font-size: 22px;
     padding: 6px 0;
 }
-.no-note-wrap{
+.no-note-wrap,
+.no-scorers-wrap,
+.no-events-wrap{
     display: none;
 }
 .no-note-container,
-.no-fixtures-container{
+.no-fixtures-container,
+.no-scorers-container,
+.no-events-container{
     -webkit-box-align: center;
     box-align: center;
     -webkit-align-items: center;
@@ -3243,8 +3266,14 @@ tbody .icon-link>i {
     justify-content: center;
     min-height: 350px;
 }
+.no-scorers-container,
+.no-events-container{
+    min-height: 85px;
+}
 .no-note-container .no-note,
-.no-fixtures-container .no-fixtures{
+.no-fixtures-container .no-fixtures,
+.no-scorers-container .no-scorer,
+.no-events-container .no-event{
     text-align: center;
 }
 .no-note-container .no-note .no-note-text,

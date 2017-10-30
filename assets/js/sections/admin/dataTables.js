@@ -522,7 +522,8 @@ function editMatch(matchid){
                 });
             }
         })
-        .on('click', '.add-scorer .add-link a', function(){
+        .on('click', '.add-scorer .add-link', function(){
+            $('.no-scorers-wrap').hide();
             var $template = $('#addresultTemplate'),
             $clone = $template
                 .clone()
@@ -544,7 +545,8 @@ function editMatch(matchid){
                 .formValidation('addField', $clone.find('[name="owngoal[]"]'))
                 .formValidation('addField', $clone.find('[name="time[]"]'));
         })
-        .on('click', '.add-event .add-link a', function(){
+        .on('click', '.add-event .add-link', function(){
+            $('.no-events-wrap').hide();
             var $template = $('#addeventTemplate'),
             $clone = $template
                 .clone()
@@ -572,8 +574,9 @@ function editMatch(matchid){
             var scoreTeam1 = $('.home-score').attr('data-teamid');
             var scoreTeam2 = $('.away-score').attr('data-teamid');   
             var $row = $(this).closest('.scorer');
+            var scorerbox = $('.modresult-addscore').find('.scorer');
             var target = $(this).closest('.scorer').find('input[data-team]');
-            var icondelete = $('.player-remove');
+            if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
             var sum1 = 0;
             var sum2 = 0;
             $('input[data-team="'+scoreTeam1+'"]').not(target).each(function(){
@@ -591,6 +594,8 @@ function editMatch(matchid){
         })
         .on('click', '.event-player-remove', function(){
             var $row = $(this).closest('.event');
+            var eventbox = $('.modresult-addevent').find('.event');
+            if(eventbox.length === 2){$('.no-events-wrap').show();}
             $('#editMatchForm')
                 .formValidation('removeField', $row.find('[name="eventplayername[]"]'))
                 .formValidation('removeField', $row.find('[name="timevent[]"]'));
@@ -674,8 +679,12 @@ function editMatch(matchid){
                 data: 'match_id=' + matchid,
                 success: function(response) {
                     if(response.success){
-                        
                         datascorers = response.datascorers;
+                        if(!datascorers.length){                           
+                            $('.no-scorers-wrap').show();
+                            }else{
+                            $('.no-scorers-wrap').hide();
+                        }
                         $.each(datascorers, function(i, val){
                             div = '<div class="scorer">'+
                                     '<div class="scorer-container" style="background-color: #fff">'+
@@ -717,8 +726,12 @@ function editMatch(matchid){
                 data: 'match_id=' + matchid,
                 success: function(response) {
                     if(response.success){
-                        
                         dataevents = response.dataevents;
+                        if(!dataevents.length){                           
+                            $('.no-events-wrap').show();
+                            }else{
+                            $('.no-events-wrap').hide();
+                        }
                         $.each(dataevents, function(i, val){
                             div = '<div class="event">'+
                                     '<div class="event-container" style="background-color: #fff">'+
@@ -775,7 +788,6 @@ function editMatch(matchid){
                 }
                 }).on('shown.bs.modal', function(){
                 $('#editMatchForm').show();
-                
                 if($(window).width() < 750) {
                     $('.modal .modal-body-custom').css('overflow-y', 'hidden'); 
                     $('.modal .modal-body-custom').css('max-height', $(window).height() - 124);
