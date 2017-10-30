@@ -1,10 +1,11 @@
 /*!
 *   LEAGUEX
-*   @copyright (C) 2014 fankstribe. All rights reserved.
+*   @copyright (C) 2017 fankstribe. All rights reserved.
 *   @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
 *   License: Open source - MIT
 *   @link http://www.fankstribe.org 
 !*/
+
 /* Set tables default values */
 $.extend(true, $.fn.dataTable.defaults, {
     pageLength: 25,
@@ -351,38 +352,38 @@ function fixtureListTable() {
 function editMatch(matchid){
     var homeScore = $('.home-score');
     var awayScore = $('.away-score');
-    
+    var loading = $('.loadpic');
+    var matchscore = $('.modresult-box').find('.modresult-match-score span'); 
     $selectPlayers = $('.scorer .selectpicker.selectscorer, .event .selectpicker.selectevent');
-        $selectPlayers.html('');
-        $.ajax({
-            url: base + "admin/competitions/edit_league/loadplayers",
-            type: 'POST',
-            dataType: 'JSON',
-            data: 'match_id=' + matchid,
-            success: function(response) {
-                $selectPlayers.append('<option selected value="0">'+selectDefault+'</option>');
-                $.each(response.playerslist, function(key, val) {
-                    var group = $('<optgroup>', {label:key});
-                    $.each(val, function(i,item){
-                        $('<option/>', {value:item.id+','+item.player_team_id, text:item.player_name})
-                        .appendTo(group).selectpicker('refresh');
-                    });
-                    $selectPlayers.append(group).selectpicker('refresh');
+    $selectPlayers.html('');
+    $.ajax({
+        url: base + "admin/competitions/edit_league/loadplayers",
+        type: 'POST',
+        dataType: 'JSON',
+        data: 'match_id=' + matchid,
+        success: function(response) {
+            $selectPlayers.append('<option selected value="0">'+selectDefault+'</option>');
+            $.each(response.playerslist, function(key, val) {
+                var group = $('<optgroup>', {label:key});
+                $.each(val, function(i,item){
+                    $('<option/>', {value:item.id+','+item.player_team_id, text:item.player_name})
+                    .appendTo(group).selectpicker('refresh');
                 });
-            }
-        });
-        
-        $selectEvents = $('.event .selectpicker.selecteventype');
-        $selectEvents.html('');
-        $.ajax({
-            url: base + "admin/competitions/edit_league/loadevents",
-            dataType: 'JSON',
-            success: function(response){
-                $.each(response.eventslist, function(key, val) {
-                    $selectEvents.append('<option value="'+ val.eventid +'">' + val.eventdesc + '</option>').selectpicker('refresh');
-                });
-            }
-        });
+                $selectPlayers.append(group).selectpicker('refresh');
+            });
+        }
+    });
+    $selectEvents = $('.event .selectpicker.selecteventype');
+    $selectEvents.html('');
+    $.ajax({
+        url: base + "admin/competitions/edit_league/loadevents",
+        dataType: 'JSON',
+        success: function(response){
+            $.each(response.eventslist, function(key, val) {
+                $selectEvents.append('<option value="'+ val.eventid +'">' + val.eventdesc + '</option>').selectpicker('refresh');
+            });
+        }
+    });
     
     if($('#editMatchForm').length && $.fn.formValidation){
         var fixturetable = $('#editLeague').DataTable();
@@ -438,8 +439,8 @@ function editMatch(matchid){
             }
         })
         .on('change', '#selectPlayerName', function(){
-            $(homeScore).effect('highlight', {color: "#e8f0fe"}, 1000);
-            $(awayScore).effect('highlight', {color: "##e8f0fe"}, 1000);
+            $(matchscore).hide();
+            $(loading).show();
             var scoreTeam1 = $('.home-score').attr('data-teamid');
             var scoreTeam2 = $('.away-score').attr('data-teamid');
             var datateam = $(this).closest('.scorer').find('input[data-team]');
@@ -467,21 +468,24 @@ function editMatch(matchid){
             }else{
                 owngoal.selectpicker('val', 0);};
             datateam.attr('data-team', opteamid);
-            var sum1 = 0;
-            var sum2 = 0;
-            $('input[data-team="'+scoreTeam1+'"]').each(function(){
-                sum1 += +$(this).val();
-            });
-            homeScore.val(sum1);
-            $('input[data-team="'+scoreTeam2+'"]').each(function(){
-                sum2 += +$(this).val();
-            });
-            awayScore.val(sum2);
-            
+            setTimeout(function() {
+                var sum1 = 0;
+                var sum2 = 0;
+                $('input[data-team="'+scoreTeam1+'"]').each(function(){
+                    sum1 += +$(this).val();
+                });
+                homeScore.val(sum1);
+                $('input[data-team="'+scoreTeam2+'"]').each(function(){
+                    sum2 += +$(this).val();
+                });
+                awayScore.val(sum2);
+                $(loading).hide();
+                $(matchscore).show();
+            }, 400);
         })
         .on('change', '#owngoal', function(){
-            $(homeScore).effect('highlight', {color: "#a4e3ff"}, 1000);
-            $(awayScore).effect('highlight', {color: "#a4e3ff"}, 1000);
+            $(matchscore).hide();
+            $(loading).show();
             var select = $(this).closest('.scorer').find('#selectPlayerName');
             var scoreTeam1 = $('.home-score').attr('data-teamid');
             var scoreTeam2 = $('.away-score').attr('data-teamid');   
@@ -490,6 +494,7 @@ function editMatch(matchid){
             var score = $(this).closest('.scorer').find('input[data-team]').val(); 
             var datateam = $(this).closest('.scorer').find('input[data-team]');
             var teamid = $(this).closest('.scorer').find('input[data-team]').attr('data-team');
+            setTimeout(function() {
             if((teamid === scoreTeam1)&&(select.val() !== '0')){
                 scorevalsum = +awayScore.val() + +score;
                 scorevalsub = +homeScore.val() - +score; 
@@ -503,6 +508,9 @@ function editMatch(matchid){
                 awayScore.val(scorevalsub);
                 datateam.attr('data-team', scoreTeam1);
             };
+            $(loading).hide();
+            $(matchscore).show();
+            }, 400);
         })
         .on('change', '#selectEventPlayerName', function(){
             var team = $(this).find('option:selected').val().split(",")[1];
@@ -569,14 +577,15 @@ function editMatch(matchid){
                 .formValidation('addField', $clone.find('[name="timevent[]"]'));
         })        
         .on('click', '.player-remove', function(){
-            $(homeScore).effect('highlight', {color: "#e8f0fe"}, 1000);
-            $(awayScore).effect('highlight', {color: "##e8f0fe"}, 1000);
+            $(matchscore).hide();
+            $(loading).show();
             var scoreTeam1 = $('.home-score').attr('data-teamid');
             var scoreTeam2 = $('.away-score').attr('data-teamid');   
             var $row = $(this).closest('.scorer');
             var scorerbox = $('.modresult-addscore').find('.scorer');
             var target = $(this).closest('.scorer').find('input[data-team]');
             if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
+            setTimeout(function() {
             var sum1 = 0;
             var sum2 = 0;
             $('input[data-team="'+scoreTeam1+'"]').not(target).each(function(){
@@ -587,6 +596,9 @@ function editMatch(matchid){
                 sum2 += Number($(this).val());
             });
             awayScore.val(sum2);
+            $(loading).hide();
+            $(matchscore).show();
+            }, 400);
             $('#editMatchForm')
                 .formValidation('removeField', $row.find('[name="playername[]"]'))
                 .formValidation('removeField', $row.find('[name="time[]"]'));
@@ -646,7 +658,6 @@ function editMatch(matchid){
     }
     
     if('undefined' !== typeof matchid){
-        
         $.ajax({
             url: base+ 'admin/competitions/edit_league/select_match',
             type: 'POST',
@@ -671,147 +682,152 @@ function editMatch(matchid){
             }
         });
             
-        
         $('.assignedresult-scorer').html('');
         $.ajax({
-                url: base + "admin/competitions/edit_league/select_scorers",
-                type: 'POST',
-                data: 'match_id=' + matchid,
-                success: function(response) {
-                    if(response.success){
-                        datascorers = response.datascorers;
-                        if(!datascorers.length){                           
-                            $('.no-scorers-wrap').show();
-                            }else{
-                            $('.no-scorers-wrap').hide();
-                        }
-                        $.each(datascorers, function(i, val){
-                            div = '<div class="scorer">'+
-                                    '<div class="scorer-container" style="background-color: #fff">'+
-                                        '<input id="goalscore" data-team="'+val.teamid+'" name="goalscore[]" type="hidden" value="1">'+
-                                        '<div class="playername form-group">'+
-                                            '<div class="icon"><i class="fa fa-male"></i></div>'+
-                                            '<div class="infoscorer">'+
-                                                '<span>'+val.playername+'</span>'+ 
-                                                '<input type="hidden" name="teamidval[]" value="'+val.teamid+'">'+
-                                                '<input type="hidden" name="playername[]" value="'+val.playerid+','+val.teamid+'">'+
-                                            '</div>'+
-                                            '<div class="owngoal">'+
-                                                '<div class="icon">'+
-                                                    '<i class="fa fa-soccer-ball-o"></i>'+
-                                                '</div>'+
-                                                '<div class="infogoal">'+
-                                                    '<span>'+val.owngoal+'</span>'+ 
-                                                    '<input type="hidden" name="owngoal[]" value="'+val.owngoalid+'">'+
-                                                '</div>'+
-                                            '</div>'+
-                                        '</div>'+
-                                        '<div class="timescore form-group">'+
-                                            '<div class="timelabel">Min</div>'+
-                                            '<input class="form-control timescore" name="time[]" type="text" maxlength="3" value="'+val.timescore+'">'+
-                                        '</div>'+
-                                        '<div class="player-remove withripple" style="display: block;"><i class="material-icons">clear</i></div>'+
-                                    '</div>'+
-                                  '</div>';
-                             $('.assignedresult-scorer').append(div);
-                        });
+            url: base + "admin/competitions/edit_league/select_scorers",
+            type: 'POST',
+            data: 'match_id=' + matchid,
+            success: function(response) {
+                if(response.success){
+                    datascorers = response.datascorers;
+                    if(!datascorers.length){                           
+                        $('.no-scorers-wrap').show();
+                    }else{
+                        $('.no-scorers-wrap').hide();
                     }
+                    $.each(datascorers, function(i, val){
+                        div = '<div class="scorer">'+
+                                '<div class="scorer-container" style="background-color: #fff">'+
+                                    '<input id="goalscore" data-team="'+val.teamid+'" name="goalscore[]" type="hidden" value="1">'+
+                                    '<div class="playername form-group">'+
+                                        '<div class="icon"><i class="fa fa-male"></i></div>'+
+                                        '<div class="infoscorer">'+
+                                            '<span>'+val.playername+'</span>'+ 
+                                            '<input type="hidden" name="teamidval[]" value="'+val.teamid+'">'+
+                                            '<input type="hidden" name="playername[]" value="'+val.playerid+','+val.teamid+'">'+
+                                        '</div>'+
+                                        '<div class="owngoal">'+
+                                            '<div class="icon">'+
+                                                '<i class="fa fa-soccer-ball-o"></i>'+
+                                            '</div>'+
+                                            '<div class="infogoal">'+
+                                                '<span>'+val.owngoal+'</span>'+ 
+                                                '<input type="hidden" name="owngoal[]" value="'+val.owngoalid+'">'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                    '<div class="timescore form-group">'+
+                                        '<div class="timelabel">Min</div>'+
+                                        '<input class="form-control timescore" name="time[]" type="text" maxlength="3" value="'+val.timescore+'">'+
+                                    '</div>'+
+                                    '<div class="player-remove withripple" style="display: block;"><i class="material-icons">clear</i></div>'+
+                                '</div>'+
+                              '</div>';
+                         $('.assignedresult-scorer').append(div);
+                    });
                 }
-            }); 
+            }
+        }); 
             
-             $('.assignedresult-event').html('');
+        $('.assignedresult-event').html('');
         $.ajax({
-                url: base + "admin/competitions/edit_league/select_events",
-                type: 'POST',
-                data: 'match_id=' + matchid,
-                success: function(response) {
-                    if(response.success){
-                        dataevents = response.dataevents;
-                        if(!dataevents.length){                           
-                            $('.no-events-wrap').show();
-                            }else{
-                            $('.no-events-wrap').hide();
-                        }
-                        $.each(dataevents, function(i, val){
-                            div = '<div class="event">'+
-                                    '<div class="event-container" style="background-color: #fff">'+
-                                        '<div class="eventplayername form-group">'+
-                                            '<div class="icon"><i class="fa fa-male"></i></div>'+
-                                            '<div class="infoscorer">'+
-                                                '<span>'+val.playername+'</span>'+ 
-                                                '<input type="hidden" name="evteamidval[]" value="'+val.teamid+'">'+
-                                                '<input type="hidden" name="eventplayername[]" value="'+val.playerid+'">'+
-                                            '</div>'+
-                                            '<div class="playerevent">'+
-                                                '<div class="icon">'+
-                                                    '<i class="fa fa-calendar-o"></i>'+
-                                                '</div>'+
-                                                '<div class="infoevent">'+
-                                                    '<span>'+val.eventdesc+'</span>'+
-                                                    '<input type="hidden" name="eventype[]" value="'+val.eventid+'">'+
-                                                '</div>'+
-                                            '</div>'+
-                                        '</div>'+
-                                        '<div class="timevent form-group">'+
-                                            '<div class="timelabel">Min</div>'+
-                                            '<input class="form-control timescore" name="timevent[]" type="text" maxlength="3" value="'+val.timevent+'">'+
-                                        '</div>'+
-                                        '<div class="event-player-remove withripple" style="display: block;"><i class="material-icons">clear</i></div>'+
+            url: base + "admin/competitions/edit_league/select_events",
+            type: 'POST',
+            data: 'match_id=' + matchid,
+            success: function(response) {
+                if(response.success){
+                    dataevents = response.dataevents;
+                    if(!dataevents.length){                           
+                        $('.no-events-wrap').show();
+                    }else{
+                        $('.no-events-wrap').hide();
+                    }
+                    $.each(dataevents, function(i, val){
+                        div = '<div class="event">'+
+                            '<div class="event-container" style="background-color: #fff">'+
+                                '<div class="eventplayername form-group">'+
+                                    '<div class="icon"><i class="fa fa-male"></i></div>'+
+                                    '<div class="infoscorer">'+
+                                        '<span>'+val.playername+'</span>'+ 
+                                        '<input type="hidden" name="evteamidval[]" value="'+val.teamid+'">'+
+                                        '<input type="hidden" name="eventplayername[]" value="'+val.playerid+'">'+
                                     '</div>'+
-                                  '</div>';
-                             $('.assignedresult-event').append(div);
-                        });
-                    }
+                                    '<div class="playerevent">'+
+                                            '<div class="icon">'+
+                                                    '<i class="fa fa-calendar-o"></i>'+
+                                            '</div>'+
+                                            '<div class="infoevent">'+
+                                                '<span>'+val.eventdesc+'</span>'+
+                                                '<input type="hidden" name="eventype[]" value="'+val.eventid+'">'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                    '<div class="timevent form-group">'+
+                                        '<div class="timelabel">Min</div>'+
+                                        '<input class="form-control timescore" name="timevent[]" type="text" maxlength="3" value="'+val.timevent+'">'+
+                                    '</div>'+
+                                    '<div class="event-player-remove withripple" style="display: block;"><i class="material-icons">clear</i></div>'+
+                                '</div>'+
+                            '</div>';
+                        $('.assignedresult-event').append(div);
+                    });
                 }
-            });    
-                       
-            bootbox.dialog({
-                message: $('#editMatchForm'),
-                closeButton: false,
-                show: false,
-                className:'bootbox-matchplay',
-                animate: true,
-                buttons:{
-                    submit:{
-                        label: formButtonSave,
-                        className: "btn-info",
-                        callback: function(e) {
-                            editmatch.submit();
-                            return false;
-                        }
-                    },
-                    cancel: {
-                        label: formButtonClose,
-                        className: "btn-info",
-                        callback: function(){}
+            }
+        });    
+                      
+        bootbox.dialog({
+            message: $('#editMatchForm'),
+            closeButton: false,
+            show: false,
+            className:'bootbox-matchplay',
+            animate: true,
+            buttons:{
+                submit:{
+                    label: formButtonSave,
+                    className: "btn-info",
+                    callback: function(e) {
+                        editmatch.submit();
+                        return false;
                     }
+                },
+                cancel: {
+                    label: formButtonClose,
+                    className: "btn-info",
+                    callback: function(){}
                 }
-                }).on('shown.bs.modal', function(){
-                $('#editMatchForm').show();
+            }
+        }).on('shown.bs.modal', function(){
+            $('#editMatchForm').show();
+            var scorer =  $('.modresult-scorer .scorer');
+            if((scorer).is(':visible')){
+                $('.modresult-scorer .scorer').not('.scorer.hide').remove();
+            }
+            var event =  $('.modresult-event .event');
+            if((event).is(':visible')){
+                $('.modresult-event .event').not('.event.hide').remove();
+            }
+            if($(window).width() < 750) {
+                $('.modal .modal-body-custom').css('overflow-y', 'hidden'); 
+                $('.modal .modal-body-custom').css('max-height', $(window).height() - 124);
+                $('.modal .modal-body-custom').css('height', $(window).height() - 124);
+            }
+            $(window).on('resize', function() {
                 if($(window).width() < 750) {
                     $('.modal .modal-body-custom').css('overflow-y', 'hidden'); 
                     $('.modal .modal-body-custom').css('max-height', $(window).height() - 124);
                     $('.modal .modal-body-custom').css('height', $(window).height() - 124);
                 }
-                $(window).on('resize', function() {
-                    if($(window).width() < 750) {
-                        $('.modal .modal-body-custom').css('overflow-y', 'hidden'); 
-                        $('.modal .modal-body-custom').css('max-height', $(window).height() - 124);
-                        $('.modal .modal-body-custom').css('height', $(window).height() - 124);
-                    }
-                });
-                $('.modal .modal-body-custom').niceScroll({
-                    cursorwidth: '4px',
-                    cursorborder: '2px',
-                    cursorcolor: 'trasparent',
-                    railalign: 'right'
-                });   
-                }).on('hide.bs.modal', function(e){
-                    
-                    $('#editMatchForm').hide().appendTo('body').off();
-                }).modal('show');
-        }
-      
+            });
+            $('.modal .modal-body-custom').niceScroll({
+                cursorwidth: '4px',
+                cursorborder: '2px',
+                cursorcolor: 'trasparent',
+                railalign: 'right'
+            });   
+        }).on('hide.bs.modal', function(e){
+            $('#editMatchForm').hide().appendTo('body');
+        }).modal('show');
+    }
 }
 
 /* Show users list */
