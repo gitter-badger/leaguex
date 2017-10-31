@@ -256,9 +256,7 @@ $lang['match_day_info'] = "Dettaglio partita";
 
 // ADD RESULT VIEW
 $lang['addresult_title_goal_scorers'] = "Marcatori";
-$lang['addresult_title_add_scorer'] = "Aggiungi marcatore";
 $lang['addresult_title_events'] = "Eventi";
-$lang['addresult_title_add_event'] = "Aggiungi evento";
 $lang['addresult_option_goal'] = "Goal";
 $lang['addresult_option_own_goal'] = "Autogoal";
 

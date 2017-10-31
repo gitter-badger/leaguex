@@ -13,7 +13,9 @@ function addResult(){
     var awayScore = $('.away-score');
     var scoreTeam1 = $('.home-score').attr('data-teamid');
     var scoreTeam2 = $('.away-score').attr('data-teamid');   
-    var matchid = $('#matchid').val(); 
+    var matchid = $('#matchid').val();
+    var loading = $('.loadpic');
+    var matchscore = $('.modresult-box').find('.modresult-match-score span'); 
    
     $selectPlayers = $('.scorer .selectpicker.selectscorer, .event .selectpicker.selectevent');
     $selectPlayers.html('');
@@ -71,7 +73,6 @@ function addResult(){
                 },
                 'playername[]':{
                     excluded: ':disabled',
-                    enabled: false,
                     validators: {
                         callback:{                          
                             callback: function(value, validator, $field){
@@ -85,7 +86,6 @@ function addResult(){
                 },
                 'eventplayername[]':{
                     excluded: ':disabled',
-                    enabled: false,
                     validators: {
                         callback:{                          
                             callback: function(value, validator, $field){
@@ -98,7 +98,6 @@ function addResult(){
                     }
                 },
                 'timevent[]':{
-                    enabled: false,
                     validators:{
                         notEmpty: {},
                         integer:{}
@@ -108,12 +107,8 @@ function addResult(){
         })
         //Add score 
         .on('change', '#selectPlayerName', function(){
-            $(homeScore).effect('highlight', {color: "#e8f0fe"}, 1000);
-            $(awayScore).effect('highlight', {color: "##e8f0fe"}, 1000);
-            var check = $(this).val().length > 1;
-                $('#addResultForm')
-                .formValidation('enableFieldValidators', 'time[]', check)
-                .formValidation('enableFieldValidators', 'playername[]', check);
+            $(matchscore).hide();
+            $(loading).show();
             var datateam = $(this).closest('.scorer').find('input[data-team]');
             var teamid = $(this).closest('.scorer').find('input[data-team]').attr('data-team');
             var opteamid = $(this).find('option:selected').val().split(",").pop();
@@ -139,6 +134,7 @@ function addResult(){
             }else{
                 owngoal.selectpicker('val', 0);};
             datateam.attr('data-team', opteamid);
+            setTimeout(function() {
             var sum1 = 0;
             var sum2 = 0;
             $('input[data-team="'+scoreTeam1+'"]').each(function(){
@@ -149,68 +145,43 @@ function addResult(){
                 sum2 += +$(this).val();
             });
             awayScore.val(sum2);
-            
-        })
-        .on('keyup', '[name="time[]"]', function(e){
-            var playername = $('[name="playername[]"]');
-            var isEmpty = $(this).val();
-            if(isEmpty != '' && playername.length == 1){
-                $('#addResultForm')
-                .formValidation('enableFieldValidators', 'time[]', true)
-                .formValidation('enableFieldValidators', 'playername[]', true);
-            } else {
-                $('#addResultForm')
-                .formValidation('enableFieldValidators', 'time[]', false)
-                .formValidation('enableFieldValidators', 'playername[]', false);
-            }
+            $(loading).hide();
+                $(matchscore).show();
+            }, 400);
         })
         //Convert score into own goal   
         .on('change', '#owngoal', function(){
-            $(homeScore).effect('highlight', {color: "#e8f0fe"}, 1000);
-            $(awayScore).effect('highlight', {color: "##e8f0fe"}, 1000);
+            $(matchscore).hide();
+            $(loading).show();
             var select = $(this).closest('.scorer').find('#selectPlayerName'); 
             var scorevalsum = '';
             var scorevalsub = '';
             var score = $(this).closest('.scorer').find('input[data-team]').val(); 
             var datateam = $(this).closest('.scorer').find('input[data-team]');
             var teamid = $(this).closest('.scorer').find('input[data-team]').attr('data-team');
-            if((teamid === scoreTeam1)&&(select.val() !== '0')){
-                scorevalsum = +awayScore.val() + +score;
-                scorevalsub = +homeScore.val() - +score; 
-                awayScore.val(scorevalsum);
-                homeScore.val(scorevalsub);
-                datateam.attr('data-team', scoreTeam2);
-            }else if((teamid === scoreTeam2)&&(select.val() !== '0')){
-                scorevalsum = +homeScore.val() + +score;
-                scorevalsub = +awayScore.val() - +score; 
-                homeScore.val(scorevalsum);
-                awayScore.val(scorevalsub);
-                datateam.attr('data-team', scoreTeam1);
-            };
+            setTimeout(function() {
+                if((teamid === scoreTeam1)&&(select.val() !== '0')){
+                    scorevalsum = +awayScore.val() + +score;
+                    scorevalsub = +homeScore.val() - +score; 
+                    awayScore.val(scorevalsum);
+                    homeScore.val(scorevalsub);
+                    datateam.attr('data-team', scoreTeam2);
+                }else if((teamid === scoreTeam2)&&(select.val() !== '0')){
+                    scorevalsum = +homeScore.val() + +score;
+                    scorevalsub = +awayScore.val() - +score; 
+                    homeScore.val(scorevalsum);
+                    awayScore.val(scorevalsub);
+                    datateam.attr('data-team', scoreTeam1);
+                };
+                $(loading).hide();
+                $(matchscore).show();
+            }, 400);
         })
         //Add event 
         .on('change', '#selectEventPlayerName', function(){
-            var check = $(this).val().length > 1;
-            $('#addResultForm')
-            .formValidation('enableFieldValidators', 'timevent[]', check)
-            .formValidation('enableFieldValidators', 'eventplayername[]', check);
-            
             var team = $(this).find('option:selected').val().split(",")[1];
             var teamval = $(this).closest('.eventplayername').find('#evteamidval');
             teamval.val(team);
-        })
-        .on('keyup', '[name="timevent[]"]', function(e){
-            var eventplayername = $('[name="eventplayername[]"]');
-            var isEmpty = $(this).val();
-            if(isEmpty != '' && eventplayername.length == 1){
-                $('#addResultForm')
-                .formValidation('enableFieldValidators', 'timevent[]', true)
-                .formValidation('enableFieldValidators', 'eventplayername[]', true);
-            } else {
-                $('#addResultForm')
-                .formValidation('enableFieldValidators', 'time[]', false)
-                .formValidation('enableFieldValidators', 'playername[]', false);
-            }
         })
         .on('added.field.fv', function(e, data){
             if(data.field === 'playername[]' || data.field === 'owngoal[]' || data.field === 'eventplayername[]' || data.field === 'eventype[]'){
@@ -225,7 +196,8 @@ function addResult(){
                 });
             }
         })
-        .on('click', '.add-scorer .add-link a', function(){
+        .on('click', '.add-scorer .add-link', function(){
+            $('.no-scorers-wrap').hide();
             var $template = $('#addresultTemplate'),
             $clone = $template
                 .clone()
@@ -247,7 +219,8 @@ function addResult(){
                 .formValidation('addField', $clone.find('[name="owngoal[]"]'))
                 .formValidation('addField', $clone.find('[name="time[]"]'));
         })
-        .on('click', '.add-event .add-link a', function(){
+        .on('click', '.add-event .add-link', function(){
+            $('.no-events-wrap').hide();
             var $template = $('#addeventTemplate'),
             $clone = $template
                 .clone()
@@ -270,43 +243,39 @@ function addResult(){
                 .formValidation('addField', $clone.find('[name="timevent[]"]'));
         })        
         .on('click', '.player-remove', function(){
-            $(homeScore).effect('highlight', {color: "#e8f0fe"}, 1000);
-            $(awayScore).effect('highlight', {color: "##e8f0fe"}, 1000);
+            $(matchscore).hide();
+            $(loading).show();
             var $row = $(this).closest('.scorer');
+            var scorerbox = $('.modresult-addscore').find('.scorer');
             var target = $(this).closest('.scorer').find('input[data-team]');
-            var icondelete = $('.player-remove');
-            var sum1 = 0;
-            var sum2 = 0;
-            $('input[data-team="'+scoreTeam1+'"]').not(target).each(function(){
-                sum1 += Number($(this).val());
-            });
-            homeScore.val(sum1);
-            $('input[data-team="'+scoreTeam2+'"]').not(target).each(function(){
-                sum2 += Number($(this).val());
-            });
-            awayScore.val(sum2);
+            if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
+            setTimeout(function() {
+                var sum1 = 0;
+                var sum2 = 0;
+                $('input[data-team="'+scoreTeam1+'"]').not(target).each(function(){
+                    sum1 += Number($(this).val());
+                });
+                homeScore.val(sum1);
+                $('input[data-team="'+scoreTeam2+'"]').not(target).each(function(){
+                    sum2 += Number($(this).val());
+                });
+                awayScore.val(sum2);
+                $(loading).hide();
+                $(matchscore).show();
+            }, 400);
             $('#addResultForm')
                 .formValidation('removeField', $row.find('[name="playername[]"]'))
                 .formValidation('removeField', $row.find('[name="time[]"]'));
-            if((icondelete).length === 3){
-                $row.remove();
-                icondelete.hide();
-            }else{
-                $row.remove();
-            }  
+            $row.remove();
         })
         .on('click', '.event-player-remove', function(){
             var $row = $(this).closest('.event');
-            var icondelete = $('.event-player-remove');
+            var eventbox = $('.modresult-addevent').find('.event');
+            if(eventbox.length === 2){$('.no-events-wrap').show();}
             $('#addResultForm')
                 .formValidation('removeField', $row.find('[name="eventplayername[]"]'))
                 .formValidation('removeField', $row.find('[name="timevent[]"]'));
-            if((icondelete).length === 3){
-                $row.remove();
-                icondelete.hide();
-            }else{
-                $row.remove();
-            }  
+            $row.remove();
         })
         .on('err.field.fv', function(e, data) {
             data.element

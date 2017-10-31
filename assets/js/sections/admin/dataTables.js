@@ -148,7 +148,7 @@ function addLeague() {
                                 "competition_registration_date": newleague.regdate,
                                 "action": '<a href="#" id="' + newleague.leagueid + '" class="table-icon btn btn-fab btn-fab-custom make-fx no-shadow no-color-bg fixture">\
                                            <i class="material-icons event_avalaible"></i>\
-                                           <i class="fa fa-spinner fa-spin fa-stack-1x fa-inverse loadpic"></i>\
+                                           <i class="fa fa-circle-o-notch fa-spin loadpic"></i>\
                                            </a>\
                                            <a href="#" id="' + newleague.leagueid + '" class="table-icon btn btn-fab btn-fab-custom no-shadow no-color-bg delete">\
                                            <i class="material-icons">delete</i>\
@@ -202,7 +202,7 @@ function makeFixture() {
         var leaguestable = $('#leaguesList').DataTable();
         var id = $(this).attr('id');
         var icon = $(this).find('.event_avalaible');
-        var spinner = $(this).find('.fa-spinner');
+        var spinner = $(this).find('.fa-circle-o-notch');
         bootbox.dialog({
             message: alertMessageMakeFixture,
             title: alertHeader,
@@ -385,19 +385,18 @@ function editMatch(matchid){
         }
     });
     
-    if($('#editMatchForm').length && $.fn.formValidation){
+    
         var fixturetable = $('#editLeague').DataTable();
         var editmatch = $('#editMatchForm');
         $('#editMatchForm').find('[name="playername[]"]').selectpicker().change(function(e){
             $('#editMatchForm').formValidation('revalidateField', 'playername[]');
         }).end();
-        editmatch.formValidation({
+       $(editmatch).formValidation({
             framework: "bootstrap",
             locale: cklocal,
             live: 'submitted',
             fields:{
                 'time[]':{
-                    excluded: ':disabled',
                     validators: {
                         notEmpty: {},
                         integer:{}
@@ -495,21 +494,21 @@ function editMatch(matchid){
             var datateam = $(this).closest('.scorer').find('input[data-team]');
             var teamid = $(this).closest('.scorer').find('input[data-team]').attr('data-team');
             setTimeout(function() {
-            if((teamid === scoreTeam1)&&(select.val() !== '0')){
-                scorevalsum = +awayScore.val() + +score;
-                scorevalsub = +homeScore.val() - +score; 
-                awayScore.val(scorevalsum);
-                homeScore.val(scorevalsub);
-                datateam.attr('data-team', scoreTeam2);
-            }else if((teamid === scoreTeam2)&&(select.val() !== '0')){
-                scorevalsum = +homeScore.val() + +score;
-                scorevalsub = +awayScore.val() - +score; 
-                homeScore.val(scorevalsum);
-                awayScore.val(scorevalsub);
-                datateam.attr('data-team', scoreTeam1);
-            };
-            $(loading).hide();
-            $(matchscore).show();
+                if((teamid === scoreTeam1)&&(select.val() !== '0')){
+                    scorevalsum = +awayScore.val() + +score;
+                    scorevalsub = +homeScore.val() - +score; 
+                    awayScore.val(scorevalsum);
+                    homeScore.val(scorevalsub);
+                    datateam.attr('data-team', scoreTeam2);
+                }else if((teamid === scoreTeam2)&&(select.val() !== '0')){
+                    scorevalsum = +homeScore.val() + +score;
+                    scorevalsub = +awayScore.val() - +score; 
+                    homeScore.val(scorevalsum);
+                    awayScore.val(scorevalsub);
+                    datateam.attr('data-team', scoreTeam1);
+                };
+                $(loading).hide();
+                $(matchscore).show();
             }, 400);
         })
         .on('change', '#selectEventPlayerName', function(){
@@ -575,7 +574,7 @@ function editMatch(matchid){
                 .formValidation('addField', $clone.find('[name="eventplayername[]"]'))
                 .formValidation('addField', $clone.find('[name="eventype[]"]'))
                 .formValidation('addField', $clone.find('[name="timevent[]"]'));
-        })        
+        })
         .on('click', '.player-remove', function(){
             $(matchscore).hide();
             $(loading).show();
@@ -586,18 +585,18 @@ function editMatch(matchid){
             var target = $(this).closest('.scorer').find('input[data-team]');
             if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
             setTimeout(function() {
-            var sum1 = 0;
-            var sum2 = 0;
-            $('input[data-team="'+scoreTeam1+'"]').not(target).each(function(){
-                sum1 += Number($(this).val());
-            });
-            homeScore.val(sum1);
-            $('input[data-team="'+scoreTeam2+'"]').not(target).each(function(){
-                sum2 += Number($(this).val());
-            });
-            awayScore.val(sum2);
-            $(loading).hide();
-            $(matchscore).show();
+                var sum1 = 0;
+                var sum2 = 0;
+                $('input[data-team="'+scoreTeam1+'"]').not(target).each(function(){
+                    sum1 += Number($(this).val());
+                });
+                homeScore.val(sum1);
+                $('input[data-team="'+scoreTeam2+'"]').not(target).each(function(){
+                    sum2 += Number($(this).val());
+                });
+                awayScore.val(sum2);
+                $(loading).hide();
+                $(matchscore).show();
             }, 400);
             $('#editMatchForm')
                 .formValidation('removeField', $row.find('[name="playername[]"]'))
@@ -619,6 +618,7 @@ function editMatch(matchid){
                 .data('fv.messages')
                 .find('.help-block[data-fv-for="' + data.field + '"]').hide();
         })
+        .off('success.form.fv')
         .on('success.form.fv', function(e){
             $('.modal-content').waitMe({
                 effect: '',
@@ -655,7 +655,7 @@ function editMatch(matchid){
                 });
             }, 600); 
         });
-    }
+    
     
     if('undefined' !== typeof matchid){
         $.ajax({

@@ -45,7 +45,7 @@ class Leagues_list extends CI_Controller {
                 <span class="img-cell">$2</span>','competition_logo, competition_name')
             ->add_column('action', '<a id="$1" href="$2$1" class="table-icon btn btn-fab btn-fab-custom $3 no-shadow no-color-bg fixture">
                 <i class="material-icons $4"></i>
-                <i class="fa fa-spinner fa-spin fa-stack-1x fa-inverse loadpic"></i>
+                <i class="fa fa-circle-o-notch fa-spin loadpic"></i>
                 </a>
                 <a href="#" id="$1" class="table-icon btn btn-fab btn-fab-custom no-shadow no-color-bg delete">
                 <i class="material-icons">delete</i>

@@ -13,7 +13,7 @@
                         <span class="modresult-team-logo"><img class="team-logo-25" id="logo-one" src=""></span>
                     </span>
                 </div>
-                <div class="modresult-match-score"><div class="loadpic"><i class="fa fa-spinner fa-spin fa-stack-1x fa-inverse"></i></div><span><input type="text" size="1" value="0" class="home-score" name="home-score" data-teamid=""> - <input type="text" size="1" value="0" class="away-score" name="away-score" data-teamid=""></span></div>
+                <div class="modresult-match-score"><div class="loadpic"><i class="fa fa-circle-o-notch fa-spin"></i></div><span><input type="text" size="1" value="0" class="home-score" name="home-score" data-teamid=""> - <input type="text" size="1" value="0" class="away-score" name="away-score" data-teamid=""></span></div>
                 <div class="modresult-team-two">
                     <span class="modresult-logo-container">
                         <span class="modresult-team-logo"><img class="team-logo-25" id="logo-two" src=""></span>

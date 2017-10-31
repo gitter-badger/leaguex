@@ -258,9 +258,7 @@ $lang['match_day_info'] = "Match sheet";
 
 // ADD RESULT VIEW
 $lang['addresult_title_goal_scorers'] = "Goal Scorers";
-$lang['addresult_title_add_scorer'] = "Add scorer";
 $lang['addresult_title_events'] = "Events";
-$lang['addresult_title_add_event'] = "Add event";
 $lang['addresult_option_goal'] = "Goal";
 $lang['addresult_option_own_goal'] = "Own goal";
 
