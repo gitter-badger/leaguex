@@ -7,11 +7,11 @@
         </div>
     </div>
     <div class="modal-body-custom">
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('admin_leagueslist_select_leagueteams');?></label>
             <select class="show-tick selectpicker" id="selectTeams" data-width="100%" name="leagueteams[]" multiple data-none-selected-text="<?php echo lang('select_default');?>" data-select-all-text="<?php echo lang('select_all');?>" data-deselect-all-text="<?php echo lang('deselect_all');?>" data-size="4" data-actions-box="true" multiple data-selected-text-format="count > 3"></select>
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('admin_leagueslist_input_leaguename');?></label>
             <input type="text" class="form-control" id="inputLeaguename" name="leaguename" required>
         </div>

@@ -6,6 +6,18 @@
 *   @link http://www.fankstribe.org 
 !*/
 
+/* Set animation */
+$.fn.extend({
+animateCss: function (animationName, callback) {
+    var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+    this.addClass('animated ' + animationName).one(animationEnd, function() {
+        var obj = $(this);
+        obj.removeClass('animated ' + animationName);
+        if(callback && typeof callback === 'function') callback(obj);
+    });
+  }
+});
+
 /* Add match result */
 
 function addResult(){
@@ -14,9 +26,7 @@ function addResult(){
     var scoreTeam1 = $('.home-score').attr('data-teamid');
     var scoreTeam2 = $('.away-score').attr('data-teamid');   
     var matchid = $('#matchid').val();
-    var loading = $('.loadpic');
-    var matchscore = $('.modresult-box').find('.modresult-match-score span'); 
-   
+          
     $selectPlayers = $('.scorer .selectpicker.selectscorer, .event .selectpicker.selectevent');
     $selectPlayers.html('');
     $.ajax({
@@ -65,7 +75,6 @@ function addResult(){
             live: 'submitted',
             fields:{
                 'time[]':{
-                    enabled: false,
                     validators: {
                         notEmpty: {},
                         integer:{}
@@ -107,8 +116,6 @@ function addResult(){
         })
         //Add score 
         .on('change', '#selectPlayerName', function(){
-            $(matchscore).hide();
-            $(loading).show();
             var datateam = $(this).closest('.scorer').find('input[data-team]');
             var teamid = $(this).closest('.scorer').find('input[data-team]').attr('data-team');
             var opteamid = $(this).find('option:selected').val().split(",").pop();
@@ -134,7 +141,6 @@ function addResult(){
             }else{
                 owngoal.selectpicker('val', 0);};
             datateam.attr('data-team', opteamid);
-            setTimeout(function() {
             var sum1 = 0;
             var sum2 = 0;
             $('input[data-team="'+scoreTeam1+'"]').each(function(){
@@ -145,37 +151,28 @@ function addResult(){
                 sum2 += +$(this).val();
             });
             awayScore.val(sum2);
-            $(loading).hide();
-                $(matchscore).show();
-            }, 400);
         })
         //Convert score into own goal   
         .on('change', '#owngoal', function(){
-            $(matchscore).hide();
-            $(loading).show();
             var select = $(this).closest('.scorer').find('#selectPlayerName'); 
             var scorevalsum = '';
             var scorevalsub = '';
             var score = $(this).closest('.scorer').find('input[data-team]').val(); 
             var datateam = $(this).closest('.scorer').find('input[data-team]');
             var teamid = $(this).closest('.scorer').find('input[data-team]').attr('data-team');
-            setTimeout(function() {
-                if((teamid === scoreTeam1)&&(select.val() !== '0')){
-                    scorevalsum = +awayScore.val() + +score;
-                    scorevalsub = +homeScore.val() - +score; 
-                    awayScore.val(scorevalsum);
-                    homeScore.val(scorevalsub);
-                    datateam.attr('data-team', scoreTeam2);
-                }else if((teamid === scoreTeam2)&&(select.val() !== '0')){
-                    scorevalsum = +homeScore.val() + +score;
-                    scorevalsub = +awayScore.val() - +score; 
-                    homeScore.val(scorevalsum);
-                    awayScore.val(scorevalsub);
-                    datateam.attr('data-team', scoreTeam1);
-                };
-                $(loading).hide();
-                $(matchscore).show();
-            }, 400);
+            if((teamid === scoreTeam1)&&(select.val() !== '0')){
+                scorevalsum = +awayScore.val() + +score;
+                scorevalsub = +homeScore.val() - +score; 
+                awayScore.val(scorevalsum);
+                homeScore.val(scorevalsub);
+                datateam.attr('data-team', scoreTeam2);
+            }else if((teamid === scoreTeam2)&&(select.val() !== '0')){
+                scorevalsum = +homeScore.val() + +score;
+                scorevalsub = +awayScore.val() - +score; 
+                homeScore.val(scorevalsum);
+                awayScore.val(scorevalsub);
+                datateam.attr('data-team', scoreTeam1);
+            };
         })
         //Add event 
         .on('change', '#selectEventPlayerName', function(){
@@ -183,27 +180,19 @@ function addResult(){
             var teamval = $(this).closest('.eventplayername').find('#evteamidval');
             teamval.val(team);
         })
-        .on('added.field.fv', function(e, data){
-            if(data.field === 'playername[]' || data.field === 'owngoal[]' || data.field === 'eventplayername[]' || data.field === 'eventype[]'){
-                data.element.selectpicker({
-                    style: 'select-with-transition',
-                    iconBase: 'fa',
-                    tickIcon: 'fa-check',
-                    dropupAuto: false
-                })
-                .on('change', function(e){
-                     $('#addResultForm').formValidation('revalidateField', data.element);
-                });
-            }
-        })
         .on('click', '.add-scorer .add-link', function(){
-            $('.no-scorers-wrap').hide();
+            var loadpic = $(this).find('.fa-spin');
+            var button = $(this).find('.material-icons');
+            button.hide();
+            loadpic.show();
+            setTimeout(function() {
             var $template = $('#addresultTemplate'),
             $clone = $template
                 .clone()
                 .removeClass('hide')
                 .removeAttr('id')
                 .insertBefore($template);
+            $clone.animateCss('slideInLeft', function (obj){obj;});    
             var remove = $(this).closest('.modresult-scorer').find('.player-remove');
             var removeclone = $clone.find('.player-remove');
             $clone.find('.bootstrap-select').remove();
@@ -218,15 +207,25 @@ function addResult(){
                 .formValidation('addField', $clone.find('[name="playername[]"]'))
                 .formValidation('addField', $clone.find('[name="owngoal[]"]'))
                 .formValidation('addField', $clone.find('[name="time[]"]'));
+            $('.no-scorers-wrap').hide();
+                loadpic.hide();
+                button.show();
+                $('.modal .modal-body-custom').getNiceScroll().resize();
+            }, 400);            
         })
         .on('click', '.add-event .add-link', function(){
-            $('.no-events-wrap').hide();
+            var loadpic = $(this).find('.fa-spin');
+            var button = $(this).find('.material-icons');
+            button.hide();
+            loadpic.show();
+            setTimeout(function() {
             var $template = $('#addeventTemplate'),
             $clone = $template
                 .clone()
                 .removeClass('hide')
                 .removeAttr('id')
                 .insertBefore($template);
+            $clone.animateCss('slideInLeft', function (obj){obj;});    
             var remove = $(this).closest('.modresult-event').find('.event-player-remove');
             var removeclone = $clone.find('.event-player-remove');
             $clone.find('.bootstrap-select').remove();
@@ -241,47 +240,73 @@ function addResult(){
                 .formValidation('addField', $clone.find('[name="eventplayername[]"]'))
                 .formValidation('addField', $clone.find('[name="eventype[]"]'))
                 .formValidation('addField', $clone.find('[name="timevent[]"]'));
-        })        
+            $('.no-events-wrap').hide();
+                loadpic.hide();
+                button.show();
+                $('.modal .modal-body-custom').getNiceScroll().resize();
+            }, 400);                
+        })
+        .on('added.field.fv', function(e, data){
+            if(data.field === 'playername[]' || data.field === 'timevent[]' || data.field === 'time[]' || data.field === 'eventplayername[]' || data.field === 'eventype[]' || data.field === 'owngoal[]'){
+                data.element.selectpicker({
+                    style: 'select-with-transition',
+                    iconBase: 'material-icons',
+                    tickIcon: 'done',
+                    dropupAuto: true,
+                    container: 'body',
+                    size: '6'
+                })
+                .on('change', function(e){
+                     $('#addResultForm').formValidation('revalidateField', data.element);
+                });
+            }
+        })
         .on('click', '.player-remove', function(){
-            $(matchscore).hide();
-            $(loading).show();
             var $row = $(this).closest('.scorer');
             var scorerbox = $('.modresult-addscore').find('.scorer');
             var target = $(this).closest('.scorer').find('input[data-team]');
-            if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
-            setTimeout(function() {
-                var sum1 = 0;
-                var sum2 = 0;
-                $('input[data-team="'+scoreTeam1+'"]').not(target).each(function(){
-                    sum1 += Number($(this).val());
-                });
-                homeScore.val(sum1);
-                $('input[data-team="'+scoreTeam2+'"]').not(target).each(function(){
-                    sum2 += Number($(this).val());
-                });
-                awayScore.val(sum2);
-                $(loading).hide();
-                $(matchscore).show();
-            }, 400);
+            var sum1 = 0;
+            var sum2 = 0;
+            $('input[data-team="'+scoreTeam1+'"]').not(target).each(function(){
+                sum1 += Number($(this).val());
+            });
+            homeScore.val(sum1);
+            $('input[data-team="'+scoreTeam2+'"]').not(target).each(function(){
+                sum2 += Number($(this).val());
+            });
+            awayScore.val(sum2);
             $('#addResultForm')
                 .formValidation('removeField', $row.find('[name="playername[]"]'))
                 .formValidation('removeField', $row.find('[name="time[]"]'));
-            $row.remove();
+            setTimeout(function() {
+                $row.animateCss('slideOutRight', function (obj) {
+                obj.remove();
+                if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
+            });
+                $('.modal .modal-body-custom').getNiceScroll().resize();
+            }, 400);
         })
         .on('click', '.event-player-remove', function(){
+            $(".modal .modal-body-custom").getNiceScroll().resize();
             var $row = $(this).closest('.event');
             var eventbox = $('.modresult-addevent').find('.event');
-            if(eventbox.length === 2){$('.no-events-wrap').show();}
             $('#addResultForm')
                 .formValidation('removeField', $row.find('[name="eventplayername[]"]'))
                 .formValidation('removeField', $row.find('[name="timevent[]"]'));
-            $row.remove();
+            setTimeout(function() {
+                $row.animateCss('slideOutRight', function (obj) {
+                obj.remove();
+                if(eventbox.length === 2){$('.no-events-wrap').show();}
+            });
+                $('.modal .modal-body-custom').getNiceScroll().resize();
+            }, 400);
         })
         .on('err.field.fv', function(e, data) {
             data.element
                 .data('fv.messages')
                 .find('.help-block[data-fv-for="' + data.field + '"]').hide();
         })
+        .off('success.form.fv')
         .on('success.form.fv', function(e){
             $('.modal-content').waitMe({
                 effect: '',
@@ -300,7 +325,6 @@ function addResult(){
                     success:function(response){
                         $('.modal-content').waitMe("hide");
                         if(response.success){
-                                                  
                             $('.match-box-teams').find('.home-score').html(response.showscore.homescore);
                             $('.match-box-teams').find('.away-score').html(response.showscore.awayscore);
                                                        
@@ -380,23 +404,28 @@ function addResult(){
             }
         }).on('shown.bs.modal', function() {
             $('#addResultForm').show();
-            if($(window).width() < 750) {
-                $('.modal .modal-body-custom').css('overflow-y', 'hidden'); 
-                $('.modal .modal-body-custom').css('max-height', $(window).height() - 124);
-                $('.modal .modal-body-custom').css('height', $(window).height() - 124);
+            var scorer =  $('.modresult-scorer .scorer');
+            if((scorer).is(':visible')){
+                $('.no-scorers-wrap').hide();
+            }else{
+                $('.no-scorers-wrap').show();
             }
-            $(window).on('resize', function() {
-            if($(window).width() < 750) {
-                $('.modal .modal-body-custom').css('overflow-y', 'hidden'); 
-                $('.modal .modal-body-custom').css('max-height', $(window).height() - 124);
-                $('.modal .modal-body-custom').css('height', $(window).height() - 124);
+            var event =  $('.modresult-event .event');
+            if((event).is(':visible')){
+                $('.no-events-wrap').hide();
+            }else{
+                $('.no-events-wrap').show();
             }
-            });
-            
+            $('.modal .modal-body-custom').niceScroll({
+                cursorwidth: '4px',
+                cursorborder: '0px',
+                cursorcolor: 'trasparent',
+                railalign: 'right'
+            });    
         }).on('hide.bs.modal', function(e) {
             $('#addResultForm').hide().appendTo('body');
         }).modal('show');
-    }); 
+    });
 }
 
 /* Comments system */

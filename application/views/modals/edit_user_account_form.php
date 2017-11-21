@@ -8,24 +8,24 @@
         </div>
     </div>
     <div class="modal-body-custom">
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_email');?></label>
             <input type="text" class="form-control" id="editInputEmail" name="email"> 
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_birthday');?></label>
             <input type="text" class="form-control format" id="editInputBirthday" name="birthday" autocomplete="off" placeholder="<?php echo lang('esett_pick_birthday');?>">
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_city');?></label>
             <input type="text" class="form-control" id="editInputCity" name="city" autocomplete="off" maxlength="50">
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_change_password');?></label>
             <input type="password" class="form-control" id="editInputPassword" name="newpassword" autocomplete="new-password">
             <input type="hidden" class="form-control" id="hiddenPassword" name="password" autocomplete="new-password">
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_confirm_password');?></label>
             <input type="password" class="form-control" id="editInputConfirmPassword" name="confirmpassword" autocomplete="new-password">
         </div> 

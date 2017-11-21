@@ -30,17 +30,6 @@ $.extend(true, $.fn.dataTable.defaults, {
         }
     }
 });
-/* Set animation */
-$.fn.extend({
-animateCss: function (animationName, callback) {
-    var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
-    this.addClass('animated ' + animationName).one(animationEnd, function() {
-        var obj = $(this);
-        obj.removeClass('animated ' + animationName);
-        if(callback && typeof callback === 'function') callback(obj);
-    });
-  }
-});
 
 function compareText(val1, val2){
     var firstchar = val1.substr(0,1);
@@ -159,7 +148,7 @@ function addLeague() {
                                 "competition_registration_date": newleague.regdate,
                                 "action": '<a href="#" id="' + newleague.leagueid + '" class="table-icon btn btn-fab btn-fab-custom make-fx no-shadow no-color-bg fixture">\
                                            <i class="material-icons event_avalaible"></i>\
-                                           <i class="fa fa-refresh fa-spin" style="display: none"></i>\
+                                           <i class="fa fa-circle-o-notch fa-spin loadpic"></i>\
                                            </a>\
                                            <a href="#" id="' + newleague.leagueid + '" class="table-icon btn btn-fab btn-fab-custom no-shadow no-color-bg delete">\
                                            <i class="material-icons">delete</i>\
@@ -213,7 +202,7 @@ function makeFixture() {
         var leaguestable = $('#leaguesList').DataTable();
         var id = $(this).attr('id');
         var icon = $(this).find('.event_avalaible');
-        var spinner = $(this).find('.fa-refresh');
+        var spinner = $(this).find('.fa-circle-o-notch');
         bootbox.dialog({
             message: alertMessageMakeFixture,
             title: alertHeader,
@@ -333,10 +322,10 @@ function fixtureListTable() {
                 {data: "team1", bSortable: false, className: "not-mobile"},
                 {data: "score", bSortable: false, className: "dt-center"},
                 {data: "team2", bSortable: false, className: "not-mobile, dt-right"}],
-            drawCallback: function(settings) {
+            drawCallback: function ( settings ) {
                 var api = this.api();
                 var rows = api.rows( {page:'current'} ).nodes();
-                var last= null;
+                var last=null;
                 api.column(0, {page:'current'} ).data().each( function ( matchday_name, i ) {
                     if ( last !== matchday_name ) {
                         $(rows).eq( i ).before(
@@ -346,6 +335,7 @@ function fixtureListTable() {
                     }
                 });
             }
+
         });
         // Order by the grouping
         $('#editLeague tbody').on( 'click', 'tr.group', function() {
@@ -358,10 +348,12 @@ function fixtureListTable() {
         });
     }
 }
-/* Edit match */
+
 function editMatch(matchid){
     var homeScore = $('.home-score');
     var awayScore = $('.away-score');
+    var loading = $('.loadpic');
+    var matchscore = $('.modresult-box').find('.modresult-match-score span'); 
     $selectPlayers = $('.scorer .selectpicker.selectscorer, .event .selectpicker.selectevent');
     $selectPlayers.html('');
     $.ajax({
@@ -392,19 +384,7 @@ function editMatch(matchid){
             });
         }
     });
-    $selectWalkover = $('.walkover .selectpicker.selectwalkover');
-    $selectWalkover.html('');
-    $.ajax({
-        url: base + "admin/competitions/edit_league/loadteams",
-        type: 'POST',
-        dataType: 'JSON',
-        data: 'match_id=' + matchid,
-        success: function(teamslist){
-             $.each(teamslist, function(key, val) {
-            $selectWalkover.append('<option value="'+ val.value +'">' + val.text + '</option>').selectpicker('refresh');
-            });
-        }
-    });
+    
     if($('#editMatchForm').length && $.fn.formValidation){
         var fixturetable = $('#editLeague').DataTable();
         var editmatch = $('#editMatchForm');
@@ -453,23 +433,12 @@ function editMatch(matchid){
                         notEmpty: {},
                         integer:{}
                     }
-                },
-                'walkoverteamname':{
-                    excluded: ':disabled',
-                    validators: {
-                        callback:{                          
-                            callback: function(value, validator, $field){
-                                if(value === ''){
-                                    return false;
-                                }
-                            return true;
-                            }
-                        }
-                    }
-                },
+                }
             }
         })
-        .on('change', '#selectPlayerName', function(e){
+        .on('change', '#selectPlayerName', function(){
+            $(matchscore).hide();
+            $(loading).show();
             var scoreTeam1 = $('.home-score').attr('data-teamid');
             var scoreTeam2 = $('.away-score').attr('data-teamid');
             var datateam = $(this).closest('.scorer').find('input[data-team]');
@@ -497,19 +466,24 @@ function editMatch(matchid){
             }else{
                 owngoal.selectpicker('val', 0);};
             datateam.attr('data-team', opteamid);
-            var sum1 = 0;
-            var sum2 = 0;
-            $('input[data-team="'+scoreTeam1+'"]').each(function(){
-                sum1 += +$(this).val();
-            });
-            homeScore.val(sum1);
-            $('input[data-team="'+scoreTeam2+'"]').each(function(){
-                sum2 += +$(this).val();
-            });
-            awayScore.val(sum2);
+            setTimeout(function() {
+                var sum1 = 0;
+                var sum2 = 0;
+                $('input[data-team="'+scoreTeam1+'"]').each(function(){
+                    sum1 += +$(this).val();
+                });
+                homeScore.val(sum1);
+                $('input[data-team="'+scoreTeam2+'"]').each(function(){
+                    sum2 += +$(this).val();
+                });
+                awayScore.val(sum2);
+                $(loading).hide();
+                $(matchscore).show();
+            }, 400);
         })
-        .off('change', '#owngoal')
         .on('change', '#owngoal', function(){
+            $(matchscore).hide();
+            $(loading).show();
             var select = $(this).closest('.scorer').find('#selectPlayerName');
             var scoreTeam1 = $('.home-score').attr('data-teamid');
             var scoreTeam2 = $('.away-score').attr('data-teamid');   
@@ -518,218 +492,133 @@ function editMatch(matchid){
             var score = $(this).closest('.scorer').find('input[data-team]').val(); 
             var datateam = $(this).closest('.scorer').find('input[data-team]');
             var teamid = $(this).closest('.scorer').find('input[data-team]').attr('data-team');
-            if((teamid === scoreTeam1)&&(select.val() !== '0')){
-                scorevalsum = +awayScore.val() + +score;
-                scorevalsub = +homeScore.val() - +score; 
-                awayScore.val(scorevalsum);
-                homeScore.val(scorevalsub);
-                datateam.attr('data-team', scoreTeam2);
-            }else if((teamid === scoreTeam2)&&(select.val() !== '0')){
-                scorevalsum = +homeScore.val() + +score;
-                scorevalsub = +awayScore.val() - +score; 
-                homeScore.val(scorevalsum);
-                awayScore.val(scorevalsub);
-                datateam.attr('data-team', scoreTeam1);
-            };
+            setTimeout(function() {
+                if((teamid === scoreTeam1)&&(select.val() !== '0')){
+                    scorevalsum = +awayScore.val() + +score;
+                    scorevalsub = +homeScore.val() - +score; 
+                    awayScore.val(scorevalsum);
+                    homeScore.val(scorevalsub);
+                    datateam.attr('data-team', scoreTeam2);
+                }else if((teamid === scoreTeam2)&&(select.val() !== '0')){
+                    scorevalsum = +homeScore.val() + +score;
+                    scorevalsub = +awayScore.val() - +score; 
+                    homeScore.val(scorevalsum);
+                    awayScore.val(scorevalsub);
+                    datateam.attr('data-team', scoreTeam1);
+                };
+                $(loading).hide();
+                $(matchscore).show();
+            }, 400);
         })
         .on('change', '#selectEventPlayerName', function(){
             var team = $(this).find('option:selected').val().split(",")[1];
             var teamval = $(this).closest('.eventplayername').find('#evteamidval');
             teamval.val(team);
         })
-        .on('change', '#selectWalkoverTeam', function(){
-            $('#morewalkover').attr('disabled', true);
-            var team = $(this).find('option:selected').val();
-            var scoreTeam1 = $('.home-score').attr('data-teamid');
-            if(team === scoreTeam1){
-                awayScore.val('0');
-                homeScore.val('3');
-            }else{
-                homeScore.val('0');
-                awayScore.val('3');
-            };
-        })
-        .off('click', '.add-scorer .add-link')
-        .on('click', '.add-scorer .add-link', function(){
-            var loadpic = $(this).find('.fa-spin');
-            var button = $(this).find('.material-icons');
-            button.hide();
-            loadpic.show();
-            setTimeout(function() {
-                var $template = $('#addresultTemplate');
-                $clone = $template
-                    .clone()
-                    .removeClass('hide')
-                    .removeAttr('id')
-                    .insertAfter($template);
-                $clone.animateCss('slideInLeft', function (obj){obj;});
-                var remove = $(this).closest('.modresult-scorer').find('.player-remove');
-                var removeclone = $clone.find('.player-remove');
-                $clone.find('.bootstrap-select').remove();
-                $clone.find('#goalscore').attr('name','goalscore[]');
-                $clone.find('#selectPlayerName').attr('name','playername[]');
-                $clone.find('#owngoal').attr('name','owngoal[]');
-                $clone.find('#time').attr('name','time[]');
-                $clone.find('#teamidval').attr('name','teamidval[]');
-                remove.show();
-                removeclone.show();
-                $('#editMatchForm')
-                    .formValidation('addField', $clone.find('[name="playername[]"]'))
-                    .formValidation('addField', $clone.find('[name="owngoal[]"]'))
-                    .formValidation('addField', $clone.find('[name="time[]"]'));
-                $('.no-scorers-wrap').hide();
-                loadpic.hide();
-                button.show();
-                $('.modal .modal-body-custom').getNiceScroll().resize();
-            }, 400);        
-        })
-        .off('click', '.add-event .add-link')
-        .on('click', '.add-event .add-link', function(){
-            var loadpic = $(this).find('.fa-spin');
-            var button = $(this).find('.material-icons');
-            button.hide();
-            loadpic.show();
-            setTimeout(function() {
-                var $template = $('#addeventTemplate'),
-                $clone = $template
-                    .clone()
-                    .removeClass('hide')
-                    .removeAttr('id')
-                    .insertAfter($template);
-                $clone.animateCss('slideInLeft', function (obj){obj;});
-                var remove = $(this).closest('.modresult-event').find('.event-player-remove');
-                var removeclone = $clone.find('.event-player-remove');
-                $clone.find('.bootstrap-select').remove();
-                $clone.find('#eventscore').attr('name','eventscore[]');
-                $clone.find('#selectEventPlayerName').attr('name','eventplayername[]');
-                $clone.find('#selectEvenType').attr('name','eventype[]');
-                $clone.find('#timevent').attr('name','timevent[]');
-                $clone.find('#evteamidval').attr('name','evteamidval[]');
-                remove.show();
-                removeclone.show();
-                $('#editMatchForm')
-                    .formValidation('addField', $clone.find('[name="eventplayername[]"]'))
-                    .formValidation('addField', $clone.find('[name="eventype[]"]'))
-                    .formValidation('addField', $clone.find('[name="timevent[]"]'));
-                $('.no-events-wrap').hide();
-                loadpic.hide();
-                button.show();
-                $('.modal .modal-body-custom').getNiceScroll().resize();
-            }, 400);            
-        })
-        .off('click', '.add-walkover .add-link')
-        .on('click', '.add-walkover .add-link', function(){
-            $(this).attr('disabled', true);
-            $('.no-walkover-wrap').show()
-            $('.no-walkover img').hide();
-            $('.no-walkover .loadpic').show();
-            setTimeout(function() {
-            var $template = $('#addwalkoverTemplate'),
-                $clone = $template
-                    .clone()
-                    .removeClass('hide')
-                    .removeAttr('id')
-                    .insertBefore($template).hide().slideDown(500);
-                var remove = $(this).closest('.modresult-walkover').find('.walkover-team-remove');
-                var removeclone = $clone.find('.walkover-team-remove');    
-                $clone.find('.bootstrap-select').remove();
-                $clone.find('#selectWalkoverTeam').attr('name','walkoverteamname');
-                remove.show();
-                removeclone.show();
-                $('#editMatchForm')
-                    .formValidation('addField', $clone.find('[name="walkoverteamname"]'))
-                $('.no-walkover .loadpic').hide();
-                $('.no-walkover-wrap').hide();
-                $(".modresult-addevent").slideUp(500);
-                $(".modresult-addscore").slideUp(500);
-                $('.modal .modal-body-custom').getNiceScroll().resize();
-            }, 400);    
-        })
         .on('added.field.fv', function(e, data){
-            if(data.field === 'playername[]' || data.field === 'timevent[]' || data.field === 'time[]' || data.field === 'eventplayername[]' || data.field === 'eventype[]' || data.field === 'owngoal[]' || data.field === 'walkoverteamname'){
+            if(data.field === 'playername[]' || data.field === 'timevent[]' || data.field === 'time[]' || data.field === 'eventplayername[]' || data.field === 'eventype[]' || data.field === 'owngoal[]'){
                 data.element.selectpicker({
                     style: 'select-with-transition',
-                    iconBase: 'material-icons',
-                    tickIcon: 'done',
-                    dropupAuto: true,
-                    container: 'body',
-                    size: '6'
+                    iconBase: 'fa',
+                    tickIcon: 'fa-check',
+                    dropupAuto: false
                 })
                 .on('change', function(e){
                      $('#editMatchForm').formValidation('revalidateField', data.element);
                 });
             }
         })
+        .off('click', '.add-scorer .add-link')
+        .on('click', '.add-scorer .add-link', function(e){
+            console.log(e);
+            $('.no-scorers-wrap').hide();
+            $('.modal .modal-body-custom').getNiceScroll().resize();
+            var $template = $('#addresultTemplate'),
+            $clone = $template
+                .clone()
+                .removeClass('hide')
+                .removeAttr('id')
+                .insertBefore($template);
+            var remove = $(this).closest('.modresult-scorer').find('.player-remove');
+            var removeclone = $clone.find('.player-remove');
+            $clone.find('.bootstrap-select').remove();
+            $clone.find('#goalscore').attr('name','goalscore[]');
+            $clone.find('#selectPlayerName').attr('name','playername[]');
+            $clone.find('#owngoal').attr('name','owngoal[]');
+            $clone.find('#time').attr('name','time[]');
+            $clone.find('#teamidval').attr('name','teamidval[]');
+            remove.show();
+            removeclone.show();
+            $('#editMatchForm')
+                .formValidation('addField', $clone.find('[name="playername[]"]'))
+                .formValidation('addField', $clone.find('[name="owngoal[]"]'))
+                .formValidation('addField', $clone.find('[name="time[]"]'));
+        })
+        .off('click', '.add-event .add-link')
+        .on('click', '.add-event .add-link', function(){
+            $('.no-events-wrap').hide();
+            $('.modal .modal-body-custom').getNiceScroll().resize();
+            var $template = $('#addeventTemplate'),
+            $clone = $template
+                .clone()
+                .removeClass('hide')
+                .removeAttr('id')
+                .insertBefore($template);
+            var remove = $(this).closest('.modresult-event').find('.event-player-remove');
+            var removeclone = $clone.find('.event-player-remove');
+            $clone.find('.bootstrap-select').remove();
+            $clone.find('#eventscore').attr('name','eventscore[]');
+            $clone.find('#selectEventPlayerName').attr('name','eventplayername[]');
+            $clone.find('#selectEvenType').attr('name','eventype[]');
+            $clone.find('#timevent').attr('name','timevent[]');
+            $clone.find('#evteamidval').attr('name','evteamidval[]');
+            remove.show();
+            removeclone.show();
+            $('#editMatchForm')
+                .formValidation('addField', $clone.find('[name="eventplayername[]"]'))
+                .formValidation('addField', $clone.find('[name="eventype[]"]'))
+                .formValidation('addField', $clone.find('[name="timevent[]"]'));
+        })
         .off('click', '.player-remove')
         .on('click', '.player-remove', function(){
+            $(matchscore).hide();
+            $(loading).show();
+            $('.modal .modal-body-custom').getNiceScroll().resize();
             var scoreTeam1 = $('.home-score').attr('data-teamid');
             var scoreTeam2 = $('.away-score').attr('data-teamid');   
             var $row = $(this).closest('.scorer');
             var scorerbox = $('.modresult-addscore').find('.scorer');
             var target = $(this).closest('.scorer').find('input[data-team]');
-            var sum1 = 0;
-            var sum2 = 0;
-            $('input[data-team="'+scoreTeam1+'"]').not(target).each(function(){
-                sum1 += Number($(this).val());
-            });
-            homeScore.val(sum1);
-            $('input[data-team="'+scoreTeam2+'"]').not(target).each(function(){
-                sum2 += Number($(this).val());
-            });
-            awayScore.val(sum2);
+            if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
+            setTimeout(function() {
+                var sum1 = 0;
+                var sum2 = 0;
+                $('input[data-team="'+scoreTeam1+'"]').not(target).each(function(){
+                    sum1 += Number($(this).val());
+                });
+                homeScore.val(sum1);
+                $('input[data-team="'+scoreTeam2+'"]').not(target).each(function(){
+                    sum2 += Number($(this).val());
+                });
+                awayScore.val(sum2);
+                $(loading).hide();
+                $(matchscore).show();
+            }, 400);
             $('#editMatchForm')
                 .formValidation('removeField', $row.find('[name="playername[]"]'))
                 .formValidation('removeField', $row.find('[name="time[]"]'));
-            setTimeout(function() {
-                $row.animateCss('slideOutRight', function (obj) {
-                obj.remove();
-                if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
-            });
-                $('.modal .modal-body-custom').getNiceScroll().resize();
-            }, 400);
+            $row.remove();
         })
         .off('click', '.event-player-remove')
         .on('click', '.event-player-remove', function(){
             $('.modal .modal-body-custom').getNiceScroll().resize();
             var $row = $(this).closest('.event');
             var eventbox = $('.modresult-addevent').find('.event');
+            if(eventbox.length === 2){$('.no-events-wrap').show();}
             $('#editMatchForm')
                 .formValidation('removeField', $row.find('[name="eventplayername[]"]'))
                 .formValidation('removeField', $row.find('[name="timevent[]"]'));
-            setTimeout(function() {
-                $row.animateCss('slideOutRight', function (obj) {
-                obj.remove();
-                if(eventbox.length === 2){$('.no-events-wrap').show();}
-            });
-                $('.modal .modal-body-custom').getNiceScroll().resize();
-            }, 400);
-        })
-        .off('click', '.walkover-team-remove')
-        .on('click', '.walkover-team-remove', function(){
-            $('.add-walkover .add-link').attr('disabled', false);
-            var $row = $(this).closest('.walkover');
-            var scoreTeam1 = $('.home-score').attr('data-teamid');
-            var scoreTeam2 = $('.away-score').attr('data-teamid');   
-            var sum1 = 0;
-            var sum2 = 0;
-            $('input[data-team="'+scoreTeam1+'"]').each(function(){
-                sum1 += Number($(this).val());
-            });
-            homeScore.val(sum1);
-            $('input[data-team="'+scoreTeam2+'"]').each(function(){
-                sum2 += Number($(this).val());
-            });
-            awayScore.val(sum2);
-            $('#editMatchForm')
-                .formValidation('removeField', $row.find('[name="walkoverteamname"]'));
-            setTimeout(function() {
-                $row.remove();
-                $('.no-walkover-wrap').show();
-                $('.no-walkover-wrap img').show();
-                $(".modresult-addevent").slideDown(500);
-                $(".modresult-addscore").slideDown(500);
-                $('.modal .modal-body-custom').getNiceScroll().resize();
-            }, 800);
+            $row.remove();
         })
         .on('err.field.fv', function(e, data) {
             data.element
@@ -814,7 +703,7 @@ function editMatch(matchid){
                     }
                     $.each(datascorers, function(i, val){
                         div = '<div class="scorer">'+
-                                '<div class="scorer-container" style="background-color: #eee">'+
+                                '<div class="scorer-container" style="background-color: #E1F5FE">'+
                                     '<input id="goalscore" data-team="'+val.teamid+'" name="goalscore[]" type="hidden" value="1">'+
                                     '<div class="playername form-group">'+
                                         '<div class="icon"><i class="fa fa-male"></i></div>'+
@@ -861,7 +750,7 @@ function editMatch(matchid){
                     }
                     $.each(dataevents, function(i, val){
                         div = '<div class="event">'+
-                            '<div class="event-container" style="background-color: #eee">'+
+                            '<div class="event-container" style="background-color: #E1F5FE">'+
                                 '<div class="eventplayername form-group">'+
                                     '<div class="icon"><i class="fa fa-male"></i></div>'+
                                     '<div class="infoscorer">'+
@@ -910,21 +799,12 @@ function editMatch(matchid){
                 cancel: {
                     label: formButtonClose,
                     className: "btn-info",
-                     callback: function() {
-                        $('.bootstrap-select').removeClass('open');
-                        $('#editMatchForm').formValidation('revalidateField', 'playername[]');
-                        $('#editMatchForm').formValidation('revalidateField', 'time[]');
-                        $('#editMatchForm').formValidation('revalidateField', 'eventplayername[]');
-                        $('#editMatchForm').formValidation('revalidateField', 'timevent[]');
-                        $('#editMatchForm').formValidation('revalidateField', 'walkoverteamname');
-                    }
+                    callback: function(){}
                 }
             }
         }).on('shown.bs.modal', function(){
             $('#editMatchForm').show();
             $('#editMatchForm').formValidation();
-            $(".modresult-addevent").show();
-            $(".modresult-addscore").show();
             var scorer =  $('.modresult-scorer .scorer');
             if((scorer).is(':visible')){
                 $('.modresult-scorer .scorer').not('.scorer.hide').detach();
@@ -933,19 +813,22 @@ function editMatch(matchid){
             if((event).is(':visible')){
                 $('.modresult-event .event').not('.event.hide').detach();
             }
-            var walkover =  $('.modresult-walkover .walkover');
-            $(walkover).not('.walkover.hide').detach();
-            $('.add-walkover .add-link').attr('disabled', false);
-            $('.no-walkover-wrap').show();
-            $('.no-walkover-wrap img').show();
+            if($(window).width() < 750) {
+                $('.modal .modal-body-custom').css('overflow-y', 'hidden'); 
+                $('.modal .modal-body-custom').css('max-height', $(window).height() - 124);
+                $('.modal .modal-body-custom').css('height', $(window).height() - 124);
+            }
+            $(window).on('resize', function() {
+                if($(window).width() < 750) {
+                    $('.modal .modal-body-custom').css('overflow-y', 'hidden'); 
+                    $('.modal .modal-body-custom').css('max-height', $(window).height() - 124);
+                    $('.modal .modal-body-custom').css('height', $(window).height() - 124);
+                }
+            });
             $('.modal .modal-body-custom').niceScroll({
-                cursorwidth: '4px',
-                cursorborder: '0px',
-                cursorcolor: 'trasparent',
-                railalign: 'right'
+                cursorcolor: 'transparent'
             });  
         }).on('hide.bs.modal', function(e){
-            $('.selectscorer').selectpicker('hide');
             $('#editMatchForm').hide().appendTo('body');
         }).modal('show');
     }

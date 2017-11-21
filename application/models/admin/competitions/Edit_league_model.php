@@ -73,6 +73,16 @@ class Edit_league_model extends CI_Model{
         return $result;
     }
     
+    function optionteams($matchid){
+        $this->db->select('a.match_team1_id as teamid1, a.match_team2_id as teamid2, b1.team_name as team1, b2.team_name as team2');
+        $this->db->from('lex_matches as a');
+        $this->db->join('lex_teams as b1', 'a.match_team1_id = b1.team_id');
+        $this->db->join('lex_teams as b2', 'a.match_team2_id = b2.team_id');
+        $this->db->where('match_id', $matchid);
+        $show_teams = $this->db->get();  
+        return $show_teams->row();
+    }
+    
     function optionplayers($modmatchid){
         $sql='SELECT player_name, id, player_team_id, team_name FROM lex_players, lex_teams, lex_matches
               WHERE player_team_id = team_id AND match_team1_id = team_id AND match_id = '.$modmatchid.'
@@ -91,13 +101,13 @@ class Edit_league_model extends CI_Model{
         return $show_events->result_array();
     }
     
-    function updatescore($matchid, $score1, $score2, $data, $data2, $playerid, $evplayerid){
+    function updatescore($matchid, $score1, $score2, $data, $data2, $playerid, $evplayerid, $walkover){
         $this->db->set('match_score1', $score1);
         $this->db->set('match_score2', $score2);
         $this->db->set('match_status', '1');
         $this->db->where('match_id', $matchid);       
         $this->db->update('lex_matches');
-        if($playerid[0]){
+       if(($playerid[0])&&(empty($walkover))){
             $this ->db-> where('scorer_match_id', $matchid);        
             $this->db->delete('lex_matchscorer');    
             $this->db->insert_batch('lex_matchscorer', $data);
@@ -105,7 +115,7 @@ class Edit_league_model extends CI_Model{
             $this ->db-> where('scorer_match_id', $matchid);        
             $this->db->delete('lex_matchscorer');        
         }        
-        if($evplayerid[0]){
+        if(($evplayerid[0])&&(empty($walkover))){
             $this ->db-> where('event_match_id', $matchid);    
             $this->db->delete('lex_matchevents');        
             $this->db->insert_batch('lex_matchevents', $data2);
@@ -161,5 +171,5 @@ class Edit_league_model extends CI_Model{
         } else {
             return TRUE;
         }
-    }   
+    }
 }

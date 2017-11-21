@@ -46,7 +46,7 @@ class Edit_league extends CI_Controller {
         ->join('lex_teams as b1', 'a.match_team1_id = b1.team_id')
         ->join('lex_teams as b2', 'a.match_team2_id = b2.team_id')
         ->where('d.competition_id', $id) 
-        ->add_column('score', '<a href="javascript:editMatch($3)"><strong>$1 - $2</strong></a>','match_score1, match_score2, match_id');
+        ->add_column('score', '$1','check_match_score(match_score1, match_score1, match_score2, match_id, match_team1_id)' );
          echo $this->datatables->generate();
     }
     
@@ -127,6 +127,17 @@ class Edit_league extends CI_Controller {
         echo json_encode($response);
     }
     
+    public function loadteams(){
+        $matchid = $this->input->post('match_id');
+        $row = $this->edit_league_model->optionteams($matchid); 
+        $teamsList[] = ['value' => $row->teamid1, 'text' => $row->team1]; 
+        $teamsList[] = ['value' => $row->teamid2, 'text' => $row->team2]; 
+        header('Content-Type: application/json');
+        echo json_encode($teamsList);
+    }
+
+    
+    
     public function loadplayers(){
         $modmatchid = $this->input->post('match_id');
         $show_players = $this->edit_league_model->optionplayers($modmatchid);
@@ -178,7 +189,8 @@ class Edit_league extends CI_Controller {
         $evtime = $this->input->post('timevent'); 
         $evtype = $this->input->post('eventype');
         $owngoal = $this->input->post('owngoal');
-        if($playerid[0]){
+        $walkover = $this->input->post('walkoverteamname');
+        if(($playerid[0])&&(empty($walkover))){
         foreach($playerid as $i=>$val){
             $data[] = array(           
                 'scorer_player_id' => $playerid[$i],          
@@ -192,7 +204,7 @@ class Edit_league extends CI_Controller {
             );
         }
         }else{$data='';}
-        if($evplayerid[0]){    
+        if(($evplayerid[0])&&(empty($walkover))){    
         foreach($evplayerid as $i=>$val){
             $data2[] = array(
                 'event_type_id' => $evtype[$i],
@@ -206,7 +218,7 @@ class Edit_league extends CI_Controller {
         }
         }else{$data2='';}
         
-        $getscore = $this->edit_league_model->updatescore($matchid, $score1, $score2, $data, $data2, $playerid, $evplayerid);
+        $getscore = $this->edit_league_model->updatescore($matchid, $score1, $score2, $data, $data2, $playerid, $evplayerid, $walkover);
         
         foreach($getscore as $val){
             $showscore = array(
@@ -288,17 +300,17 @@ class Edit_league extends CI_Controller {
         $id = $this->input->post('pk');  
         $leaguename = $this->input->post('value');
         if($this->edit_league_model->update_league($id, $leaguename)){        
-            } else {
+        } else {
             echo 'failed';
-            }
         }
+    }
         
     public function update_status(){              
         $id = $this->input->post('id');  
         $activeleague = $this->input->post('activeleague');
         if($this->edit_league_model->update_status($id, $activeleague)){        
-            } else {
+        } else {
             echo 'failed';
-            }
-        }   
+        }
+    }
 }

@@ -35,7 +35,7 @@
                             </div>
                             <div class="info-wrap">    
                                 <div class="competition-name">
-                                    <a href="#" id="competitionName" data-name="competitioname" data-type="text" data-pk="<?php echo $leagueid->competition_id;?>" data-url="<?php echo site_url("admin/competitions/edit_league/update_league");?>" data-title="Enter league name"><?php echo $leagueid->competition_name;?> <i class="material-icons mode_edit"></i></a>
+                                    <a href="#" id="competitionName" data-name="competitioname" data-type="text" data-pk="<?php echo $leagueid->competition_id;?>" data-url="<?php echo site_url("admin/competitions/edit_league/update_league");?>" data-title="<?php echo lang('admin_eleague_popup_competition_name');?>"><?php echo $leagueid->competition_name;?> <i class="material-icons mode_edit"></i></a>
                                 </div>
                                 <div class="info-list">
                                     <ul class="col-1">

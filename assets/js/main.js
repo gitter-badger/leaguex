@@ -24,8 +24,15 @@ if($('.float-button').length){
     });
 }
 
-/* Hide - Show header when user scroll  */
+/* Set body height */
+function bodyHeight(){
+    $(window).on('resize', function(){
+        var h = $(window).height();
+        $("body").css({'min-height' : h+'px', 'bottom' : 'auto', 'right' : 'auto', 'width' : 'auto', 'height' : '100%'});
+    }).resize();
+}
 
+/* Hide - Show header when user scroll  */
 function hideHeader(){
     var windowSize = $(window).width();
     var didScroll;
@@ -173,13 +180,8 @@ function selectPick() {
             tickIcon: 'done',
             dropupAuto: true
         });
-        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-            $('.selectpicker').selectpicker('mobile');
-        }
     }
 }
-
-
 /* Navbar tabs */
 function pullHeaderBottom(){
     if($('.nav-tabs-bar').length){
@@ -212,7 +214,7 @@ function tabsLink() {
             window.location.hash = e.target.hash.replace("#", "#" + prefix);
         });
     }
-/* Window resize */
+//* Window resize */
 function checkWidth() {
     $(window).on('resize', function() {
         if($(window).width() > 750) {
@@ -221,7 +223,6 @@ function checkWidth() {
         }
     });
 }
-
 /* Sidebar left nicescroll */
 function sidebarLeftScroll() {
     var heightSidebarLeft = $(window).outerHeight();
@@ -263,7 +264,7 @@ function sidebarMenu() {
         if($('html').hasClass('notification-sidebar-opened')){
             $('html').removeClass('notification-sidebar-opened');
         }
-        ($(window).width() > 750) ? $('html').toggleClass('sidebar-opened'): $('html').toggleClass('sidebar-mb-opened');
+        ($(window).width() > 750) ? $('html').toggleClass('full-size'): $('html').toggleClass('sidebar-mb-opened');
     });
 }
 function sidebarChat() {
@@ -410,9 +411,10 @@ function imageUpload() {
 $(document).ready(function(){
     $.material.options.autofill = true;
     $.material.init();
+    bodyHeight();
     showLoading();
-    selectPick();
     checkWidth();
+    selectPick();
     pullHeaderBottom();
     tabsTransition();
     tabsLink();

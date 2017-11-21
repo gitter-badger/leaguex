@@ -13,7 +13,7 @@
                         <span class="modresult-team-logo"><img class="team-logo-25" id="logo-one" src=""></span>
                     </span>
                 </div>
-                <div class="modresult-match-score"><div class="loadpic"><i class="fa fa-circle-o-notch fa-spin"></i></div><span><input type="text" size="1" value="0" class="home-score" name="home-score" data-teamid=""> - <input type="text" size="1" value="0" class="away-score" name="away-score" data-teamid=""></span></div>
+                <div class="modresult-match-score"><span><input type="text" size="1" value="0" class="home-score" name="home-score" data-teamid=""> - <input type="text" size="1" value="0" class="away-score" name="away-score" data-teamid=""></span></div>
                 <div class="modresult-team-two">
                     <span class="modresult-logo-container">
                         <span class="modresult-team-logo"><img class="team-logo-25" id="logo-two" src=""></span>
@@ -30,11 +30,11 @@
                 <div class="modresult-addscore">
                     <div class="add-scorer">
                         <div class="scorer-title m-r-a"><?php echo lang('addresult_title_goal_scorers');?></div>
-                        <div class="add-link btn btn-fab btn-fab-mini no-shadow no-color-bg"><i class="material-icons">add_circle</i></div>
+                        <button type="button" class="add-link btn btn-fab btn-fab-mini no-shadow no-color-bg" id="morescorer"><i class="fa fa-refresh fa-spin" style="display: none"></i><i class="material-icons">add_circle</i></button>
                     </div>
                     <div class="no-scorers-wrap">
-                        <div class="no-scorers-container">
-                            <div class="no-scorers"> <img src="<?= base_url().'assets/img/no-scorer.png'?>"></div>
+                        <div class="no-scorers-container animated fadeIn">
+                            <div class="no-scorers"><img src="<?= base_url().'assets/img/no-scorer.png'?>" width="55px"></div>
                         </div>
                     </div>
                     <div class="modresult-scorer">
@@ -68,11 +68,11 @@
                 <div class="modresult-addevent">
                     <div class="add-event">
                         <div class="event-title m-r-a"><?php echo lang('addresult_title_events');?></div>
-                        <div class="add-link btn btn-fab btn-fab-mini no-shadow no-color-bg"><i class="material-icons">add_circle</i></div>
+                        <button type="button" class="add-link btn btn-fab btn-fab-mini no-shadow no-color-bg" id="morevents"><i class="fa fa-refresh fa-spin" style="display: none"></i><i class="material-icons">add_circle</i></button>
                     </div>
                      <div class="no-events-wrap">
-                        <div class="no-events-container">
-                            <div class="no-event"> <img src="<?= base_url().'assets/img/no-events.png'?>"></div>
+                        <div class="no-events-container animated fadeIn">
+                            <div class="no-events"><img src="<?= base_url().'assets/img/no-events.png'?>" width="50px"></div>
                         </div>
                     </div>
                     <div class="modresult-event">
@@ -97,6 +97,30 @@
                         </div>
                     </div>
                     <div class="assignedresult-event"></div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="modresult-addwalkover">
+                    <div class="add-walkover">
+                        <div class="walkover-title m-r-a"><?php echo lang('addresult_title_walkover');?></div>
+                        <button type="button" class="add-link btn btn-fab btn-fab-mini no-shadow no-color-bg" id="morewalkover"><i class="material-icons">add_circle</i></button>
+                    </div>
+                     <div class="no-walkover-wrap">
+                        <div class="no-walkover-container animated fadeIn">
+                            <div class="no-walkover"><div class="loadpic"><i class="fa fa-refresh fa-spin" style="font-size: 55px"></i></div><img src="<?= base_url().'assets/img/no-walkover.png'?>" width="55px"></div>
+                        </div>
+                    </div>
+                    <div class="modresult-walkover">
+                        <div class="walkover hide" id="addwalkoverTemplate">
+                            <div class="walkover-container">
+                                <div class="walkoverteamname form-group">
+                                    <div class="icon"><i class="fa fa-shield"></i></div>
+                                    <select class="selectpicker show-tick selectwalkover custom-dropdown" id="selectWalkoverTeam" data-size="auto" data-width="fit" title="<?php echo lang('select_default');?>"></select>
+                                </div>
+                                <div class="walkover-team-remove withripple"><i class="material-icons">clear</i></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

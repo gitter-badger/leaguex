@@ -259,6 +259,7 @@ $lang['match_day_info'] = "Match sheet";
 // ADD RESULT VIEW
 $lang['addresult_title_goal_scorers'] = "Goal Scorers";
 $lang['addresult_title_events'] = "Events";
+$lang['addresult_title_walkover'] = "Walkover"; //admin side
 $lang['addresult_option_goal'] = "Goal";
 $lang['addresult_option_own_goal'] = "Own goal";
 
@@ -375,7 +376,9 @@ $lang['admin_eleague_info_matchday'] = "Matchday";
 $lang['admin_eleague_info_matches'] = "Matches";
 $lang['admin_eleague_info_played'] = "Played";
 $lang['admin_eleague_info_unplayed'] = "Unplayed";
-$lang['admin_eleague_info_activate_league'] = "Activate League";
+$lang['admin_eleague_info_activate_league'] = "Activate league";
+$lang['admin_eleague_popup_competition_name'] = "Edit name";
+$lang['admin_eleague_popup_walkover'] = "Walkover";
 
 // USERS LIST
 $lang['admin_ulist_header_title'] = "Users";

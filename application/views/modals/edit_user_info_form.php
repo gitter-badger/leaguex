@@ -8,23 +8,23 @@
         </div>
     </div>
     <div class="modal-body-custom">
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_skype');?></label>
             <input type="text" class="form-control" id="editInputSkype" name="skype" maxlength="50"> 
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_xbox');?></label>
             <input type="text" class="form-control" id="editInputXbox" name="xbox" maxlength="50"> 
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_psn');?></label>
             <input type="text" class="form-control" id="editInputPsn" name="psn" maxlength="50"> 
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_favorite_club');?></label>
             <input type="text" class="form-control" id="editInputfavoriteclub" name="favoriteclub" maxlength="50"> 
         </div>
-        <div class="form-group empty label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_about_me');?></label>
             <textarea type="textarea" class="form-control" id="editInputAboutMe" name="aboutme"></textarea> 
         </div>

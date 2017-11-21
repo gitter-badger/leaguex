@@ -31,11 +31,11 @@
                 <div class="modresult-addscore">
                     <div class="add-scorer">
                         <div class="scorer-title m-r-a"><?php echo lang('addresult_title_goal_scorers');?></div>
-                        <div class="add-link btn btn-fab btn-fab-mini no-shadow no-color-bg"><i class="material-icons">add_circle</i></div>
+                        <button type="button" class="add-link btn btn-fab btn-fab-mini no-shadow no-color-bg"><i class="fa fa-refresh fa-spin" style="display: none"></i><i class="material-icons">add_circle</i></button>
                     </div>
                     <div class="no-scorers-wrap">
-                        <div class="no-scorers-container">
-                            <div class="no-scorers"> <img src="<?= base_url().'assets/img/no-scorer.png'?>"></div>
+                        <div class="no-scorers-container animated fadeIn">
+                            <div class="no-scorers"><img src="<?= base_url().'assets/img/no-scorer.png'?>" width="55px"></div>
                         </div>
                     </div>
                     <div class="modresult-scorer">
@@ -45,7 +45,7 @@
                                 <div class="playername form-group">
                                     <div class="icon"><i class="fa fa-male"></i></div>
                                     <select class="selectpicker show-tick selectscorer custom-dropdown" id="selectPlayerName" data-size="auto" data-width="fit" title="<?php echo lang('select_default');?>"></select>
-                                    <input type="hidden" id="teamidval" value="">
+                                    <input type="hidden" name="teamidval[]" id="teamidval" value="">
                                     <div class="owngoal">
                                     <div class="icon"><i class="fa fa-soccer-ball-o"></i></div>    
                                     <select class="selectpicker selectowngoal custom-dropdown" id="owngoal" data-size="auto" data-width="fit">
@@ -56,7 +56,7 @@
                                 </div>
                                 <div class="timescore form-group">
                                     <div class="timelabel">Min</div>
-                                    <input class="form-control" id="time" type="text" maxlength="3" value=""/>
+                                    <input class="form-control" name="time[]" id="time" type="text" maxlength="3" value=""/>
                                 </div>
                                 <div class="player-remove withripple"><i class="material-icons">clear</i></div>
                             </div>
@@ -68,11 +68,11 @@
                 <div class="modresult-addevent">
                     <div class="add-event">
                         <div class="event-title m-r-a"><?php echo lang('addresult_title_events');?></div>
-                        <div class="add-link btn btn-fab btn-fab-mini no-shadow no-color-bg"><i class="material-icons">add_circle</i></div>
+                        <button type="button" class="add-link btn btn-fab btn-fab-mini no-shadow no-color-bg"><i class="fa fa-refresh fa-spin" style="display: none"></i><i class="material-icons">add_circle</i></button>
                     </div>
                     <div class="no-events-wrap">
-                        <div class="no-events-container">
-                            <div class="no-event"> <img src="<?= base_url().'assets/img/no-events.png'?>"></div>
+                        <div class="no-events-container animated fadeIn">
+                            <div class="no-event"> <img src="<?= base_url().'assets/img/no-events.png'?>" width="50px"></div>
                         </div>
                     </div>
                     <div class="modresult-event">

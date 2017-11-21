@@ -231,8 +231,14 @@ function load_widgetnote(userid,limit){
             if(response.success){
                 morenote = response.morenote;
                 $('.notification-body').html('');
-                
                 ntf = response.ntf;                
+                if(!ntf.length){                           
+                    $('.notification-body-wrap').hide();
+                    $('.notification-footer').hide();
+                }else{
+                    $('.notification-body-wrap').show();
+                    $('.notification-footer').show();
+                }
                 $.each(ntf, function(){
                     var objectType = ''; 
                     if(this.permissions == 4){

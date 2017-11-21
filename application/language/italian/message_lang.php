@@ -257,6 +257,7 @@ $lang['match_day_info'] = "Dettaglio partita";
 // ADD RESULT VIEW
 $lang['addresult_title_goal_scorers'] = "Marcatori";
 $lang['addresult_title_events'] = "Eventi";
+$lang['addresult_title_walkover'] = "Vittoria a tavolino"; //admin side
 $lang['addresult_option_goal'] = "Goal";
 $lang['addresult_option_own_goal'] = "Autogoal";
 
@@ -374,7 +375,9 @@ $lang['admin_eleague_info_matchday'] = "Giornate";
 $lang['admin_eleague_info_matches'] = "Incontri";
 $lang['admin_eleague_info_played'] = "Giocate";
 $lang['admin_eleague_info_unplayed'] = "Da Giocare";
-$lang['admin_eleague_info_activate_league'] = "Attiva Torneo";
+$lang['admin_eleague_info_activate_league'] = "Attiva torneo";
+$lang['admin_eleague_popup_competition_name'] = "Modifica nome";
+$lang['admin_eleague_popup_walkover'] = "Vittoria a tavolino";
 
 //USERS LIST
 $lang['admin_ulist_header_title'] = "Utenti";

@@ -53,5 +53,6 @@
     var leagueMatchdayTitle = '<?php echo lang('league_matchday_title');?>';
     var formButtonSave = '<?php echo lang('form_button_save');?>';
     var formButtonClose = '<?php echo lang('form_button_close');?>';
+    var popupWalkover = '<?php echo lang('admin_eleague_popup_walkover');?>';
 </script>
 
