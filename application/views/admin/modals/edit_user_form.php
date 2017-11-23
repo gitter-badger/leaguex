@@ -8,24 +8,24 @@
         </div>
     </div>
     <div class="modal-body-custom">
-        <div class="form-group label-floating">
+        <div class="form-group">
              <label class="control-label"><?php echo lang('admin_ulist_modal_label_username');?></label>
             <input type="text" class="form-control" id="editInputUsername" name="username"> 
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('admin_ulist_modal_label_email');?></label>
             <input type="text" class="form-control" id="editInputEmail" name="email"> 
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('admin_ulist_modal_label_permission');?></label>
             <select class="show-tick selectpicker" id="editSelectPermission" name="permission" data-width="100%"></select> 
         </div>
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('admin_ulist_modal_label_password');?></label>
             <input type="password" class="form-control" id="editInputPassword" name="newpassword" autocomplete="new-password">
             <input type="hidden" class="form-control" id="hiddenPassword" name="password">
         </div> 
-        <div class="form-group label-floating">
+        <div class="form-group">
             <label class="control-label"><?php echo lang('admin_ulist_modal_label_birthday');?></label>
             <input type="text" class="form-control format" id="editInputBirthday" name="birthday" autocomplete="off">
         </div>

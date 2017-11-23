@@ -248,6 +248,9 @@ label.checkbox-inline .checkbox-material .check {
     padding-bottom: 10px;
     margin: 18px 0 0 0;
 }
+.modal .form-group:first-child{
+    margin: 0;
+}
 .form-group .rating-symbol {
     padding-bottom: 10px;
     font-size: 24px;
@@ -711,11 +714,10 @@ label.checkbox-inline .checkbox-material .check {
     display: flex;
 }
 .modal-body-custom {
-    padding: 8px 24px 28px 24px;
+    padding: 24px;
 }
 .bootbox-matchplay .modal-body-custom {
     padding-top: 8px;
-    overflow-x: hidden;
     overflow-y: auto;
     height: calc(80vh - 70px*2);
     background-color: #f1f1f1;
@@ -1761,9 +1763,6 @@ div.dataTables_wrapper div.dataTables_length label {
 .dataTables_length .select-with-transition,
 .dataTables_length .btn-group.bootstrap-select.show-tick.open .select-with-transition {
     background-image: none !important;
-}
-div.dataTables_wrapper div.dataTables_filter {
-    text-align: right !important;
 }
 .table thead>tr>th,
 .table tfoot>tr>th {

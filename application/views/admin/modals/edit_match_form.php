@@ -34,7 +34,7 @@
                     </div>
                     <div class="no-scorers-wrap">
                         <div class="no-scorers-container animated fadeIn">
-                            <div class="no-scorers"><img src="<?= base_url().'assets/img/no-scorer.png'?>" width="55px"></div>
+                            <div class="no-scorers"><img src="<?= base_url().'assets/img/no-scorer.png'?>" width="50px"></div>
                         </div>
                     </div>
                     <div class="modresult-scorer">
@@ -72,7 +72,7 @@
                     </div>
                      <div class="no-events-wrap">
                         <div class="no-events-container animated fadeIn">
-                            <div class="no-events"><img src="<?= base_url().'assets/img/no-events.png'?>" width="50px"></div>
+                            <div class="no-events"><img src="<?= base_url().'assets/img/no-events.png'?>" width="45px"></div>
                         </div>
                     </div>
                     <div class="modresult-event">
@@ -107,7 +107,7 @@
                     </div>
                      <div class="no-walkover-wrap">
                         <div class="no-walkover-container animated fadeIn">
-                            <div class="no-walkover"><div class="loadpic"><i class="fa fa-refresh fa-spin" style="font-size: 55px"></i></div><img src="<?= base_url().'assets/img/no-walkover.png'?>" width="55px"></div>
+                            <div class="no-walkover"><div class="loadpic"><i class="fa fa-refresh fa-spin" style="font-size: 50px"></i></div><img src="<?= base_url().'assets/img/no-walkover.png'?>" width="50px"></div>
                         </div>
                     </div>
                     <div class="modresult-walkover">

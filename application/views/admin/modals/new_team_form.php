@@ -7,11 +7,9 @@
         </div>
     </div>
     <div class="modal-body-custom">
-        <div class="input-group">
-            <span class="input-group-addon"><i class="material-icons">security</i></span>
-            <div class="form-group">
-                <input type="text" class="form-control" id="inputTeamname" name="teamname" placeholder="<?php echo lang('admin_tlist_input_teamname');?>">                                                        
-            </div>
+        <div class="form-group">
+            <label class="control-label"><?php echo lang('admin_tlist_input_teamname');?></label>
+            <input type="text" class="form-control" id="inputTeamname" name="teamname">                                                        
         </div>
         <div class="input-group">
             <span class="input-group-addon rating-remove"><i class="material-icons">clear</i></span>

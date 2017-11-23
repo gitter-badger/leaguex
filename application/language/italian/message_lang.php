@@ -397,7 +397,7 @@ $lang['admin_ulist_modal_label_password'] = "Password";
 $lang['admin_ulist_modal_label_birthday'] = "Data di nascit&#224;";
 
 // TEAMS LIST
-$lang['admin_tlist_input_teamname'] = "Nome";
+$lang['admin_tlist_input_teamname'] = "Nome squadra";
 $lang['admin_tlist_alert_message_team_delete'] = "Sei sicuro di voler rimuovere questa squadra?";
 $lang['admin_tlist_toastr_message_team_add'] = "Nuova squadra creata.";
 $lang['admin_tlist_toastr_message_team_delete'] = "Squadra rimossa.";
