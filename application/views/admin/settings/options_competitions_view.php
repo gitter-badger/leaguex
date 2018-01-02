@@ -16,95 +16,53 @@
         <div class="row">
             <div class="col-md-12 animsition">
                 <div class="panel">
-                     <form action="<?php echo site_url("admin/settings/options_competitions/update_competitions_options");?>" method="post" role="form" name="updatecompetitionsOptions" id="updatecompetitionsOptions" autocomplete="off" class="form-horizontal fv-form fv-form-bootstrap">
+                    <form action="<?php echo site_url("admin/settings/options_competitions/update_events_options");?>" method="post" role="form" name="updateEventsOptions" id="updateEventsOptions" autocomplete="off" class="form-horizontal fv-form fv-form-bootstrap">
                         <header class="panel-heading">
-                            <h2><?php echo lang('admin_ocompetitions_title_players_levels');?></h2>
-                            <span class="panel-heading-desc"><?php echo lang('admin_ocompetitions_description_players_levels');?></span>                            
+                            <h2><?php echo lang('admin_ocompetitions_title_events');?></h2>
+                            <span class="panel-heading-desc"><?php echo lang('admin_ocompetitions_description_events');?></span>
                         </header>
-                         <div class="panel-body pad-t-0">
-                            <div class="form-group">                                
-                                <label class="col-sm-3 control-label"><?php echo lang('admin_ocompetitions_activate_levels');?>:</label>
-                                <div class="col-sm-6">     
-                                    <div class="radio radio-inline">
-                                        <label>
-                                            <input type="radio" id="players-levels" name="playersLevels" value="1" <?php if ($option->players_levels == 1){echo "CHECKED";} ?>>
-                                            <?php echo lang('admin_ogeneral_option_yes');?>
-                                        </label>
-                                    </div>
-                                    <div class="radio radio-inline">
-                                        <label>
-                                            <input type="radio" id="players-levels" name="playersLevels" value="0" <?php if ($option->players_levels == 0){echo "CHECKED";} ?>>
-                                            <?php echo lang('admin_ogeneral_option_no');?>
-                                        </label>
-                                    </div>
-                                </div>                               
-                            </div>   
+                        <div class="panel-body pad-t-0">
+                            <?php $count = 0; $count++; foreach ($getevents as $events):?>
                             <div class="form-group">
-                                 <label class="col-sm-3 control-label"><?php echo lang('admin_ocompetitions_input_levels');?>:</label>
-                                 <div class="col-sm-8">
-                                    <?php $levmin = explode(",", $option->level_min);
-                                          $levmax = explode(",", $option->level_max);
-                                          $maxplayers = explode(",", $option->level_max_players);
-                                    ?>
-                                    <div class="form-group">
-                                        <div class="col-xs-3">
-                                            <input type="text" class="form-control" id="ova" name="levMin[]" placeholder="Min" value="<?php echo $levmin[0];?>" maxlength="2">
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <input type="text" class="form-control" id="ova" name="levMax[]" placeholder="Max" value="<?php echo $levmax[0];?>" maxlength="2">
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <input type="text" class="form-control" id="ova" name="maxPlayers[]" placeholder="<?php echo lang('admin_ocompetitions_input_placeholder_max_players');?>" value="<?php echo $maxplayers[0];?>" maxlength="2">
-                                        </div>
-                                        <div class="col-xs-1">
-                                            <button type="button" class="btn btn-fab btn-fab-custom no-shadow no-color-bg addButton"><i class="material-icons">add</i></button>
-                                        </div>                                       
-                                    </div>
-                                    <?php $nextmin = array_slice($levmin, 1);
-                                          $nextmax = array_slice($levmax, 1);
-                                          $nextmaxplayers = array_slice($maxplayers, 1);                                           
-                                          foreach ($nextmin as $index => $levmin){
-                                          $levmax = $nextmax[$index];
-                                          $maxplayers = $nextmaxplayers[$index];
-                                    ?>
-                                    <div class="form-group <?php if(!$nextmin){ echo 'hide'; } ?>">                                        
-                                        <div class="col-xs-3">
-                                            <input type="text" class="form-control" id="ova" name="levMin[]" placeholder="Min" value="<?php echo $levmin;?>" maxlength="2">
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <input type="text" class="form-control" id="ova" name="levMax[]" placeholder="Max" value="<?php echo $levmax;?>" maxlength="2">
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <input type="text" class="form-control" id="ova" name="maxPlayers[]" placeholder="<?php echo lang('admin_ocompetitions_input_placeholder_max_players');?>" value="<?php echo $maxplayers;?>" maxlength="2">
-                                        </div>
-                                        <div class="col-xs-1">
-                                            <button type="button" class="btn btn-fab btn-fab-custom no-shadow no-color-bg removeButton"><i class="material-icons">remove</i></button>
-                                        </div>                                      
-                                    </div> 
-                                    <?php } ?>        
-                                    <div class="form-group hide" id="optionTemplate">                                        
-                                        <div class="col-xs-3">
-                                            <input type="text" class="form-control" id="ova" name="levMin[]" placeholder="Min" value="" maxlength="2">
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <input type="text" class="form-control" id="ova" name="levMax[]" placeholder="Max" value="" maxlength="2">
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <input type="text" class="form-control" id="ova" name="maxPlayers[]" placeholder="<?php echo lang('admin_ocompetitions_input_placeholder_max_players');?>" value="" maxlength="2">
-                                        </div>
-                                        <div class="col-xs-1">
-                                            <button type="button" class="btn btn-fab btn-fab-custom no-shadow no-color-bg removeButton removeButton"><i class="material-icons">remove</i></button>
-                                        </div>                                        
-                                    </div>
+                                <label class="col-md-2 control-label"><?php echo lang('admin_ocompetitions_input_events');?></label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control icon-clear pad-r-15" id="eventName" name="eventName[]" placeholder="<?php echo lang('admin_ocompetitions_input_placeholder_event_name');?>" value="<?php echo $events->event_desc;?>">
+                                    <span id="iconclear" class="fa fa-times-circle"></span>
+                                </div>
+                                <div class="col-md-6 input-group">
+                                    <input type="text" id="inputFile" name="eventImage[]" class="form-control" data-url="<?php echo site_url("admin/settings/options_competitions/upload_handler");?>" placeholder="<?php echo lang('admin_ocompetitions_input_placeholder_event_image');?>" readonly value="<?php echo $events->event_icon;?>">
+                                    <span class="input-group-btn">
+                                        <button type="button" id="uploadFile_<?php echo $count ?>" onMouseOver="fileUpload(<?php echo $count ?>);" class="btn btn-fab btn-fab-custom no-shadow no-color-bg uploadFile"><i class="material-icons">image</i></button>
+                                    </span>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-fab btn-fab-custom no-shadow no-color-bg <?php if($count > 1){echo 'removeButton';}else{echo 'addButton';}?>"><i class="material-icons"><?php if($count++ > 1){echo 'remove';}else{echo 'add';}?></i></button>
+                                    </span>
                                 </div>
                             </div>
-                            <div class="form-group">                                                                       
-                                <div class="col-sm-6 col-sm-offset-3">                                                             
+                            <?php endforeach;?> 
+                            <div class="form-group hide" id="optionTemplate">
+                                <label class="col-md-2 control-label"><?php echo lang('admin_ocompetitions_input_events');?></label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control pad-r-15" id="eventName" placeholder="<?php echo lang('admin_ocompetitions_input_placeholder_event_name');?>" value="">
+                                    <span id="iconclear" class="fa fa-times-circle"></span>
+                                </div>
+                                <div class="col-md-6 input-group">
+                                    <input type="text" id="inputFile" class="form-control" data-url="<?php echo site_url("admin/settings/options_competitions/upload_handler");?>" readonly placeholder="<?php echo lang('admin_ocompetitions_input_placeholder_event_image');?>" value="">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-fab btn-fab-custom no-shadow no-color-bg uploadFile"><i class="material-icons">image</i></button>
+                                    </span>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-fab btn-fab-custom no-shadow no-color-bg removeButton"><i class="material-icons">remove</i></button>
+                                    </span> 
+                                </div>
+                            </div>
+                             <div class="form-group">                                                                       
+                                <div class="col-md-10 col-md-offset-2">                                                             
                                     <button type="submit" class="btn btn-danger btn-raised" id="btnUpdateForm"><span><?php echo lang('form_button_save_changes');?></span></button>
                                 </div>
                             </div>  
-                        </div>
-                    </form>
+                        </div> 
+                    </form> 
                 </div>
             </div> 
         </div>

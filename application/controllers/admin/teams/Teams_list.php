@@ -78,7 +78,8 @@ class Teams_list extends CI_Controller {
         $teamid = $this->input->post('teamid');
         $data = array(            
             'team_name' => $this->input->post('teamname'),                       
-            'team_level' => $this->input->post('teamlevel'),                         
+            'team_level' => $this->input->post('teamlevel'), 
+            'team_logo' => $this->input->post('img-ghost'),           
         );       
         $this->teams_list_model->edit_team($teamid, $data);
         $get_teams = $this->teams_list_model->select_team($teamid);
@@ -129,63 +130,61 @@ class Teams_list extends CI_Controller {
         }               
     }
     
-     public function upload_handler(){
-            if (!empty($_FILES['userfile']['name'])) { 
-            $this->db->select('logo_size_maxwidth, logo_size_maxheight, logo_size_minwidth, logo_size_minheight');
-            $query = $this->db->get('lex_settings');
-            foreach ($query->result() as $row){
-                $maxWidth = $row->logo_size_maxwidth;
-                $maxHeight = $row->logo_size_maxheight;
-                $minWidth = $row->logo_size_minwidth;
-                $minHeight = $row->logo_size_minheight;
-            }        
-            $json = array();           
-            list($width, $height) = getimagesize($_FILES['userfile']['tmp_name']);           
-            $max_width = $maxWidth;  
-            $max_height = $maxHeight;
-            $min_width = $minWidth;
-            $min_height = $minHeight;
-            $dimension_error='';     
-            if($width > $max_width ){  
-                  $dimension_error = sprintf($this->lang->line('alert_image_max_width'),$max_width);  
-              }  
-              if($height > $max_height ){  
-                  $dimension_error = sprintf($this->lang->line('alert_image_max_height'),$max_height);  
-              }  
-              if($width > $max_width && $height > $max_height){  
-                  $dimension_error = sprintf($this->lang->line('alert_image_max_width_height'),$max_width,$max_height);  
-              }
-              if($width < $min_width ){  
-                  $dimension_error = sprintf($this->lang->line('alert_image_min_width'),$min_width);  
-              }  
-              if($height < $min_height ){  
-                  $dimension_error = sprintf($this->lang->line('alert_image_min_height'),$min_height);  
-              }  
-              if($width < $min_width && $height < $min_height){  
-                  $dimension_error = sprintf($this->lang->line('alert_image_min_width_height'),$min_width,$min_height);  
-              }              
-              if($dimension_error != ''){  
-                  $json['error'] = $dimension_error;  
-              }  
-          } else {  
-            $json['error'] = 'Upload Failed';  
-        }  
-           
-            if (!$json) {
-            $idteam = $this->input->post('key');
-            $filename = ($_FILES['userfile']['name']);            
-            $extension = pathinfo($filename, PATHINFO_EXTENSION);
-            $imgname = sha1($filename).'.'.$extension;
-            if (move_uploaded_file($_FILES['userfile']['tmp_name'], './assets/img/teams_logo/'.$imgname)){
-                $this->teams_list_model->update_logo($idteam,$imgname);  
-                $json['photo_file'] = $imgname;               
-            } 
-             $json['success'] = 'Successfuly uploaded';  
-            }
-            //add the header here
-                    header('Content-Type: application/json');
-                    echo json_encode( $json );
-           
+    public function upload_handler(){
+        if (!empty($_FILES['userfile']['name'])) { 
+        $this->db->select('logo_size_maxwidth, logo_size_maxheight, logo_size_minwidth, logo_size_minheight');
+        $query = $this->db->get('lex_settings');
+        foreach ($query->result() as $row){
+            $maxWidth = $row->logo_size_maxwidth;
+            $maxHeight = $row->logo_size_maxheight;
+            $minWidth = $row->logo_size_minwidth;
+            $minHeight = $row->logo_size_minheight;
         }        
+        $json = array();           
+        list($width, $height) = getimagesize($_FILES['userfile']['tmp_name']);           
+        $max_width = $maxWidth;  
+        $max_height = $maxHeight;
+        $min_width = $minWidth;
+        $min_height = $minHeight;
+        $dimension_error='';     
+        if($width > $max_width ){  
+              $dimension_error = sprintf($this->lang->line('alert_image_max_width'),$max_width);  
+          }  
+          if($height > $max_height ){  
+              $dimension_error = sprintf($this->lang->line('alert_image_max_height'),$max_height);  
+          }  
+          if($width > $max_width && $height > $max_height){  
+              $dimension_error = sprintf($this->lang->line('alert_image_max_width_height'),$max_width,$max_height);  
+          }
+          if($width < $min_width ){  
+              $dimension_error = sprintf($this->lang->line('alert_image_min_width'),$min_width);  
+          }  
+          if($height < $min_height ){  
+              $dimension_error = sprintf($this->lang->line('alert_image_min_height'),$min_height);  
+          }  
+          if($width < $min_width && $height < $min_height){  
+              $dimension_error = sprintf($this->lang->line('alert_image_min_width_height'),$min_width,$min_height);  
+          }              
+          if($dimension_error != ''){  
+              $json['error'] = $dimension_error;  
+          }  
+      } else {  
+        $json['error'] = 'Upload Failed';  
+    }  
+
+        if (!$json) {
+        $filename = ($_FILES['userfile']['name']);            
+        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $imgname = sha1($filename).'.'.$extension;
+        if (move_uploaded_file($_FILES['userfile']['tmp_name'], './assets/img/teams_logo/'.$imgname)){
+            $json['photo_file'] = $imgname;               
+        } 
+         $json['success'] = 'Successfuly uploaded';  
+        }
+        //add the header here
+                header('Content-Type: application/json');
+                echo json_encode( $json );
+
+    }        
     
 }

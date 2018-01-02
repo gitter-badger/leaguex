@@ -3,7 +3,6 @@
     <input type="hidden" id="matchid" name="matchid" value="<?php echo $matchid->match_id;?>">
     <input type="hidden" id="ematchid" name="vmatchid" value="<?php echo $matchid->match_id;?>">
     <input type="hidden" id="competitionid" name="competitionid" value="<?php echo $matchid->competition_id;?>">
-    <input type="hidden" id="matchdayid" name="matchdayid" value="<?php echo $matchid->matchday_id;?>">
     <div class="modal-header">
         <div class="modresult-box">
             <div class="modresult-match-info">

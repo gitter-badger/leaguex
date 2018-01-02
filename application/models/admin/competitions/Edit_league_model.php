@@ -2,9 +2,8 @@
 
 class Edit_league_model extends CI_Model{
     function leagueid($id){
-        $this->db->select('competition_id, competition_name, competition_logo, competition_registration_date, COUNT(DISTINCT matchday_id)as countmatchday, COUNT(DISTINCT match_id)as countmatches, competition_status');
+        $this->db->select('competition_id, competition_name, competition_logo, competition_registration_date, COUNT(DISTINCT match_matchday)as countmatchday, COUNT(DISTINCT match_id)as countmatches, competition_status');
         $this->db->from('lex_competitions'); 
-        $this->db->join('lex_matchday', 'matchday_competition_id = competition_id');
         $this->db->join('lex_matches', 'match_competition_id = competition_id');
         $this->db->where('competition_id', $id);
         $this->db->where('match_team1_id !=', 0);
@@ -39,10 +38,9 @@ class Edit_league_model extends CI_Model{
     }
     
     function select_match($matchid){
-        $this->db->select('a.match_id, a.match_status, a.match_team1_id, a.match_team2_id, b1.team_name as team1, b2.team_name as team2, b1.team_logo as logo1, b2.team_logo as logo2, a.match_score1, a.match_score2, c.matchday_id, c.matchday_name, d.competition_id, d.competition_name, d.competition_logo');
-        $this->db->from('lex_competitions as d'); 
-        $this->db->join('lex_matchday as c', 'd.competition_id = c.matchday_competition_id');
-        $this->db->join('lex_matches as a', 'a.match_matchday_id = c.matchday_id');
+        $this->db->select('a.match_id, a.match_status, a.match_team1_id, a.match_team2_id, b1.team_name as team1, b2.team_name as team2, b1.team_logo as logo1, b2.team_logo as logo2, a.match_score1, a.match_score2, d.competition_id, d.competition_name, d.competition_logo');
+        $this->db->from('lex_matches as a'); 
+        $this->db->join('lex_competitions as d', 'd.competition_id = a.match_competition_id');
         $this->db->join('lex_teams as b1', 'a.match_team1_id = b1.team_id');
         $this->db->join('lex_teams as b2', 'a.match_team2_id = b2.team_id');
         $this->db->where('match_id', $matchid);
@@ -123,9 +121,8 @@ class Edit_league_model extends CI_Model{
             $this ->db-> where('event_match_id', $matchid);    
             $this->db->delete('lex_matchevents');            
         }      
-        $this->db->select('d.match_id as matchid, b1.team_name as team1, b2.team_name as team2, d.match_score1 as score1, d.match_score2 as score2, c.matchday_name');
+        $this->db->select('d.match_id as matchid, b1.team_name as team1, b2.team_name as team2, d.match_score1 as score1, d.match_score2 as score2, d.match_matchday');
         $this->db->from('lex_matches as d'); 
-        $this->db->join('lex_matchday as c', 'd.match_matchday_id = c.matchday_id');
         $this->db->join('lex_teams as b1', 'd.match_team1_id = b1.team_id');
         $this->db->join('lex_teams as b2', 'd.match_team2_id = b2.team_id');
         $this->db->where('match_id', $matchid);

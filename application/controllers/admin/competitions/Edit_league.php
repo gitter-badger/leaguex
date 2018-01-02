@@ -39,10 +39,9 @@ class Edit_league extends CI_Controller {
       
     public function showfixture(){
         $id = $this->input->post('id');   
-        $this->datatables->select('a.match_id, a.match_status, a.match_team1_id, a.match_team2_id, b1.team_id, b2.team_id, b1.team_name as team1, b2.team_name as team2, b1.team_logo as logo1, b2.team_logo as logo2, a.match_score1, a.match_score2, c.matchday_name, d.competition_name, d.competition_logo')
+        $this->datatables->select('a.match_id, a.match_status, a.match_matchday, a.match_team1_id, a.match_team2_id, b1.team_id, b2.team_id, b1.team_name as team1, b2.team_name as team2, b1.team_logo as logo1, b2.team_logo as logo2, a.match_score1, a.match_score2, d.competition_name, d.competition_logo')
         ->from('lex_competitions as d')
-        ->join('lex_matchday as c', 'd.competition_id = c.matchday_competition_id')
-        ->join('lex_matches as a', 'a.match_matchday_id = c.matchday_id')
+        ->join('lex_matches as a', 'a.match_competition_id = d.competition_id')
         ->join('lex_teams as b1', 'a.match_team1_id = b1.team_id')
         ->join('lex_teams as b2', 'a.match_team2_id = b2.team_id')
         ->where('d.competition_id', $id) 
@@ -55,7 +54,6 @@ class Edit_league extends CI_Controller {
         $data_match = $this->edit_league_model->select_match($matchid);
         foreach ($data_match as $match){
             $dataMatch = array(
-                'matchdayid' => $match->matchday_id,
                 'matchid' => $match->match_id,
                 'competitionid' => $match->competition_id,
                 'team1' => $match->team1,
@@ -177,7 +175,6 @@ class Edit_league extends CI_Controller {
         $matchid = $this->input->post('matchid');
         $ematchid = $this->input->post('vmatchid');
         $competitionid = $this->input->post('competitionid');
-        $matchdayid = $this->input->post('matchdayid');
         $playerid = $this->input->post('playername');
         $evplayerid = $this->input->post('eventplayername');
         $teamid = $this->input->post('teamidval');
@@ -200,7 +197,6 @@ class Edit_league extends CI_Controller {
                 'scorer_team_id' => $teamid[$i],   
                 'scorer_owngoal' => $owngoal[$i],
                 'scorer_competition_id' => $competitionid,
-                'scorer_matchday_id' => $matchdayid
             );
         }
         }else{$data='';}
@@ -213,7 +209,6 @@ class Edit_league extends CI_Controller {
                 'event_time' => $evtime[$i],
                 'event_team_id' => $evteamid[$i], 
                 'event_competition_id' => $competitionid,
-                'event_matchday_id' => $matchdayid
             );
         }
         }else{$data2='';}
@@ -225,7 +220,7 @@ class Edit_league extends CI_Controller {
                 'homescore' => $val->score1,
                 'awayscore' => $val->score2,
                 'matchid' => $val->matchid,
-                'matchday' => $val->matchday_name,
+                'matchday' => $val->match_matchday,
                 'team1' => $val->team1,
                 'team2' => $val->team2
             );

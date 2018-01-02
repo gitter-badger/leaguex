@@ -69,7 +69,7 @@ function mediaFormValidation(){
          $('#updateMediaOptions').formValidation('revalidateField', 'logoSizeMin');        
     })   
     .on('success.form.fv',function(e){
-        $('.panel').waitMe({
+        $('.container-fluid').waitMe({
             effect: '',
             bg: 'rgba(255,255,255,0.7)',
             color: '#f44336'
@@ -84,7 +84,7 @@ function mediaFormValidation(){
                 data: $form.serialize(),
                 success:function(result){
                     if(result ==''){
-                        $('.panel').waitMe("hide"); 
+                        $('.container-fluid').waitMe("hide"); 
                         fv.disableSubmitButtons(false);
                         $.notify({message: updateSuccessMessage});                     
                     }        
@@ -121,7 +121,7 @@ function generalFormValidation(){
             }        
     })    
     .on('success.form.fv',function(e){
-        $('.panel').waitMe({
+        $('.container-fluid').waitMe({
             effect: '',
             bg: 'rgba(255,255,255,0.7)',
             color: '#f44336'
@@ -136,7 +136,7 @@ function generalFormValidation(){
                 data: $form.serialize(),
                 success:function(result){
                     if(result ==''){
-                        $('.panel').waitMe("hide"); 
+                        $('.container-fluid').waitMe("hide"); 
                         fv.disableSubmitButtons(false);
                         $.notify({message: updateSuccessMessage});
                     }   
@@ -230,7 +230,7 @@ function levelsFormValidation(){
     })
     
     .on('success.form.fv',function(e){
-        $('.panel').waitMe({
+        $('.container-fluid').waitMe({
             effect: '',
             bg: 'rgba(255,255,255,0.7)',
             color: '#f44336'
@@ -245,7 +245,7 @@ function levelsFormValidation(){
                 data: $form.serialize(),
                 success:function(result){
                     if(result ==''){
-                        $('.panel').waitMe("hide"); 
+                        $('.container-fluid').waitMe("hide"); 
                         fv.disableSubmitButtons(false);
                         $.notify({message: updateSuccessMessage});                      
                     }   
@@ -279,7 +279,7 @@ function playersFormValidation(){
             }        
     })   
     .on('success.form.fv',function(e){ 
-        $('.panel').waitMe({
+        $('.container-fluid').waitMe({
             effect: '',
             bg: 'rgba(255,255,255,0.7)',
             color: '#f44336'
@@ -294,7 +294,7 @@ function playersFormValidation(){
                 data: $form.serialize(),
                 success:function(result){
                     if(result ==''){
-                        $('.panel').waitMe("hide"); 
+                        $('.container-fluid').waitMe("hide"); 
                         fv.disableSubmitButtons(false);
                         $.notify({message: updateSuccessMessage});                       
                     }   
@@ -329,7 +329,7 @@ function emailFormValidation(){
             }        
     })    
     .on('success.form.fv',function(e){
-        $('.panel').waitMe({
+        $('.container-fluid').waitMe({
             effect: '',
             bg: 'rgba(255,255,255,0.7)',
             color: '#f44336'
@@ -344,7 +344,7 @@ function emailFormValidation(){
                 data: $form.serialize(),
                 success:function(result){
                     if(result ==''){ 
-                        $('.panel').waitMe("hide"); 
+                        $('.container-fluid').waitMe("hide"); 
                         fv.disableSubmitButtons(false);
                         $.notify({message: updateSuccessMessage});
                     }   
@@ -372,7 +372,7 @@ function testFormValidation(){
             }        
     })    
     .on('success.form.fv',function(e){
-        $('.panel').waitMe({
+        $('.container-fluid').waitMe({
             effect: '',
             bg: 'rgba(255,255,255,0.7)',
             color: '#f44336'
@@ -387,7 +387,7 @@ function testFormValidation(){
                 data: $form.serialize(),
                 success:function(result){
                     if(result ==''){
-                        $('.panel').waitMe("hide"); 
+                        $('.container-fluid').waitMe("hide"); 
                         fv.disableSubmitButtons(false);
                         $form.formValidation('resetForm', true);
                         $.notify({message: successSMTPmessage});
@@ -405,7 +405,36 @@ function testFormValidation(){
 }
 
 /* Events form validation */
-
+function iconUpload(){
+    $('#updateEventsOptions .input-file').each(function(){
+        var iconclear = $(this).find('#iconclear');
+        $(this).before(function(){
+            if(!$(this).prev().hasClass('input-ghost')){
+                var elem = $("<input type='file' id='inputGhost' class='input-ghost' style='visibility:hidden; height:0'>");
+                
+                elem.change(function(){
+                    elem.next(elem).find('input').val((elem.val()).split('\\').pop());
+                    iconclear.show();
+                });
+                $(this).find('button.uploadFile').hover(
+                    function(){$(this).addClass('hover')},
+                    function(){$(this).removeClass('hover')}
+                );
+                iconclear.click(function(){
+                    elem.val(null);
+                    $(this).parents(".input-file").find('input').val('');
+                    $(this).hide();
+                });
+                $(this).find('input').css('cursor', 'pointer');
+                    $(this).find('input').mousedown(function() {
+                    $(this).parents('.input-file').prev().click();
+                    return false;
+                });
+                return elem;
+            }
+        });
+    });
+}
 function eventsFormValidation(){
     if($('#updateEventsOptions').length && $.fn.formValidation){
         $('#updateEventsOptions').formValidation({
@@ -426,19 +455,13 @@ function eventsFormValidation(){
                 }
             }
         })
-        .on('click', '.addButton', function(){
-            
-            var num = $('.form-group .input-group:visible').length;
-            var newNum = new Number(num + 1);
+        .on('click', '.addButton', function() {
             var $template = $('#optionTemplate'),
             $clone = $template.clone().removeClass('hide').removeAttr('id').insertBefore($template);
             $clone.find('.input-group').addClass('input-file');   
+            iconUpload();
             $clone.find('#eventName').attr('name','eventName[]');
-            $clone.find('#inputFile').attr('name','eventImage[]');
-            $clone.find('.uploadFile').attr('id','uploadFile_'+ newNum);
-            $clone.find('.uploadFile').attr('onMouseOver','fileUpload('+newNum+')');
-            $clone.find('#eventName').addClass('icon-clear');
-            cleareInputValue();
+            $clone.find('#eventImage').attr('name','eventImage[]');
             $('#updateEventsOptions')
                 .formValidation('addField', $clone.find('[name="eventName[]"]'))
                 .formValidation('addField', $clone.find('[name="eventImage[]"]'));;
@@ -454,7 +477,7 @@ function eventsFormValidation(){
                 
         })
         .on('success.form.fv',function(e){
-        $('.panel').waitMe({
+        $('.container-fluid').waitMe({
             effect: '',
             bg: 'rgba(255,255,255,0.7)',
             color: '#f44336'
@@ -469,7 +492,7 @@ function eventsFormValidation(){
                 data: $form.serialize(),
                 success:function(result){
                     if(result ==''){
-                        $('.panel').waitMe("hide"); 
+                        $('.container-fluid').waitMe("hide"); 
                         fv.disableSubmitButtons(false);
                         $.notify({message: updateSuccessMessage});                      
                     }   
@@ -489,6 +512,7 @@ $(document).ready(function () {
     emailFormValidation();
     testFormValidation();
     eventsFormValidation();
+    iconUpload();
 });
 
 

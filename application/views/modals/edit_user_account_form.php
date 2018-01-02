@@ -10,15 +10,18 @@
     <div class="modal-body-custom">
         <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_email');?></label>
-            <input type="text" class="form-control" id="editInputEmail" name="email"> 
+            <input type="text" class="form-control icon-clear pad-r-15" id="editInputEmail" name="email">
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_birthday');?></label>
-            <input type="text" class="form-control format" id="editInputBirthday" name="birthday" autocomplete="off" placeholder="<?php echo lang('esett_pick_birthday');?>">
+            <input type="text" class="form-control icon-clear format" id="editInputBirthday" name="birthday" autocomplete="off" placeholder="<?php echo lang('esett_pick_birthday');?>">
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_city');?></label>
-            <input type="text" class="form-control" id="editInputCity" name="city" autocomplete="off" maxlength="50">
+            <input type="text" class="form-control icon-clear pad-r-15" id="editInputCity" name="city" autocomplete="off" maxlength="50">
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_change_password');?></label>

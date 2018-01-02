@@ -48,12 +48,30 @@
                         </header>
                         <div class="panel-body useraccount pad-t-5">
                             <div id="custom-box">
-                                <ul class="list-custom list-unstyled">
-                                    <li><div class="list-title"><?php echo lang('esett_title_box_username');?></div><div class="list-desc" id="usernameAccount"><?php echo $userid->user_name;?></div></li>
-                                    <li><div class="list-title"><?php echo lang('esett_title_box_email');?></div><div class="list-desc" id="emailAccount"><?php echo $userid->user_email;?></div></li>
-                                    <li><div class="list-title"><?php echo lang('esett_title_box_birthday');?></div><div class="list-desc" id="birthdayAccount"><?php echo date("d/m/Y", strtotime($userid->user_birthday));?></div></li>
-                                    <li><div class="list-title"><?php echo lang('esett_title_box_city');?></div><div class="list-desc" id="cityAccount"><?php if($userid->user_city == null){echo lang('esett_desc_box_no_data');}else{echo $userid->user_city;}?></div></li>
-                                </ul>
+                                <div class="list-custom">
+                                    <div class="list">
+                                        <div class="list-title"><?php echo lang('esett_title_box_username');?></div>
+                                        <div class="list-desc" id="usernameAccount"><?php echo $userid->user_name;?></div>
+                                    </div>
+                                </div> 
+                                <div class="list-custom">
+                                    <div class="list">
+                                        <div class="list-title"><?php echo lang('esett_title_box_email');?></div>
+                                        <div class="list-desc" id="emailAccount"><?php echo $userid->user_email;?></div>
+                                    </div>
+                                </div>
+                                <div class="list-custom">
+                                    <div class="list">
+                                        <div class="list-title"><?php echo lang('esett_title_box_birthday');?></div>
+                                        <div class="list-desc" id="birthdayAccount"><?php echo date("d/m/Y", strtotime($userid->user_birthday));?></div>
+                                    </div>
+                                </div>
+                                <div class="list-custom">
+                                    <div class="list">
+                                        <div class="list-title"><?php echo lang('esett_title_box_city');?></div>
+                                        <div class="list-desc" id="cityAccount"><?php if($userid->user_city == null){echo lang('esett_desc_box_no_data');}else{echo $userid->user_city;}?></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -93,12 +111,30 @@
                         </header>
                         <div class="panel-body userinfo pad-t-5">
                             <div id="custom-box">
-                                <ul class="list-custom list-unstyled">
-                                    <li><div class="list-title"><?php echo lang('esett_title_box_skype');?></div><div class="list-desc" id="skypeInfo"><?php if($userid->skype_tag == null){echo lang('esett_desc_box_no_data');}else{echo $userid->skype_tag;}?></div></li>
-                                    <li><div class="list-title"><?php echo lang('esett_title_box_xbox');?></div><div class="list-desc" id="xboxInfo"><?php if($userid->xbox_tag == null){echo lang('esett_desc_box_no_data');}else{echo $userid->xbox_tag;}?></div></li>
-                                    <li><div class="list-title"><?php echo lang('esett_title_box_psn');?></div><div class="list-desc" id="psnInfo"><?php if($userid->psn_tag == null){echo lang('esett_desc_box_no_data');}else{echo $userid->psn_tag;}?></div></li>
-                                    <li><div class="list-title"><?php echo lang('esett_title_box_favorite_club');?></div><div class="list-desc" id="favoriteClubInfo"><?php if($userid->favorite_club == null){echo lang('esett_desc_box_no_data');}else{echo $userid->favorite_club;}?></div></li>
-                                </ul>
+                                <div class="list-custom">
+                                    <div class="list">
+                                        <div class="list-title"><?php echo lang('esett_title_box_skype');?></div>
+                                        <div class="list-desc" id="skypeInfo"><?php if($userid->skype_tag == null){echo lang('esett_desc_box_no_data');}else{echo $userid->skype_tag;}?></div>
+                                    </div>
+                                </div>
+                                <div class="list-custom">
+                                    <div class="list">
+                                        <div class="list-title"><?php echo lang('esett_title_box_xbox');?></div>
+                                        <div class="list-desc" id="xboxInfo"><?php if($userid->xbox_tag == null){echo lang('esett_desc_box_no_data');}else{echo $userid->xbox_tag;}?></div>
+                                    </div>
+                                </div>
+                                <div class="list-custom">
+                                    <div class="list">
+                                        <div class="list-title"><?php echo lang('esett_title_box_psn');?></div>
+                                        <div class="list-desc" id="psnInfo"><?php if($userid->psn_tag == null){echo lang('esett_desc_box_no_data');}else{echo $userid->psn_tag;}?></div>
+                                    </div>
+                                </div>
+                                <div class="list-custom">
+                                    <div class="list">
+                                        <div class="list-title"><?php echo lang('esett_title_box_favorite_club');?></div>
+                                        <div class="list-desc" id="favoriteClubInfo"><?php if($userid->favorite_club == null){echo lang('esett_desc_box_no_data');}else{echo $userid->favorite_club;}?></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

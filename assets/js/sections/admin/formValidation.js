@@ -44,7 +44,7 @@ function pswFormValidation(){
         }
     })
     .on('success.form.fv',function(e){
-        $('body').waitMe({
+        $('.container-fluid').waitMe({
             effect: 'rotation',
             bg: 'rgba(255,255,255,0.7)',
             color: '#f44336'
@@ -59,7 +59,7 @@ function pswFormValidation(){
                 data: $form.serialize(),
                 success:function(result){
                     if(result ==''){
-                        $('body').waitMe("hide"); 
+                        $('.container-fluid').waitMe("hide"); 
                         fv.disableSubmitButtons(false);
                         $form.formValidation('resetForm', true);
                         $.notify({message: updateSuccessMessage});                     
@@ -104,7 +104,7 @@ function managerFormValidation(){
             }
         })
     .on('success.form.fv',function(e){ 
-        $('body').waitMe({
+        $('.container-fluid').waitMe({
             effect: 'rotation',
             bg: 'rgba(255,255,255,0.7)',
             color: '#f44336'
@@ -119,7 +119,7 @@ function managerFormValidation(){
                 data: $form.serialize(),
                 success:function(result){
                     if(result ==''){     
-                        $('body').waitMe("hide"); 
+                        $('.container-fluid').waitMe("hide"); 
                         fv.disableSubmitButtons(false);
                         $.notify({message: updateSuccessMessage});                         
                     }       

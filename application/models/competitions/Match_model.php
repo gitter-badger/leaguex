@@ -11,10 +11,9 @@ class Match_model extends CI_Model{
     } 
     
     function getmatch($matchid){
-        $this->db->select('a.match_id, a.match_status, a.match_team1_id, a.match_team2_id, b1.team_name as team1, b2.team_name as team2, b1.team_logo as logo1, b2.team_logo as logo2, a.match_score1, a.match_score2, c.matchday_id, c.matchday_name, d.competition_id, d.competition_name, d.competition_logo');
-        $this->db->from('lex_competitions as d'); 
-        $this->db->join('lex_matchday as c', 'd.competition_id = c.matchday_competition_id');
-        $this->db->join('lex_matches as a', 'a.match_matchday_id = c.matchday_id');
+        $this->db->select('a.match_id, a.match_status, a.match_team1_id, a.match_team2_id, b1.team_name as team1, b2.team_name as team2, b1.team_logo as logo1, b2.team_logo as logo2, a.match_score1, a.match_score2, a.match_matchday, c.competition_id, c.competition_name, c.competition_logo');
+        $this->db->from('lex_matches as a');
+        $this->db->join('lex_competitions as c', 'c.competition_id = a.match_competition_id');
         $this->db->join('lex_teams as b1', 'a.match_team1_id = b1.team_id');
         $this->db->join('lex_teams as b2', 'a.match_team2_id = b2.team_id');
         $this->db->where('match_id', $matchid);

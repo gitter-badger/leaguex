@@ -328,7 +328,7 @@ function fixtureListTable() {
             rowId: 'match_id',
             order: [0, "asc"],
             aoColumns: [
-                {data: "matchday_name", bVisible: false},
+                {data: "match_matchday", bVisible: false},
                 {data: "match_id", bVisible: false},
                 {data: "team1", bSortable: false, className: "not-mobile"},
                 {data: "score", bSortable: false, className: "dt-center"},
@@ -337,12 +337,12 @@ function fixtureListTable() {
                 var api = this.api();
                 var rows = api.rows( {page:'current'} ).nodes();
                 var last= null;
-                api.column(0, {page:'current'} ).data().each( function ( matchday_name, i ) {
-                    if ( last !== matchday_name ) {
-                        $(rows).eq( i ).before(
-                        '<tr class="group"><td colspan="5">'+leagueMatchdayTitle+'&nbsp;'+matchday_name+'</td></tr>'
+                api.column(0, {page:'current'} ).data().each( function (match_matchday, i) {
+                    if (last !== match_matchday) {
+                        $(rows).eq(i).before(
+                        '<tr class="group"><td colspan="5">'+leagueMatchdayTitle+'&nbsp;'+match_matchday+'</td></tr>'
                         );
-                        last = matchday_name;
+                        last = match_matchday;
                     }
                 });
             }
@@ -563,6 +563,7 @@ function editMatch(matchid){
                     .removeAttr('id')
                     .insertAfter($template);
                 $clone.animateCss('slideInLeft', function (obj){obj;});
+                $('.modal .modal-body-custom').getNiceScroll().resize();
                 var remove = $(this).closest('.modresult-scorer').find('.player-remove');
                 var removeclone = $clone.find('.player-remove');
                 $clone.find('.bootstrap-select').remove();
@@ -580,7 +581,6 @@ function editMatch(matchid){
                 $('.no-scorers-wrap').hide();
                 loadpic.hide();
                 button.show();
-                $('.modal .modal-body-custom').getNiceScroll().resize();
             }, 400);        
         })
         .off('click', '.add-event .add-link')
@@ -597,6 +597,7 @@ function editMatch(matchid){
                     .removeAttr('id')
                     .insertAfter($template);
                 $clone.animateCss('slideInLeft', function (obj){obj;});
+                $('.modal .modal-body-custom').getNiceScroll().resize();
                 var remove = $(this).closest('.modresult-event').find('.event-player-remove');
                 var removeclone = $clone.find('.event-player-remove');
                 $clone.find('.bootstrap-select').remove();
@@ -614,7 +615,6 @@ function editMatch(matchid){
                 $('.no-events-wrap').hide();
                 loadpic.hide();
                 button.show();
-                $('.modal .modal-body-custom').getNiceScroll().resize();
             }, 400);            
         })
         .off('click', '.add-walkover .add-link')
@@ -629,7 +629,8 @@ function editMatch(matchid){
                     .clone()
                     .removeClass('hide')
                     .removeAttr('id')
-                    .insertBefore($template).hide().slideDown(500);
+                    .insertBefore($template).hide().slideDown(200);
+                $('.modal .modal-body-custom').getNiceScroll().resize();    
                 var remove = $(this).closest('.modresult-walkover').find('.walkover-team-remove');
                 var removeclone = $clone.find('.walkover-team-remove');    
                 $clone.find('.bootstrap-select').remove();
@@ -640,9 +641,8 @@ function editMatch(matchid){
                     .formValidation('addField', $clone.find('[name="walkoverteamname"]'))
                 $('.no-walkover .loadpic').hide();
                 $('.no-walkover-wrap').hide();
-                $(".modresult-addevent").slideUp(500);
-                $(".modresult-addscore").slideUp(500);
-                $('.modal .modal-body-custom').getNiceScroll().resize();
+                $(".modresult-addevent").slideUp(200);
+                $(".modresult-addscore").slideUp(200);
             }, 400);    
         })
         .on('added.field.fv', function(e, data){
@@ -682,15 +682,14 @@ function editMatch(matchid){
                 .formValidation('removeField', $row.find('[name="time[]"]'));
             setTimeout(function() {
                 $row.animateCss('slideOutRight', function (obj) {
-                obj.remove();
-                if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
-            });
-                $('.modal .modal-body-custom').getNiceScroll().resize();
+                    obj.remove();
+                    $('.modal .modal-body-custom').getNiceScroll().resize();
+                    if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
+                });
             }, 400);
         })
         .off('click', '.event-player-remove')
         .on('click', '.event-player-remove', function(){
-            $('.modal .modal-body-custom').getNiceScroll().resize();
             var $row = $(this).closest('.event');
             var eventbox = $('.modresult-addevent').find('.event');
             $('#editMatchForm')
@@ -698,10 +697,10 @@ function editMatch(matchid){
                 .formValidation('removeField', $row.find('[name="timevent[]"]'));
             setTimeout(function() {
                 $row.animateCss('slideOutRight', function (obj) {
-                obj.remove();
-                if(eventbox.length === 2){$('.no-events-wrap').show();}
-            });
-                $('.modal .modal-body-custom').getNiceScroll().resize();
+                    obj.remove();
+                    $('.modal .modal-body-custom').getNiceScroll().resize();
+                    if(eventbox.length === 2){$('.no-events-wrap').show();}
+                });
             }, 400);
         })
         .off('click', '.walkover-team-remove')
@@ -724,11 +723,11 @@ function editMatch(matchid){
                 .formValidation('removeField', $row.find('[name="walkoverteamname"]'));
             setTimeout(function() {
                 $row.remove();
+                $('.modal .modal-body-custom').getNiceScroll().resize();
                 $('.no-walkover-wrap').show();
                 $('.no-walkover-wrap img').show();
-                $(".modresult-addevent").slideDown(500);
-                $(".modresult-addscore").slideDown(500);
-                $('.modal .modal-body-custom').getNiceScroll().resize();
+                $(".modresult-addevent").slideDown(200);
+                $(".modresult-addscore").slideDown(200);
             }, 800);
         })
         .on('err.field.fv', function(e, data) {
@@ -758,7 +757,7 @@ function editMatch(matchid){
                         if(response.success){
                             showscore = response.showscore;
                             var newdata = ({
-                                matchday_name: showscore.matchday,
+                                match_matchday: showscore.matchday,
                                 match_id: showscore.matchid,
                                 team1: showscore.team1,
                                 score: '<a href="javascript:editMatch('+showscore.matchid+')"><strong>'+showscore.homescore+' - '+showscore.awayscore+'</strong></a>',
@@ -794,7 +793,6 @@ function editMatch(matchid){
                     $('.away-score').attr('data-teamid', edatamatch.team2id);
                     $('#matchid, #ematchid').val(edatamatch.matchid);
                     $('#competitionid').val(edatamatch.competitionid);
-                    $('#matchdayid').val(edatamatch.matchdayid);
                 }
             }
         });
@@ -910,7 +908,7 @@ function editMatch(matchid){
                 cancel: {
                     label: formButtonClose,
                     className: "btn-info",
-                     callback: function() {
+                     callback: function(e) {
                         $('.bootstrap-select').removeClass('open');
                         $('#editMatchForm').formValidation('revalidateField', 'playername[]');
                         $('#editMatchForm').formValidation('revalidateField', 'time[]');
@@ -1146,6 +1144,7 @@ function addUser() {
             closeButton: false
         }).on('shown.bs.modal', function() {
             $('#registerForm').show();
+            $('.form-group:first-child input').focus();
         }).on('hide.bs.modal', function(e) {
             $('#registerForm').hide().appendTo('body');
         }).modal('show');
@@ -1280,8 +1279,8 @@ function editUser(userid){
                                          <i class="material-icons">delete</i>\
                                          </a>'
                             });
-                            var nodeTeamtable = userstable.row('#'+ updateuser.userid +'').data(newdata).draw().node();
-                            $(nodeTeamtable).effect('highlight', {color: "#e8f0fe"}, 3000);
+                            var nodeUserstable = userstable.row('#'+ updateuser.userid +'').data(newdata).draw().node();
+                            $(nodeUserstable).effect('highlight', {color: "#e8f0fe"}, 3000);
                         }
                         $form.parents('.bootbox').modal('hide');
                         $.notify({message: updateSuccessMessage});
@@ -1441,8 +1440,8 @@ function teamsListTable() {
 function addTeam(){
     var teamstable = $('#teamsList').DataTable();
     if($('#addTeamForm').length && $.fn.formValidation){
-        $('.rating-remove').click(function(){
-        $('#inputLevel').rating('rate', 0);
+        $('.rating-remove').on('click', function(){
+        $('.form-group').find('#inputLevel').rating('rate', 0);
         });
         $('#addTeamForm').formValidation({
             framework: "bootstrap",
@@ -1474,7 +1473,7 @@ function addTeam(){
         })
         .on('success.form.fv', function(e) {
             $('.modal-content').waitMe({
-                effect: 'rotation',
+                effect: '',
                 bg: 'rgba(255,255,255,0.7)',
                 color: '#f44336'
             });
@@ -1525,6 +1524,7 @@ function addTeam(){
         }).on('shown.bs.modal', function() {
             $('#addTeamForm').show()
                 .formValidation('resetForm', true);
+            $('.form-group:first-child input').focus();    
         }).on('hide.bs.modal', function(e) {
             $('#addTeamForm').hide().appendTo('body');
         }).modal('show');
@@ -1570,7 +1570,7 @@ function editTeam(teamid){
         .off('success.form.fv')
         .on('success.form.fv', function(e) {
             $('.modal-content').waitMe({
-                effect: 'rotation',
+                effect: '',
                 bg: 'rgba(255,255,255,0.7)',
                 color: '#f44336'
             });

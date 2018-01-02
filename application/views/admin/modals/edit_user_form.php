@@ -9,12 +9,14 @@
     </div>
     <div class="modal-body-custom">
         <div class="form-group">
-             <label class="control-label"><?php echo lang('admin_ulist_modal_label_username');?></label>
-            <input type="text" class="form-control" id="editInputUsername" name="username"> 
+            <label class="control-label"><?php echo lang('admin_ulist_modal_label_username');?></label>
+            <input type="text" class="form-control icon-clear pad-r-15" id="editInputUsername" name="username"> 
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="form-group">
             <label class="control-label"><?php echo lang('admin_ulist_modal_label_email');?></label>
-            <input type="text" class="form-control" id="editInputEmail" name="email"> 
+            <input type="text" class="form-control icon-clear pad-r-15" id="editInputEmail" name="email"> 
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="form-group">
             <label class="control-label"><?php echo lang('admin_ulist_modal_label_permission');?></label>
@@ -27,7 +29,8 @@
         </div> 
         <div class="form-group">
             <label class="control-label"><?php echo lang('admin_ulist_modal_label_birthday');?></label>
-            <input type="text" class="form-control format" id="editInputBirthday" name="birthday" autocomplete="off">
+            <input type="text" class="form-control icon-clear pad-r-15 format" id="editInputBirthday" name="birthday" autocomplete="off">
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
        
     </div>    

@@ -22,8 +22,8 @@
                         </header>                     
                         <div class="panel-body pad-t-0">
                             <div class="form-group">                                
-                                <label class="col-sm-3 control-label"><?php echo lang('admin_ogeneral_select_language');?>:</label>
-                                <div class="col-sm-6">
+                                <label class="col-md-2 control-label"><?php echo lang('admin_ogeneral_select_language');?></label>
+                                <div class="col-md-10">
                                     <select class="form-control show-tick selectpicker" id="selectLanguage" name="language">                                   
                                         <option value="0" <?php if ($option->language == 0){echo "SELECTED";} ?>><?php echo lang('admin_ogeneral_language_ita');?></option>
                                         <option value="1" <?php if ($option->language == 1){echo "SELECTED";} ?>><?php echo lang('admin_ogeneral_language_eng');?></option>                                            
@@ -32,20 +32,21 @@
                                 </div>                      
                             </div>
                             <div class="form-group">                                
-                                <label class="col-sm-3 control-label"><?php echo lang('admin_ogeneral_input_site_name');?>:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="sitename" name="sitename" placeholder="<?php echo lang('admin_ogeneral_input_placeholder_site_name');?>" value="<?php echo $option->site_name;?>">
+                                <label class="col-md-2 control-label"><?php echo lang('admin_ogeneral_input_site_name');?></label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control icon-clear pad-r-15" id="sitename" name="sitename" placeholder="<?php echo lang('admin_ogeneral_input_placeholder_site_name');?>" value="<?php echo $option->site_name;?>">
+                                    <span id="iconclear" class="fa fa-times-circle"></span>
                                 </div>
                             </div>
                             <div class="form-group">                                
-                                <label class="col-sm-3 control-label"><?php echo lang('admin_ogeneral_input_site_title');?>:</label>
-                                <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="sitetitle" name="sitetitle" placeholder="<?php echo lang('admin_ogeneral_input_placeholder_site_title');?>" value="<?php echo $option->site_title;?>">
+                                <label class="col-md-2 control-label"><?php echo lang('admin_ogeneral_input_site_title');?></label>
+                                <div class="col-md-10">
+                                    <input type="text" class="form-control icon-clear pad-r-15" id="sitetitle" name="sitetitle" placeholder="<?php echo lang('admin_ogeneral_input_placeholder_site_title');?>" value="<?php echo $option->site_title;?>">
                                 </div>
                             </div>
                             <div class="form-group mt-10">                                
-                                <label class="col-sm-3 control-label"><?php echo lang('admin_ogeneral_page_transition');?>:</label>
-                                <div class="col-sm-6">
+                                <label class="col-md-2 control-label"><?php echo lang('admin_ogeneral_page_transition');?></label>
+                                <div class="col-md-10">
                                     <div class="radio radio-inline">
                                         <label>
                                         <input type="radio" id="transition" name="transition" value="0" <?php if ($option->transition == 0){echo "CHECKED";} ?>>
@@ -62,8 +63,8 @@
                                 </div>                               
                             </div>
                             <div class="form-group">                                
-                                <label class="col-sm-3 control-label"><?php echo lang('admin_ogeneral_table_details');?>:</label>
-                                <div class="col-sm-6">
+                                <label class="col-md-2 control-label"><?php echo lang('admin_ogeneral_table_details');?></label>
+                                <div class="col-md-10">
                                     <div class="radio radio-inline">
                                         <label>
                                         <input type="radio" id="details-visibile" name="details-visibile" value="0" <?php if ($option->table_details == 0){echo "CHECKED";} ?>>
@@ -80,7 +81,7 @@
                                 </div>                               
                             </div>    
                             <div class="form-group mt-40">                                                                       
-                                <div class="col-sm-6 col-sm-offset-3">                                                             
+                                <div class="col-md-10 col-md-offset-2">                                                             
                                     <button type="submit" class="btn btn-danger btn-raised" id="btnUpdateForm"><span><?php echo lang('form_button_save_changes');?></span></button>
                                 </div>
                             </div>  

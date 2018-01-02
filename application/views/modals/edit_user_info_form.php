@@ -10,19 +10,23 @@
     <div class="modal-body-custom">
         <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_skype');?></label>
-            <input type="text" class="form-control" id="editInputSkype" name="skype" maxlength="50"> 
+            <input type="text" class="form-control icon-clear pad-r-15" id="editInputSkype" name="skype" maxlength="50">
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_xbox');?></label>
-            <input type="text" class="form-control" id="editInputXbox" name="xbox" maxlength="50"> 
+            <input type="text" class="form-control icon-clear pad-r-15" id="editInputXbox" name="xbox" maxlength="50"> 
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_psn');?></label>
-            <input type="text" class="form-control" id="editInputPsn" name="psn" maxlength="50"> 
+            <input type="text" class="form-control icon-clear pad-r-15" id="editInputPsn" name="psn" maxlength="50"> 
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_favorite_club');?></label>
-            <input type="text" class="form-control" id="editInputfavoriteclub" name="favoriteclub" maxlength="50"> 
+            <input type="text" class="form-control icon-clear pad-r-15" id="editInputfavoriteclub" name="favoriteclub" maxlength="50"> 
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="form-group">
             <label class="control-label"><?php echo lang('esett_modal_label_about_me');?></label>

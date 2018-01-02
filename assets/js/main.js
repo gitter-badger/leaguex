@@ -6,6 +6,21 @@
 *   @link http://www.fankstribe.org 
 !*/
 
+/* Dynamic modal width */
+function modalWidth(){
+    var windowSize = $(window).width();
+    function calcVH() {
+        $('.modal-body-custom').innerHeight( $(this).innerHeight() -56*2  );
+    }
+    calcVH();
+    $(window).on('resize orientationchange', function(){
+        if(windowSize < 750){
+            calcVH();
+        }else{
+            $('.modal-body-custom').css("height", "");
+        }
+    });
+}
 
 /* Empty image */
 function imgError(image) {
@@ -202,9 +217,9 @@ function tabsTransition(){
 /* Javascript to enable link to tab */
 function tabsLink() {
         var hash = document.location.hash;
-        var prefix = "tab_";
+        var prefix = "tab-";
         if(hash) {
-            $('.tab-container').removeClass("active")
+            $('.tab-container').removeClass("active");
             $('.nav-tabs-bar a[href=' + hash.replace(prefix, "") + ']').tab('show').parent().addClass('active');
             
         }
@@ -392,25 +407,116 @@ function imageUpload() {
                 setTimeout(function(){
                     if(json['success']) {
                         var image = tmp + '/' + json['photo_file'];
+                        var img_ghost = $('#img-ghost');
+                        img_ghost.val(json['photo_file']); 
                         thumb.attr('src', image);
                         preview.hide();                         
                         $('#imageid').val(json['photo_file']);
                         icon.show();
                         icon_profile.show();
                         thumb.fadeIn(400);
-                        if(!$('.comments-widget').length){
+                        if(!$('.comments-widget, #img-ghost').length){
                         $.notify({message: updateSuccessMessage});    
                         }
                     }
                 },1000);
             }
         });
+        $('input[type="file"]').on('click', function(e){
+    // code here
+});
     };
 }
+/* Function file upload */
+function fileUpload(fileid){
+    if('undefined' !== typeof fileid){
+        var button = $('#uploadFile_' + fileid);
+        var url = $('#inputFile').attr("data-url");
+        var iconurl = $('#iconclear').attr("data-clear");
+        new AjaxUpload(button, {
+            action: url,
+            responseType: 'json',
+            onSubmit: function(file, ext) {
+                if(ext && /^(jpg|png|jpeg)$/.test(ext)) {}else{
+                    bootbox.dialog({
+                        message: imgType,
+                        title: alertDanger,
+                        size: 'small',
+                        closeButton: false,
+                        buttons: {
+                            danger: {
+                                label: alertOk,
+                                className: "btn-info",
+                                callback: function() {}
+                            }
+                        }
+                    });
+                    return false;
+                }
+            },
+            onComplete: function(file, json) {
+                if(json['error']) {
+                    bootbox.dialog({
+                        message: json['error'],
+                        title: alertDanger,
+                        size: 'small',
+                        closeButton: false,
+                        buttons: {
+                            danger: {
+                                label: alertOk,
+                                className: "btn-info",
+                                callback: function() {}
+                            }
+                        }
+                    });
+                    return false;
+                }
+                if(json['success']){
+                    var iconclear = $(button).closest('.form-group').find('#iconclear');
+                    var file_ghost = $(button).closest('.form-group').find('#inputFile');
+                    file_ghost.val(json['photo_file']); 
+                    if(!$('#inputFile').length){
+                        $.notify({message: updateSuccessMessage});    
+                    }
+                    $(iconclear).on('click', function(){
+                        
+                        file_ghost.val(''); 
+                        
+                    });
+                }
+            }
+        });
+    }
+}
+/* Clear input value */
+function cleareInputValue(){
+    if($('.icon-clear').length){
+        $('input.icon-clear').each(function(){
+            var icon = $(this).next();
+            $(this).on('keyup', function(){
+                $(icon).show();
+            });
+            $(this).on('focusin', function(){
+                if($(this).val() != ''){
+                $(icon).show();}
+            }).on('focusout', function(){
+                setTimeout(function(){
+                    $(icon).hide();
+                },150);
+            });
+            $(icon).on('click', function(){
+                $(this).prev().val('').focus();
+                $(this).hide();
+            });
+        });
+    }
+}
+
+
 /****  Init of Main Functions  ****/
 $(document).ready(function(){
-    $.material.options.autofill = true;
     $.material.init();
+    modalWidth();
     bodyHeight();
     showLoading();
     checkWidth();
@@ -427,9 +533,12 @@ $(document).ready(function(){
     tooltip();
     toast();
     imageUpload();
+    fileUpload();
+    cleareInputValue();
     nobodyScroll();
     hideHeader();
     $(window).resize(hideHeader);
     hideFloatButton();
     $(window).resize(hideFloatButton);
+    $(window).resize(modalWidth);
 });

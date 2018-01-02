@@ -55,34 +55,27 @@ class Leagues_list_model extends CI_Model{
             $away[$i] = $teams[$totalteams - 1 - $i];
         }
         for($i = 0; $i < $totalmatchday * 2; $i++){
-            $data = array(
-                'matchday_name' => $i + 1,
-                'matchday_competition_id' => $fixture_id,
-            );
-            $this->db->insert('lex_matchday', $data);
-            $matchday_id = $this->db->insert_id();
-            
-                if(($i % 2) == 0){
-                    for($j = 0; $j < $totalteams /2; $j++){
-                        $data2 = array(
-                            'match_matchday_id' => $matchday_id,
-                            'match_team1_id' => $away[$j],
-                            'match_team2_id' => $home[$j],
-                            'match_competition_id' => $fixture_id
-                        );
-                        $this->db->insert('lex_matches', $data2); 
-                    }
-                } else {
-                    for($j = 0; $j < $totalteams /2; $j++){
-                    $data3 = array(
-                        'match_matchday_id' => $matchday_id,
-                        'match_team1_id' => $home[$j],
-                        'match_team2_id' => $away[$j],
+            if(($i % 2) == 0){
+                for($j = 0; $j < $totalteams /2; $j++){
+                    $data2 = array(
+                        'match_matchday' => $i + 1,
+                        'match_team1_id' => $away[$j],
+                        'match_team2_id' => $home[$j],
                         'match_competition_id' => $fixture_id
-                    );    
-                    $this->db->insert('lex_matches', $data3);        
-                    }
+                    );
+                    $this->db->insert('lex_matches', $data2); 
                 }
+            } else {
+                for($j = 0; $j < $totalteams /2; $j++){
+                $data3 = array(
+                    'match_matchday' => $i + 1,
+                    'match_team1_id' => $home[$j],
+                    'match_team2_id' => $away[$j],
+                    'match_competition_id' => $fixture_id
+                );    
+                $this->db->insert('lex_matches', $data3);        
+                }
+            }
             $tmp = $home[0];
             array_unshift($away, $home[1]);
             $rpt = array_pop($away);
@@ -105,8 +98,6 @@ class Leagues_list_model extends CI_Model{
         $this->db->delete('lex_competitions');
         $this->db->where('ct_competition_id', $delete_id);
         $this->db->delete('lex_competitions_teams');
-        $this->db->where('matchday_competition_id', $delete_id);
-        $this->db->delete('lex_matchday');
         $this->db->where('match_competition_id', $delete_id);
         $this->db->delete('lex_matches');
         $this->db->where('scorer_competition_id', $delete_id);

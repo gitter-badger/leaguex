@@ -82,13 +82,13 @@
                             </div>
                         </div>
                     </div>
-                    <?php if($this->uri->segment(2)=="test"){ ?>
+                    <?php if($this->uri->segment(2)=="leagues"){ ?>
                     <div class="nav-tabs-bar">
                         <div class="tab-container withripple active">
-                            <a class="withoutripple" data-toggle="tab" href="#profile-settings">Profilo</a>
+                            <a class="withoutripple" data-toggle="tab" href="#matches"><?php echo lang('head_tab_fixtures');?></a>
                         </div>    
                         <div class="tab-container withripple">
-                            <a class="withoutripple" data-toggle="tab" href="#notifications" id="note-tab"><input type="hidden" value="<?php echo $this->session->userdata('userid')?>" name="user_id" /><?php echo lang('esett_tab_notifications');?></a>
+                            <a class="withoutripple" data-toggle="tab" href="#tables" id="note-tab"><input type="hidden" value="<?php echo $this->session->userdata('userid')?>" name="user_id" /><?php echo lang('head_tab_tables');?></a>
                         </div>    
                     </div>
                     <?php } ?>

@@ -137,7 +137,6 @@ class Match extends CI_Controller {
         $matchid = $this->input->post('matchid');
         $ematchid = $this->input->post('vmatchid');
         $competitionid = $this->input->post('competitionid');
-        $matchdayid = $this->input->post('matchdayid');
         $playerid = $this->input->post('playername');
         $evplayerid = $this->input->post('eventplayername');
         $teamid = $this->input->post('teamidval');
@@ -159,7 +158,6 @@ class Match extends CI_Controller {
                 'scorer_team_id' => $teamid[$i],   
                 'scorer_owngoal' => $owngoal[$i],
                 'scorer_competition_id' => $competitionid,
-                'scorer_matchday_id' => $matchdayid
             );
         }
         }else{$data='';}
@@ -172,7 +170,6 @@ class Match extends CI_Controller {
                 'event_time' => $evtime[$i],
                 'event_team_id' => $evteamid[$i], 
                 'event_competition_id' => $competitionid,
-                'event_matchday_id' => $matchdayid
             );
         }
         }else{$data2='';}

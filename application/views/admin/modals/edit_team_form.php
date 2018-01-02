@@ -17,17 +17,17 @@
                 </div>
                 <div class="profile-avatar-wrap">
                     <img id="thumbImg" src="" alt="Logo">
+                    <input type="hidden" id="img-ghost" name="img-ghost">
                     <div class="profile-avatar-btn" id="upload">
                         <div class="icon-wrap"><i class="material-icons">camera_alt</i></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="input-group">
-            <span class="input-group-addon"><i class="material-icons">security</i></span>
-            <div class="form-group">
-                <input type="text" class="form-control" id="editInputTeamname" name="teamname" placeholder="<?php echo lang('admin_tlist_input_teamname');?>">                                                        
-            </div>
+        <div class="form-group">
+            <label class="control-label"><?php echo lang('admin_tlist_input_teamname');?></label>
+            <input type="text" class="form-control icon-clear pad-r-15" id="editInputTeamname" name="teamname"> 
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="input-group">
             <span class="input-group-addon rating-remove"><i class="material-icons">clear</i></span>

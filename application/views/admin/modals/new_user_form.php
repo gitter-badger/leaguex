@@ -9,19 +9,23 @@
     <div class="modal-body-custom">
         <div class="form-group">
             <label class="control-label"><?php echo lang('admin_ulist_modal_label_username');?></label>
-            <input type="text" class="form-control" id="inputUsername" name="username"> 
+            <input type="text" class="form-control icon-clear pad-r-15" id="inputUsername" name="username"> 
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="form-group">
             <label class="control-label"><?php echo lang('admin_ulist_modal_label_email');?></label>
-            <input type="text" class="form-control" id="inputEmail" name="email"> 
+            <input type="text" class="form-control icon-clear pad-r-15" id="inputEmail" name="email"> 
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="form-group">
             <label class="control-label"><?php echo lang('admin_ulist_modal_label_password');?></label>
-            <input type="password" class="form-control" id="inputPassword" name="password" autocomplete="new-password">
+            <input type="password" class="form-control icon-clear pad-r-15" id="inputPassword" name="password" autocomplete="new-password">
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div> 
         <div class="form-group">
             <label class="control-label"><?php echo lang('admin_ulist_modal_label_birthday');?></label>
-            <input type="text" class="form-control format" id="inputBirthday" name="birthday" autocomplete="off">
+            <input type="text" class="form-control icon-clear pad-r-15 format" id="inputBirthday" name="birthday" autocomplete="off">
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         
     </div>    

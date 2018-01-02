@@ -610,10 +610,6 @@ fieldset[disabled][disabled] .btn-group-vertical,
 .btn[disabled][disabled],
 .input-group-btn .btn[disabled][disabled],
 .btn-group[disabled][disabled],
-.btn-group-vertical[disabled][disabled] {
-  color: rgba(0, 0, 0, 0.26);
-  background: transparent;
-}
 .theme-dark fieldset[disabled][disabled] .btn,
 .theme-dark fieldset[disabled][disabled] .input-group-btn .btn,
 .theme-dark fieldset[disabled][disabled] .btn-group,

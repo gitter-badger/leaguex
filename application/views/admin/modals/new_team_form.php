@@ -9,7 +9,8 @@
     <div class="modal-body-custom">
         <div class="form-group">
             <label class="control-label"><?php echo lang('admin_tlist_input_teamname');?></label>
-            <input type="text" class="form-control" id="inputTeamname" name="teamname">                                                        
+            <input type="text" class="form-control icon-clear pad-r-15" id="inputTeamname" name="teamname">
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
         <div class="input-group">
             <span class="input-group-addon rating-remove"><i class="material-icons">clear</i></span>

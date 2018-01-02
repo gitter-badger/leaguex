@@ -39,18 +39,12 @@
                     </div>                        
                 </div>                    
                 <div class="content-menu withripple <?php if($this->uri->segment(1)=="competitions"){echo "menu-open active";}?>">
-                    <a class="dropdown-toggle" href="javascript:void(0);">
+                    <a class="animsition-link" href="<?= base_url().'competitions/leagues';?>">
                         <div class="icon-wrap"><i class="flaticon flaticon-cup"></i></div>
                         <div class="text"><?php echo lang('sbar_menu_leagues');?></div>
                     </a>
                 </div>
-                <div class="submenu" <?php if($this->uri->segment(1)=="competitions"){echo "style='display:block;'";}?>>
-                    <div class="content-menu withripple">
-                        <a class="animsition-link <?php if($this->uri->segment(2)=="leagues"){echo "active";}?>" href="<?= base_url().'competitions/leagues';?>">
-                            <span class="text"><?php echo lang('sbar_submenu_fixtures_results');?></span>
-                        </a> 
-                    </div>
-                </div>
+                
             </div> 
             <div class="content-menu withripple <?php if($this->uri->segment(1)=="users"){echo "active";}?>">
                 <a class="animsition-link" href="<?= base_url().'users/edit_settings/userid/'.$this->session->userdata("userid");?>">

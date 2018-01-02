@@ -39,9 +39,34 @@ class Options_players extends CI_Controller {
             'url_stats' => $this->input->post('urlStats'),                       
             'url_image' => $this->input->post('urlImage'),  
         );       
-        if($this->options_model->update_players($data)){        
-            } else {
+        if($this->options_model->update_players($data)){} else {
             echo 'failed';
-            }
         }
+    }
+    
+    public function update_levels_options(){
+        $levmin = $this->input->post('levMin');
+        $levmax = $this->input->post('levMax');
+        $maxplayers = $this->input->post('maxPlayers');
+        $playerslevels = $this->input->post('playersLevels');
+        if($playerslevels == 1){
+            $levels_min_list = implode(",", array_filter($levmin, 'strlen'));
+            $levels_max_list = implode(",", array_filter($levmax, 'strlen'));
+            $level_max_players = implode(",", array_filter($maxplayers, 'strlen'));
+            $data = array(            
+            'players_levels' => $playerslevels,
+            'level_min' => $levels_min_list,
+            'level_max' => $levels_max_list,
+            'level_max_players' => $level_max_players
+            );       
+        }else{
+            $data = array(            
+            'players_levels' => $playerslevels,
+            );       
+        }
+        
+        if($this->options_model->update_levels($data)){} else {
+            echo 'failed';
+        }
+    }
 }

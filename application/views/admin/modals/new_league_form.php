@@ -13,7 +13,8 @@
         </div>
         <div class="form-group">
             <label class="control-label"><?php echo lang('admin_leagueslist_input_leaguename');?></label>
-            <input type="text" class="form-control" id="inputLeaguename" name="leaguename" required>
+            <input type="text" class="form-control icon-clear pad-r-15" id="inputLeaguename" name="leaguename" required>
+            <span id="iconclear" class="fa fa-times-circle"></span>
         </div>
     </div>
 </form>

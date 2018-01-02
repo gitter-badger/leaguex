@@ -23,13 +23,13 @@
                         </header>
                         <div class="panel-body pad-t-0">
                             <div class="form-group">                                
-                                <label class="col-sm-3 control-label"><?php echo lang('admin_omedia_input_maxsize');?></label>
-                                <div class="col-sm-8">
+                                <label class="col-md-2 control-label"><?php echo lang('admin_omedia_input_maxsize');?></label>
+                                <div class="col-md-10 no-pad">
                                     <div class="form-group" style="margin: 0;">                                        
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-5">
                                             <input type="text" class="form-control" id="avatarMaxWidth" name="avatarMaxWidth" placeholder="<?php echo lang('admin_omedia_input_placeholder_width');?>" value="<?php echo $option->avatar_size_maxwidth;?>" maxlength="3">
                                         </div>                                        
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-5">
                                             <input type="text" class="form-control" id="avatarMaxHeight" name="avatarMaxHeight" placeholder="<?php echo lang('admin_omedia_input_placeholder_height');?>" value="<?php echo $option->avatar_size_maxheight;?>" maxlength="3">
                                         </div>                                        
                                     </div>
@@ -37,18 +37,18 @@
                                 </div>
                             </div>
                             <div class="form-group">                                
-                                <label class="col-sm-3 control-label"><?php echo lang('admin_omedia_input_minsize');?></label>
-                                <div class="col-sm-8">
+                                <label class="col-md-2 control-label"><?php echo lang('admin_omedia_input_minsize');?></label>
+                                <div class="col-md-10 no-pad">
                                     <div class="form-group" style="margin: 0;">                                        
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-5">
                                             <input type="text" class="form-control" id="avatarMinWidth" name="avatarMinWidth" placeholder="<?php echo lang('admin_omedia_input_placeholder_width');?>" value="<?php echo $option->avatar_size_minwidth;?>" maxlength="3">
                                         </div>                                        
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-5">
                                             <input type="text" class="form-control" id="avatarMinHeight" name="avatarMinHeight" placeholder="<?php echo lang('admin_omedia_input_placeholder_height');?>" value="<?php echo $option->avatar_size_minheight;?>" maxlength="3">
                                         </div>                                        
                                     </div>
                                     <input type="hidden" name="avatarSizeMin" value="0"/>
-                                    <p class="help-block show"><?php echo lang('admin_omedia_subtitle_avatar_image');?>.</p>
+                                    <p class="help-block show pad-l-15"><?php echo lang('admin_omedia_subtitle_avatar_image');?>.</p>
                                 </div>
                             </div>
                         </div>
@@ -58,13 +58,13 @@
                         </header>
                         <div class="panel-body pad-t-0">
                             <div class="form-group">                                
-                                <label class="col-sm-3 control-label"><?php echo lang('admin_omedia_input_maxsize');?></label>
-                                <div class="col-sm-8">
+                                <label class="col-md-2 control-label"><?php echo lang('admin_omedia_input_maxsize');?></label>
+                                <div class="col-md-10 no-pad">
                                     <div class="form-group" style="margin: 0;">                                        
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-5">
                                             <input type="text" class="form-control" id="logoMaxWidth" name="logoMaxWidth" placeholder="<?php echo lang('admin_omedia_input_placeholder_width');?>" value="<?php echo $option->logo_size_maxwidth;?>" maxlength="3">
                                         </div>                                        
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-5">
                                             <input type="text" class="form-control" id="logoMaxHeight" name="logoMaxHeight" placeholder="<?php echo lang('admin_omedia_input_placeholder_height');?>" value="<?php echo $option->logo_size_maxheight;?>" maxlength="3">
                                         </div>                                       
                                     </div>
@@ -72,22 +72,22 @@
                                 </div>                               
                             </div>
                             <div class="form-group">                                
-                                <label class="col-sm-3 control-label"><?php echo lang('admin_omedia_input_minsize');?></label>
-                                <div class="col-sm-8">
+                                <label class="col-md-2 control-label"><?php echo lang('admin_omedia_input_minsize');?></label>
+                                <div class="col-md-10 no-pad">
                                     <div class="form-group" style="margin: 0;">                                        
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-5">
                                             <input type="text" class="form-control" id="logoMinWidth" name="logoMinWidth" placeholder="<?php echo lang('admin_omedia_input_placeholder_width');?>" value="<?php echo $option->logo_size_minwidth;?>" maxlength="3">
                                         </div>                                        
-                                        <div class="col-xs-3">
+                                        <div class="col-xs-5">
                                             <input type="text" class="form-control" id="logoMinHeight" name="logoMinHeight" placeholder="<?php echo lang('admin_omedia_input_placeholder_height');?>" value="<?php echo $option->logo_size_minheight;?>" maxlength="3">
                                         </div>                                        
                                     </div>
                                     <input type="hidden" name="logoSizeMin" value="0"/>
-                                    <p class="help-block show"><?php echo lang('admin_omedia_subtitle_teamlogo_image');?>.</p>
+                                    <p class="help-block show pad-l-15"><?php echo lang('admin_omedia_subtitle_teamlogo_image');?>.</p>
                                 </div>
                             </div>
                             <div class="form-group mt-40">                                                                       
-                                <div class="col-sm-6 col-sm-offset-3">                                                             
+                                <div class="col-md-10 col-md-offset-2">                                                             
                                     <button type="submit" class="btn btn-danger btn-raised" id="btnUpdateForm"><span><?php echo lang('form_button_save_changes');?></span></button>
                                 </div>
                             </div>  

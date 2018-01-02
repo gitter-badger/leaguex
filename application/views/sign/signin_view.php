@@ -2,9 +2,9 @@
 <html>
     <head>
         <meta charset="utf-8">        
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+        <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,minimal-ui">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="theme-color" content="#e84e40">
+        <meta name="theme-color" content="#03a9f4">     
         <title><?php echo $title?></title>
         <?php echo put_headers();?>
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,700,500' rel='stylesheet' type='text/css'>
@@ -31,7 +31,7 @@
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="material-icons">email</i></span>
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="email" name="email" placeholder="Email">                        
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="Email">  
                                 </div>
                             </div>                   
                             <div class="input-group">

@@ -22,23 +22,43 @@ function compareText(val1, val2){
 }
 
 function fixturesTable(){
-    $('#selectLeagues').on('change', function(e){
+    $('#selectLeagues, #selectLeaguesTables').on('change', function(e){
         e.preventDefault();
+        $("#loading").show();
         var $elem = $(this);
         var $url = 'javascript:void(0)';
-        var id = $('#selectLeagues').val();
+        var id = $(this).val();
+        $('#selectLeagues, #selectLeaguesTables').selectpicker('val', id);
         var matchdayNull = ''; 
         $('ul.matchlist').empty();
+        $('.th').nextAll().remove();
         $animsition.animsition('out', $elem, $url);
-        $.ajax({
-            url: base + "competitions/leagues/filterLeagues",
-            type: "POST", 
-            dataType: "JSON",
-            data: {"id":id},
-            success: function(data){
+        function fixture(){ 
+            return $.ajax({
+                url: base + "competitions/leagues/filterLeagues",
+                type: "POST", 
+                dataType: "JSON",
+                data: {"id":id},
+                success: function(fixture_data){}
+            });
+        }
+        function table(){
+            return $.ajax({
+                url: base + "competitions/leagues/filterTable",
+                type: "POST", 
+                dataType: "JSON",
+                data: {"id":id},
+                success: function(table_data){}
+            });
+        }
+        $.when(fixture(), table()).done(function(fixture_data, table_data){
+            var fixture = fixture_data[0];
+            var table = table_data[0];
+            
+            if(fixture){
                 $("#loading").hide();
-                $.each(data, function(index, item){
-                    var matchdayName = item.matchday_name; 
+                $.each(fixture, function(index, item){
+                    var matchdayName = item.match_matchday; 
                     var manager = item.managerid; 
                     if(matchdayName !== matchdayNull){
                         var headtitle = '<li class="matchlist-heading"><div class="matchlist-competition-logo"><img src="'+ base +'assets/img/competitions_logo/'+item.competition_logo+'"></div><div class="matchlist-competition-name">'+item.competition_name+'&nbsp-&nbsp</div><div class="matchlist-day-title">'+leagueMatchdayTitle+' '+matchdayName+'</div></li>';
@@ -65,11 +85,35 @@ function fixturesTable(){
                 $('li.matchlist-heading').each(function(){
                     $(this).nextUntil('li.matchlist-heading').addBack().wrapAll('<div class="panel"><div class="panel-body"></div></div)'); 
                 });
-                $animsition.removeClass('fade-out-down-sm');
-                $animsition.animsition('in');
             }
-        }); 
+            if(table){
+                var competitioname = table[0].competitioname;
+                $('.competition-name-table, .tables-competition-name').html('').html(competitioname);
+                $('.competition-logo-table-20, .tables-competition-logo img').attr('src', '');
+                $('.competition-logo-table-20, .tables-competition-logo img').attr('src', base +'assets/img/competitions_logo/'+table[0].competitionlogo);
+                
+                $.each(table, function(index, item){
+                    var tablelist = '<div class="tr">\
+                        <div class="td"><div>'+item.position+'</div></div>\
+                        <div class="td"><img class="team-logo-table-25" src="'+ base +'assets/img/teams_logo/'+item.logo+'"><div class="team-name-table"><span class="full-text">'+item.team+'</span><span class="truncate-box-text">'+item.team.substring(0, 3)+'</span></div></div>\
+                        <div class="td">'+item.P+'</div>\
+                        <div class="td sm-hide">'+item.W+'</div>\
+                        <div class="td sm-hide">'+item.D+'</div>\
+                        <div class="td sm-hide">'+item.L+'</div>\
+                        <div class="td sm-hide">'+item.F+'</div>\
+                        <div class="td sm-hide">'+item.A+'</div>\
+                        <div class="td">'+item.GD+'</div>\
+                        <div class="td">'+item.Pts+'</div>\
+                        </div>';
+                    $('#tables .table-custom, #table-mini .table-custom').append(tablelist);  
+                });    
+            }
+            $animsition.removeClass('fade-out-down-sm');
+            $animsition.animsition('in');
+        });
+       
     });
+
     
     $('#selectTeams').on('change', function(e){
         e.preventDefault();
@@ -137,7 +181,8 @@ function fixturesTable(){
         });
     });
     
-    $selectLeagues = $('#selectLeagues');
+    $selectLeagues = $('#selectLeagues, #selectLeaguesTables');
+    
     $.ajax({
         url: base + "competitions/leagues/loadleagues",
         dataType: 'JSON',

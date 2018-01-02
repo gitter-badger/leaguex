@@ -8,3 +8,4 @@ function options(){
     $option = $query->row(); 
     return $option;
 }
+

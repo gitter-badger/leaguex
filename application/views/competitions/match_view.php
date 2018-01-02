@@ -17,7 +17,7 @@
                                 <div class="advice-text <?php if($matchid->match_status != 0){echo 'hide';}?>"><?php echo lang('match_day_advice_text');?></div>
                                 <div class="unplayed <?php if($matchid->match_status != 0){echo 'hide';}?>"><img class="" src="<?= base_url().'assets/img/timer-clock.png';?>"></div>
                                 <div class="score <?php if($matchid->match_status == 0){echo 'hide';}?>"><span class="home-score"><?php echo ($matchid->match_status == 0 ? '' : $matchid->match_score1);?></span><span class="score-space">-</span><span class="away-score"><?php echo ($matchid->match_status == 0 ? '' : $matchid->match_score2);?></span></div>
-                                <div class="match-info <?php if($matchid->match_status == 0){echo 'hide';}?>"><?php echo lang('match_day_title');?> <?php echo $matchid->matchday_name;?></div>
+                                <div class="match-info <?php if($matchid->match_status == 0){echo 'hide';}?>"><?php echo lang('match_day_title');?> <?php echo $matchid->match_matchday;?></div>
                             </div>
                             <div class="away team">
                                 <a href="#" class="team-logo-container">
@@ -27,8 +27,9 @@
                             </div>
                         </div>
                     </div> 
-                    <div class="match-box-header"><?php echo lang('match_day_info');?></div>
+                   
                     <div class="match-box-events">
+                         <div class="match-box-header"><?php echo lang('match_day_info');?></div>
                         <div class="match-scorers">
                             <?php foreach($getscorers as $scorer): ?>
                             <a href="#" class="event">

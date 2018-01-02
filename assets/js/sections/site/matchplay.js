@@ -191,8 +191,9 @@ function addResult(){
                 .clone()
                 .removeClass('hide')
                 .removeAttr('id')
-                .insertBefore($template);
-            $clone.animateCss('slideInLeft', function (obj){obj;});    
+                .insertAfter($template);
+            $clone.animateCss('slideInLeft', function (obj){obj;});
+            $('.modal .modal-body-custom').getNiceScroll().resize();
             var remove = $(this).closest('.modresult-scorer').find('.player-remove');
             var removeclone = $clone.find('.player-remove');
             $clone.find('.bootstrap-select').remove();
@@ -210,8 +211,8 @@ function addResult(){
             $('.no-scorers-wrap').hide();
                 loadpic.hide();
                 button.show();
-                $('.modal .modal-body-custom').getNiceScroll().resize();
-            }, 400);            
+                
+            }, 400);
         })
         .on('click', '.add-event .add-link', function(){
             var loadpic = $(this).find('.fa-spin');
@@ -224,8 +225,9 @@ function addResult(){
                 .clone()
                 .removeClass('hide')
                 .removeAttr('id')
-                .insertBefore($template);
+                .insertAfter($template);
             $clone.animateCss('slideInLeft', function (obj){obj;});    
+            $('.modal .modal-body-custom').getNiceScroll().resize();
             var remove = $(this).closest('.modresult-event').find('.event-player-remove');
             var removeclone = $clone.find('.event-player-remove');
             $clone.find('.bootstrap-select').remove();
@@ -243,7 +245,6 @@ function addResult(){
             $('.no-events-wrap').hide();
                 loadpic.hide();
                 button.show();
-                $('.modal .modal-body-custom').getNiceScroll().resize();
             }, 400);                
         })
         .on('added.field.fv', function(e, data){
@@ -280,14 +281,13 @@ function addResult(){
                 .formValidation('removeField', $row.find('[name="time[]"]'));
             setTimeout(function() {
                 $row.animateCss('slideOutRight', function (obj) {
-                obj.remove();
-                if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
-            });
-                $('.modal .modal-body-custom').getNiceScroll().resize();
+                    obj.remove();
+                    $('.modal .modal-body-custom').getNiceScroll().resize();
+                    if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
+                });
             }, 400);
         })
         .on('click', '.event-player-remove', function(){
-            $(".modal .modal-body-custom").getNiceScroll().resize();
             var $row = $(this).closest('.event');
             var eventbox = $('.modresult-addevent').find('.event');
             $('#addResultForm')
@@ -295,10 +295,10 @@ function addResult(){
                 .formValidation('removeField', $row.find('[name="timevent[]"]'));
             setTimeout(function() {
                 $row.animateCss('slideOutRight', function (obj) {
-                obj.remove();
-                if(eventbox.length === 2){$('.no-events-wrap').show();}
-            });
-                $('.modal .modal-body-custom').getNiceScroll().resize();
+                    obj.remove();
+                    $('.modal .modal-body-custom').getNiceScroll().resize();
+                    if(eventbox.length === 2){$('.no-events-wrap').show();}
+                });
             }, 400);
         })
         .on('err.field.fv', function(e, data) {

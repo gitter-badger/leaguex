@@ -48,17 +48,4 @@ class Teams_list_model extends CI_Model{
             return TRUE;
         }
     }
-    
-    function update_logo($idteam,$imgname){
-        $this->db->trans_start();
-        $this->db->where('team_id', $idteam);
-        $this->db->set('team_logo',$imgname);
-        $this->db->update('lex_teams');                 
-        $this->db->trans_complete();
-        if ($this->db->trans_status() === FALSE){           
-            return FALSE;
-        } else {
-            return TRUE;
-        }
-    }
 }

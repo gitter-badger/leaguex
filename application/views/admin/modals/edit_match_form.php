@@ -2,7 +2,6 @@
     <input type="hidden" id="matchid" name="matchid" value="">
     <input type="hidden" id="ematchid" name="vmatchid" value="">
     <input type="hidden" id="competitionid" name="competitionid" value="">
-    <input type="hidden" id="matchdayid" name="matchdayid" value="">
     <div class="modal-header">
         <div class="modresult-box">
             <div class="modresult-match-info">
@@ -107,7 +106,7 @@
                     </div>
                      <div class="no-walkover-wrap">
                         <div class="no-walkover-container animated fadeIn">
-                            <div class="no-walkover"><div class="loadpic"><i class="fa fa-refresh fa-spin" style="font-size: 50px"></i></div><img src="<?= base_url().'assets/img/no-walkover.png'?>" width="50px"></div>
+                            <div class="no-walkover"><div class="loadpic"><i class="fa fa-refresh fa-spin" style="font-size: 50px; color: rgba(0,0,0,0.44)"></i></div><img src="<?= base_url().'assets/img/no-walkover.png'?>" width="50px"></div>
                         </div>
                     </div>
                     <div class="modresult-walkover">

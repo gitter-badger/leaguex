@@ -7,7 +7,7 @@
 // TITOLI PAGINE
 $lang['site_title_settings'] = "Impostazioni";
 $lang['site_title_mysquad'] = "Rosa";
-$lang['site_title_leagues'] = "Calendari";
+$lang['site_title_leagues'] = "Incontri";
 $lang['site_title_matchleague'] = "Incontro";
 $lang['site_title_notifications'] = "Notifiche";
 $lang['admin_title_optionsmedia'] = "Impostazioni Media";
@@ -126,6 +126,8 @@ $lang['ntf_type_2'] = "Tanti auguri di buon compleanno dal team di %s!";
 $lang['head_menu_admin'] = "Admin";
 $lang['head_menu_settings'] = "Impostazioni";
 $lang['head_menu_myteam'] = "La mia squadra";
+$lang['head_tab_fixtures'] = "Incontri";
+$lang['head_tab_tables'] = "Classifiche";
 
 // SIDEBAR MENU SITO
 $lang['sbar_menu_home'] = "Home";
@@ -134,7 +136,6 @@ $lang['sbar_menu_notifications'] = "Notifiche";
 $lang['sbar_menu_team'] = "La Mia Squadra";
 $lang['sbar_submenu_squad'] = "Rosa";
 $lang['sbar_menu_leagues'] = "Campionati";
-$lang['sbar_submenu_fixtures_results'] = "Calendario | Risultati";
 $lang['sbar_menu_cups'] = "Coppe";
 
 //SIDEBAR MENU ADMIN
@@ -244,6 +245,15 @@ $lang['league_select_all_teams'] = "Tutte le squadre";
 $lang['league_select_all_fixtures'] = "Tutti i calendari";
 $lang['league_matchday_title'] = "Giornata";
 $lang['no_fixtures_text'] = "Nessun calendario da mostrare.";
+$lang['league_title_table'] = "Classifica";
+$lang['league_header_table_won'] = "V";
+$lang['league_header_table_drawn'] = "P";
+$lang['league_header_table_lost'] = "S";
+$lang['league_header_table_points'] = "Pt";
+$lang['league_header_table_goals_diff'] = "DG";
+$lang['league_header_table_goals_for'] = "GF";
+$lang['league_header_table_goals_against'] = "GS";
+$lang['league_header_table_played'] = "PG";
 
 // MATCH VIEW 
 $lang['match_day_title'] = "Giornata";
@@ -271,28 +281,28 @@ $lang['addresult_option_own_goal'] = "Autogoal";
 //------------------------------------------------------------------------------
 
 // OPTIONS GENERAL
-$lang['admin_ogeneral_header_title'] = "Impostazioni Generali";
+$lang['admin_ogeneral_header_title'] = "Impostazioni generali";
 $lang['admin_ogeneral_title_global_configuration'] = "Impostazioni";
 $lang['admin_ogeneral_select_language'] = "Lingua";
 $lang['admin_ogeneral_language_ita'] = "Italiano";
 $lang['admin_ogeneral_language_eng'] = "Inglese";
 $lang['admin_ogeneral_option_yes'] = "Si";
 $lang['admin_ogeneral_option_no'] = "No";
-$lang['admin_ogeneral_input_site_name'] = "Nome del Sito";
+$lang['admin_ogeneral_input_site_name'] = "Nome del sito";
 $lang['admin_ogeneral_input_placeholder_site_name'] = "es. LEAGUEX";
-$lang['admin_ogeneral_input_site_title'] = "Titolo del Sito";
+$lang['admin_ogeneral_input_site_title'] = "Titolo del sito";
 $lang['admin_ogeneral_input_placeholder_site_title'] = "es. LEAGUEX | La tua fanta master league";
-$lang['admin_ogeneral_page_transition'] = "Transizione Pagine";
-$lang['admin_ogeneral_table_details'] = "Dettagli Tabelle";
+$lang['admin_ogeneral_page_transition'] = "Transizione pagine";
+$lang['admin_ogeneral_table_details'] = "Dettagli tabelle";
 $lang['admin_ogeneral_description_page_transition'] = "Attiva o disattiva l'animazione nel passaggio tra le pagine.";
 $lang['admin_ogeneral_description_table_details'] = "Visualizza o nasconde i dettagli delle tabelle nella visuale tablet-smartphone.";
 
 // OPTIONS MEDIA
-$lang['admin_omedia_header_title'] = "Impostazioni Media";
-$lang['admin_omedia_title_avatar_image'] = "Dimensioni Avatar Utente";
+$lang['admin_omedia_header_title'] = "Impostazioni media";
+$lang['admin_omedia_title_avatar_image'] = "Dimensioni avatar utente";
 $lang['admin_omedia_subtitle_avatar_image'] = "Consigliato: max = 180 x 180, min = 130 x 130";
 $lang['admin_omedia_description_avatar_image'] = "Le dimensioni massime e minime (in pixel) dell'immagine avatar caricata dall'utente.";
-$lang['admin_omedia_title_teamlogo_image'] = "Dimensioni Logo Squadra";
+$lang['admin_omedia_title_teamlogo_image'] = "Dimensioni logo squadra";
 $lang['admin_omedia_description_teamlogo_image'] = "Le dimensioni massime e minime (in pixel) dell'immagine logo della squadra.";
 $lang['admin_omedia_subtitle_teamlogo_image'] = "Consigliato: max = 500 x 500, min = 250 x 250";
 $lang['admin_omedia_input_maxsize'] = "Massime";
@@ -301,27 +311,32 @@ $lang['admin_omedia_input_placeholder_width'] = "Largh";
 $lang['admin_omedia_input_placeholder_height'] = "Alt";
 
 // OPTIONS COMPETITIONS
-$lang['admin_ocompetitions_header_title'] = "Impostazioni Competizioni";
-$lang['admin_ocompetitions_title_players_levels'] = "Overall Range";
-$lang['admin_ocompetitions_description_players_levels'] = "Configura un massimo di 10 livelli basati sull'overall e imposta un limite di giocatori consentiti per ogni livello.";
-$lang['admin_ocompetitions_activate_levels'] = "Attiva Overall Range";
-$lang['admin_ocompetitions_input_levels'] = "Overall Range";
-$lang['admin_ocompetitions_input_placeholder_max_players'] = "Nr. Giocatori";
+$lang['admin_ocompetitions_header_title'] = "Impostazioni competizioni";
+$lang['admin_ocompetitions_title_events'] = "Eventi giocatore";
+$lang['admin_ocompetitions_description_events'] = "Crea nuovi eventi giocatore";
+$lang['admin_ocompetitions_input_events'] = "Eventi";
+$lang['admin_ocompetitions_input_placeholder_event_name'] = "Nome evento";
+$lang['admin_ocompetitions_input_placeholder_event_image'] = "Icona evento (20x20 png/jpg)";
 
 
 // OPTIONS PLAYERS
-$lang['admin_oplayers_header_title'] = "Impostazioni Giocatori";
-$lang['admin_oplayers_title_url_stats'] = "Link Statistiche";
+$lang['admin_oplayers_header_title'] = "Impostazioni giocatori";
+$lang['admin_oplayers_title_url_stats'] = "Link statistiche";
 $lang['admin_oplayers_description_url_stats'] = "Url della pagina statistiche del giocatore.";
-$lang['admin_oplayers_input_url_stats'] = "URL Statistiche";
+$lang['admin_oplayers_input_url_stats'] = "URL statistiche";
 $lang['admin_oplayers_input_placeholder_url_stats'] = "es. http://sofifa.com/player/";
-$lang['admin_oplayers_title_url_player_image'] = "Link Immagine";
+$lang['admin_oplayers_title_url_player_image'] = "Link immagine";
 $lang['admin_oplayers_description_url_player_image'] = "Url dell'immagine del giocatore.";
-$lang['admin_oplayers_input_url_player_image'] = "URL Immagine";
+$lang['admin_oplayers_input_url_player_image'] = "URL immagine";
 $lang['admin_oplayers_input_placeholder_url_player_image'] = "es. http://fifa15.content.easports.com/fifa/fltOnlineAssets/B488919F-23B5-497F-9FC0-CACFB38863D0/2016/fut/items/images/players/web/";
+$lang['admin_oplayers_title_players_levels'] = "Livelli giocatori";
+$lang['admin_oplayers_description_players_levels'] = "Configura fino a 10 livelli basati sull'overall e imposta un limite di giocatori consentiti per ogni livello.";
+$lang['admin_oplayers_activate_levels'] = "Attiva livelli";
+$lang['admin_oplayers_input_placeholder_max_players'] = "Nr. giocatori";
+$lang['admin_oplayers_input_levels'] = "Livelli";
 
 // OPTIONS EMAIL
-$lang['admin_omail_header_title'] = "Impostazioni Email";
+$lang['admin_omail_header_title'] = "Impostazioni email";
 $lang['admin_omail_title_smtp_options'] = "Opzioni SMTP";
 $lang['admin_omail_description_smtp_options'] = "Configura leaguex per l'invio di email con autenticazione SMTP.";
 $lang['admin_omail_input_email'] = "Email";
@@ -342,11 +357,11 @@ $lang['admin_omail_subtitle_authentication'] = "* Lascia i parametri seguenti vu
 $lang['admin_omail_subtitle_input_username'] = "Nome utilizzato per l'autenticazione al server di posta elettronica";
 $lang['admin_omail_input_password'] = "Password";
 $lang['admin_omail_subtitle_input_password'] = "Password utilizzata per l'autenticazione al server di posta elettronica";
-$lang['admin_omail_title_test_smtp_options'] = "Test Email";
+$lang['admin_omail_title_test_smtp_options'] = "Test email";
 $lang['admin_omail_description_test_smtp_options'] = "Invia una mail di prova all'indirizzo di posta elettronica inserito.";
 $lang['admin_omail_input_test_smtp'] = "Email";
-$lang['admin_omail_form_button_send_test'] = "Test Email";
-$lang['admin_omail_object_test_mail'] = "SMTP Test";
+$lang['admin_omail_form_button_send_test'] = "Test email";
+$lang['admin_omail_object_test_mail'] = "SMTP test";
 $lang['admin_omail_text_test_mail'] = "Ottimo! <br/><br/> Ora puoi utilizzare il protocollo SMTP per l'invio di email.";
 $lang['admin_omail_form_smtp_success_message'] = "Controlla la tua email per sapere se la configurazione è andata a buon fine";
 $lang['admin_omail_form_smtp_error_message'] = "Test fallito! Controlla le impostazioni SMTP";
@@ -354,7 +369,7 @@ $lang['admin_omail_form_smtp_error_message'] = "Test fallito! Controlla le impos
 // LEAGUES LIST
 $lang['admin_leagueslist_header_title'] = "Campionati"; 
 $lang['admin_leagueslist_modal_add_league_title'] = "Crea nuovo campionato";
-$lang['admin_leagueslist_input_leaguename'] = "Nome Campionato";
+$lang['admin_leagueslist_input_leaguename'] = "Nome campionato";
 $lang['admin_leagueslist_select_leagueteams'] = "Squadre";
 $lang['admin_leagueslist_header_table_league'] = "Campionato";
 $lang['admin_leagueslist_header_table_count_teams'] = "Squadre";
@@ -368,8 +383,8 @@ $lang['admin_leagueslist_toastr_message_league_fixture'] = "Calendario creato.";
 
 // EDIT LEAGUE 
 $lang['admin_eleague_header_title'] = "Modifica";
-$lang['admin_eleague_header_table_home_team'] = "Squadra di Casa";
-$lang['admin_eleague_header_table_away_team'] = "Squadra Ospite";
+$lang['admin_eleague_header_table_home_team'] = "Squadra di casa";
+$lang['admin_eleague_header_table_away_team'] = "Squadra ospite";
 $lang['admin_eleague_header_table_score'] = "Risultato";
 $lang['admin_eleague_info_matchday'] = "Giornate";
 $lang['admin_eleague_info_matches'] = "Incontri";
@@ -418,8 +433,8 @@ $lang['admin_mlist_modal_add_manager_title'] = "Crea nuovo manager";
 $lang['admin_mlist_header_table_manager'] = "Manager";
 $lang['admin_mlist_header_table_team'] = "Squadra";
 $lang['admin_mlist_header_table_wallet'] = "Finanze";
-$lang['admin_mlist_select_username'] = "- Seleziona Utente -";
-$lang['admin_mlist_select_teamname'] = "- Seleziona Squadra -";
+$lang['admin_mlist_select_username'] = "- Seleziona utente -";
+$lang['admin_mlist_select_teamname'] = "- Seleziona squadra -";
 $lang['admin_mlist_input_managerfinance'] = "Finanze";
 
 // EDIT MANAGER 

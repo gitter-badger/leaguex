@@ -26,8 +26,9 @@ class Leagues extends CI_Controller {
         $data['getlastleague'] = $this->leagues_model->getlastleague();
         $data['getlastteams'] = $this->leagues_model->getlastteams();
         $data['getmanagers'] = $this->leagues_model->getmanager($userID);
+        $data['getlastable'] = $this->leagues_model->getlastable();
         echo add_css(array('plugins/bootstrap-select/bootstrap-select.min.css')); 
-        echo addfooter_js(array('plugins/bootstrap-select/bootstrap-select.min.js','js/sections/site/fixturesTable.js')); 
+        echo addfooter_js(array('plugins/bootstrap-select/bootstrap-select.min.js','js/sections/site/competitions.js')); 
         $this->load->view('header_view',$data);
         $this->load->view('sidebar_left_view');
         sidebar_chat();
@@ -54,6 +55,12 @@ class Leagues extends CI_Controller {
         $this->output->set_output(json_encode($getTeams));
     }
 
+    public function filterTable(){
+         $competitionid = $this->input->post('id');
+         $getTable = $this->leagues_model->gettable($competitionid);
+         $this->output->set_output(json_encode($getTable)); 
+    }
+    
     public function loadleagues(){
         
         $show_leagues = $this->leagues_model->optionleagues();
