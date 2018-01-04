@@ -4030,13 +4030,6 @@ tbody .icon-link>i {
     .panel-heading .widget-details>.competition-logo-img>.preview{
         margin: 0 auto;
     }
-    #tables .team-name-table .full-text{
-        display: none;
-    }
-    #tables .team-name-table .truncate-box-text{
-        display: block;
-        text-transform: uppercase;
-    }
 }
 @media (max-width: 750px) {
     .csstransforms3d.sidebar-mb-opened .sidebar-left,
@@ -4229,6 +4222,13 @@ tbody .icon-link>i {
     .fixture-wrap .team-name .compare-text {
         line-height: normal;
     }
+    #tables .team-name-table .full-text{
+        display: none;
+    }
+    #tables .team-name-table .truncate-box-text{
+        display: block;
+        text-transform: uppercase;
+    }
 }
 @media (max-width: 450px) {
     .match-box .match-box-teams .team, .match-box .match-box-teams .score-container{
@@ -4296,12 +4296,5 @@ tbody .icon-link>i {
     }
     .modresult-logo-container {
         margin: 0 5px;
-    }
-     #table-mini .team-name-table .truncate-box-text{
-        text-transform: uppercase;
-        display: block;
-    }
-    #table-mini .team-name-table .full-text{
-        display: none;
     }
 }
