@@ -1,6 +1,6 @@
 <h1>Leaguex app</h1>
 
-<h2>Leaguex Versione alpha 1.02</h2>
+<h2>alpha version</h2>
 
 <h4>Premessa</h4>
 
