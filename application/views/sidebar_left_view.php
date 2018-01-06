@@ -20,24 +20,12 @@
                         <div class="text">Home</div>
                     </a>
                 </div>
-                <div class="content-menu withripple <?php if($this->uri->segment(1)=="teams"){echo "menu-open active";}?>">
-                    <a class="dropdown-toggle" href="javascript:void(0);">
+                <div class="content-menu withripple <?php if($this->uri->segment(1)=="teams"){echo "active";}?>">
+                    <a class="animsition-link" href="<?= base_url().'teams/user_team';?>">
                         <div class="icon-wrap"><i class="flaticon flaticon-game" style="font-size: 22px"></i></div>
                         <div class="text"><?php echo lang('sbar_menu_team');?></div>
                     </a>
                 </div>
-                <div class="submenu" <?php if($this->uri->segment(1)=="teams"){echo "style='display:block;'";}?>>
-                    <div class="content-menu withripple">
-                        <a class="animsition-link <?php if($this->uri->segment(2)=="user_team"){echo "active";}?>" href="<?= base_url().'teams/user_team';?>">
-                            <span class="text"><?php echo lang('sbar_submenu_squad');?></span>
-                        </a>
-                    </div>
-                    <div class="content-menu withripple">
-                        <a class="animsition-link" href="#">
-                            <span class="text"><?php echo lang('sbar_submenu_notifications');?></span>
-                        </a> 
-                    </div>                        
-                </div>                    
                 <div class="content-menu withripple <?php if($this->uri->segment(1)=="competitions"){echo "menu-open active";}?>">
                     <a class="animsition-link" href="<?= base_url().'competitions/leagues';?>">
                         <div class="icon-wrap"><i class="flaticon flaticon-cup"></i></div>

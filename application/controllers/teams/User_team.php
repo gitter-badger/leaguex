@@ -22,8 +22,11 @@ class User_team extends CI_Controller {
         $data['transition'] = read_transition();
         $userID = $this->session->userdata('userid');
         $data['userPic'] = $this->get_user_data_model->get_user_img($userID);                      
-        $data['title'] = $this->lang->line('site_title_mysquad');
         $data['userteam'] = $this->user_team_model->showuserteam($userID);
+        foreach($data['userteam'] as $geteam){
+            $teamname = $geteam->team_name; 
+        }
+        $data['title'] = $teamname;
         $data['userplayer'] = $this->user_team_model->showuserplayer($userID);
         $data['countplayers'] = count($data['userplayer']);
         echo addfooter_js(array('plugins/bootstrap-rating/bootstrap-rating.min.js')); 

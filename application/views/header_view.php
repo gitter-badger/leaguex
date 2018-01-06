@@ -88,7 +88,17 @@
                             <a class="withoutripple" data-toggle="tab" href="#matches"><?php echo lang('head_tab_fixtures');?></a>
                         </div>    
                         <div class="tab-container withripple">
-                            <a class="withoutripple" data-toggle="tab" href="#tables" id="note-tab"><input type="hidden" value="<?php echo $this->session->userdata('userid')?>" name="user_id" /><?php echo lang('head_tab_tables');?></a>
+                            <a class="withoutripple" data-toggle="tab" href="#tables"><?php echo lang('head_tab_tables');?></a>
+                        </div>    
+                    </div>
+                    <?php } ?>
+                    <?php if($this->uri->segment(2)=="user_team"){ ?>
+                    <div class="nav-tabs-bar">
+                        <div class="tab-container withripple active">
+                            <a class="withoutripple" data-toggle="tab" href="#overview"><?php echo lang('head_tab_overview');?></a>
+                        </div>    
+                        <div class="tab-container withripple">
+                            <a class="withoutripple" data-toggle="tab" href="#squad"><?php echo lang('head_tab_squad');?></a>
                         </div>    
                     </div>
                     <?php } ?>

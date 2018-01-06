@@ -1,5 +1,5 @@
 <?php if(!$userplayer){echo '<div class="col-lg-12 advice-text text-center"><h4>'.lang('uteam_text_card_noplayers_squad');'</h4></div>';}else{?> 
-<div class="tab-pane fade in active" id="tab-myteam">
+<div class="tab-pane" id="squad">
     <?php foreach($userplayer as $player):
 
         // Overall range levels

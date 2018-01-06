@@ -27,6 +27,7 @@
                     </div>
                     <?php } ?> 
                     <div id="loading" class="loading-block loadpage"></div>
+                    <?php if(is_array($getlastleague)){ ?>
                     <ul class="matchlist list-unstyled">
                         <?php
                         $matchdayNull = null; 
@@ -56,10 +57,12 @@
                             </a>
                         </li>
                         <?php $div = '</div></div>'; endforeach; } ?>
-                     </ul>
+                    </ul>
+                    <?php } ?> 
                 </div>
             </div>
             <div class="col-lg-5">
+                 <?php if(is_array($getlastleague)){ ?>
                 <div class="panel" id="table-mini">
                     <header class="panel-heading-custom">
                         <div class="panel-title-custom"><?php echo lang('league_title_table');?></div>
@@ -84,6 +87,7 @@
                         </div>
                     </div>
                 </div>
+                <?php } ?> 
             </div>
         </div>
     </div>    

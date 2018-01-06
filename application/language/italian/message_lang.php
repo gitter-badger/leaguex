@@ -6,8 +6,7 @@
 
 // TITOLI PAGINE
 $lang['site_title_settings'] = "Impostazioni";
-$lang['site_title_mysquad'] = "Rosa";
-$lang['site_title_leagues'] = "Incontri";
+$lang['site_title_leagues'] = "Competizioni";
 $lang['site_title_matchleague'] = "Incontro";
 $lang['site_title_notifications'] = "Notifiche";
 $lang['admin_title_optionsmedia'] = "Impostazioni Media";
@@ -128,14 +127,15 @@ $lang['head_menu_settings'] = "Impostazioni";
 $lang['head_menu_myteam'] = "La mia squadra";
 $lang['head_tab_fixtures'] = "Incontri";
 $lang['head_tab_tables'] = "Classifiche";
+$lang['head_tab_overview'] = "Panoramica";
+$lang['head_tab_squad'] = "Rosa";
 
 // SIDEBAR MENU SITO
 $lang['sbar_menu_home'] = "Home";
 $lang['sbar_menu_settings'] = "Impostazioni";
 $lang['sbar_menu_notifications'] = "Notifiche";
 $lang['sbar_menu_team'] = "La Mia Squadra";
-$lang['sbar_submenu_squad'] = "Rosa";
-$lang['sbar_menu_leagues'] = "Campionati";
+$lang['sbar_menu_leagues'] = "Competizioni";
 $lang['sbar_menu_cups'] = "Coppe";
 
 //SIDEBAR MENU ADMIN
@@ -239,12 +239,14 @@ $lang['esett_modal_label_favorite_club'] = "Squadra preferita";
 $lang['esett_modal_label_about_me'] = "Messaggio Personale";
 $lang['esett_avatar_widget_personal_message'] = "Il mio messaggio personale";
 
-// LEAGUES VIEW 
+// COMPETITIONS VIEW 
 $lang['league_filter_small_dev'] = "Filtra";
 $lang['league_select_all_teams'] = "Tutte le squadre";
 $lang['league_select_all_fixtures'] = "Tutti i calendari";
+$lang['league_select_all_tables'] = "Tutte le classifiche";
 $lang['league_matchday_title'] = "Giornata";
 $lang['no_fixtures_text'] = "Nessun calendario da mostrare.";
+$lang['no_tables_text'] = "Nessuna classifica da mostrare.";
 $lang['league_title_table'] = "Classifica";
 $lang['league_header_table_won'] = "V";
 $lang['league_header_table_drawn'] = "P";

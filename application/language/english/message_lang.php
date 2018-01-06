@@ -6,8 +6,7 @@
 
 // PAGE TITLES
 $lang['site_title_settings'] = "Settings";
-$lang['site_title_mysquad'] = "Squad";
-$lang['site_title_leagues'] = "Matches";
+$lang['site_title_leagues'] = "Competitions";
 $lang['site_title_matchleague'] = "Match";
 $lang['site_title_notifications'] = "Notifications";
 $lang['admin_title_optionsmedia'] = "Media Settings";
@@ -130,14 +129,15 @@ $lang['head_menu_settings'] = "Settings";
 $lang['head_menu_myteam'] = "My club";
 $lang['head_tab_fixtures'] = "Fixtures";
 $lang['head_tab_tables'] = "Tables";
+$lang['head_tab_overview'] = "Overview";
+$lang['head_tab_squad'] = "Squad";
 
 // SIDEBAR MENU SITE
 $lang['sbar_menu_home'] = "Home";
 $lang['sbar_menu_settings'] = "Settings";
 $lang['sbar_menu_notifications'] = "Notifications";
 $lang['sbar_menu_team'] = "My Club";
-$lang['sbar_submenu_squad'] = "Squad";
-$lang['sbar_menu_leagues'] = "Leagues";
+$lang['sbar_menu_leagues'] = "Competitions";
 $lang['sbar_menu_cups'] = "Cups";
 
 // SIDEBAR MENU ADMIN
@@ -241,12 +241,14 @@ $lang['esett_modal_label_favorite_club'] = "Favorite Club";
 $lang['esett_modal_label_about_me'] = "Personal message";
 $lang['esett_avatar_widget_personal_message'] = "My personal message";
 
-// LEAGUES VIEW 
+// COMPETITIONS VIEW 
 $lang['league_filter_small_dev'] = "Filter";
 $lang['league_select_all_teams'] = "All clubs";
 $lang['league_select_all_fixtures'] = "All fixtures";
+$lang['league_select_all_tables'] = "All tables";
 $lang['league_matchday_title'] = "Matchday";
 $lang['no_fixtures_text'] = "No fixtures to show.";
+$lang['no_tables_text'] = "No tables to show.";
 $lang['league_title_table'] = "Table";
 $lang['league_header_table_won'] = "W";
 $lang['league_header_table_drawn'] = "D";

@@ -4,6 +4,5 @@
             <?php $this->load->view('competitions/tabs/matches_tab');?> 
             <?php $this->load->view('competitions/tabs/tables_tab');?> 
         </div>
-            
     </div>
 </section>

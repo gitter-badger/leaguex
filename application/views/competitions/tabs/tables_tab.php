@@ -4,11 +4,22 @@
             <div class="col-lg-10">
                 <div class="filter-custom">
                     <div class="filter-wrap">
-                        <select class="show-tick selectpicker m-r-a" data-width="fit" id="selectLeaguesTables" name="leaguename" <?php if(!is_array($getlastleague)){echo 'disabled';} ?> data-none-selected-text="<?php echo lang('league_select_all_fixtures');?>"></select>
+                        <select class="show-tick selectpicker m-r-a" data-width="fit" id="selectLeaguesTables" name="leaguename" <?php if(!is_array($getlastleague)){echo 'disabled';} ?> data-none-selected-text="<?php echo lang('league_select_all_tables');?>"></select>
                         
                     </div>
                 </div>    
                 <div id="tables">
+                    <?php if(!is_array($getlastable)){ ?>
+                    <div class="no-tables-wrap">
+                        <div class="no-tables-container">
+                            <div class="no-tables">
+                                <img src="<?= base_url().'assets/img/no-tables.png'?>" width="100" height="100">
+                                <div class="no-tables-text"><?php echo lang('no_tables_text')?></div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php } ?>
+                    <?php if(is_array($getlastable)){ ?>
                     <div class="panel">
                         <div class="panel-body">
                             <div class="tables-heading">
@@ -43,6 +54,7 @@
                             </div>
                         </div>
                     </div>
+                    <?php } ?>
                 </div>
             </div>
         </div>
