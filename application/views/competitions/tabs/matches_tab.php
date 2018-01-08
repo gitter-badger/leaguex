@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="col-lg-5">
-                 <?php if(is_array($getlastleague)){ ?>
+                <?php if(is_array($getlastleague)){ ?>
                 <div class="panel" id="table-mini">
                     <header class="panel-heading-custom">
                         <div class="panel-title-custom"><?php echo lang('league_title_table');?></div>

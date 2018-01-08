@@ -1,8 +1,8 @@
 <section id="main-wrapper">
-    <div class="container-fluid animsition pad-dyn">
+    <div class="container-fluid animsition pad-dyn" id="matchview-page">
         <div class="row">
             <div class="col-1">
-                <?php foreach ($match as $matchid): $team1 = $matchid->match_team1_id; $team2 = $matchid->match_team2_id;?>
+                <?php foreach ($match as $matchid): $team1 = $matchid->match_team1_id; $team2 = $matchid->match_team2_id; $teamname1 = $matchid->team1; $teamname2 = $matchid->team2;?>
                 <div class="col-lg-7">
                     <div class="match-box">
                         <?php $this->load->view('modals/add_result_form');?>
@@ -48,6 +48,30 @@
                 </div>
                 <?php endforeach; ?>  
                 <div class="col-lg-5">
+                    <div class="panel" id="table-mini">
+                        <header class="panel-heading-custom">
+                            <div class="panel-title-custom"><?php echo lang('league_title_table');?></div>
+                        </header>
+                        <div class="panel-body pad-t-0">
+                            <div class="table-custom">
+                                <div class="th">
+                                    <div class="td"><?php foreach($getable as $showtable): ?><img class="competition-logo-table-20" src="<?= base_url().'assets/img/competitions_logo/'.$showtable->competitionlogo;?>"><span class="competition-name-table"><?php echo $showtable->competitioname;?><?php break; endforeach; ?></span></div>
+                                    <div class="td"><?php echo lang('league_header_table_played');?></div>
+                                    <div class="td"><?php echo lang('league_header_table_goals_diff');?></div>
+                                    <div class="td"><?php echo lang('league_header_table_points');?></div>
+                                </div>
+                                <?php foreach($getable as $showtable): if($showtable->team == $teamname1 || $showtable->team == $teamname2){?>
+                                <div class="tr">
+                                    <div class="td"><div><?php echo $showtable->position;?></div></div>
+                                    <div class="td"><img class="team-logo-table-25" src="<?= base_url().'assets/img/teams_logo/'.$showtable->logo;?>"><div class="team-name-table"><span class="full-text"><?php echo $showtable->team;?></span><span class="truncate-box-text"><?php echo substr($showtable->team, 0, 3);?></span></div></div>
+                                    <div class="td"><?php echo $showtable->P;?></div>
+                                    <div class="td"><?php echo $showtable->GD;?></div>
+                                    <div class="td"><?php echo $showtable->Pts;?></div>
+                                </div>
+                                <?php  } endforeach; ?>
+                            </div>
+                        </div>
+                    </div>
                     <div class="panel">
                         <div class="comments-widget">
                             <div class="comment-form-container">

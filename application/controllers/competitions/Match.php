@@ -25,7 +25,10 @@ class Match extends CI_Controller {
         $matchid = $this->uri->segment(4);
         $data['match'] = $this->match_model->getmatch($matchid);
         foreach($data['match'] as $scorer){
-            $matchname = $scorer->competition_name; 
+            $matchname = $scorer->competition_name;
+            $competitionid = $scorer->competition_id;
+            $team1 = $scorer->match_team1_id;
+            $team2 = $scorer->match_team2_id;
         }
         $data['title'] = $matchname;
         $data['getmanagers'] = $this->match_model->getmanager($userID);
@@ -34,6 +37,7 @@ class Match extends CI_Controller {
         $data['getscorers'] = $this->match_model->getscorers($matchid);
         $data['getevents'] = $this->match_model->getevents($matchid);
         $data['comments'] = $this->match_model->getcomments($matchid); 
+        $data['getable'] = $this->match_model->getable($competitionid, $team1, $team2);
         echo add_css(array('plugins/jquery-asSpinner/asSpinner.min.css','plugins/bootstrap-lightbox/lightbox.min.css','plugins/formvalidation/formValidation.min.css'));
         echo addfooter_js(array('plugins/jquery-asSpinner/jquery-asSpinner.min.js','plugins/bootstrap-select/bootstrap-select.min.js','plugins/bootstrap-lightbox/lightbox.min.js','plugins/textarea-autosize/autosize.min.js','plugins/bootbox/bootbox.js','plugins/formvalidation/formValidation.min.js','plugins/formvalidation/framework/bootstrap.min.js','js/sections/site/matchplay.js'));
         $this->load->view('header_view',$data);
