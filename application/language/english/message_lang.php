@@ -258,6 +258,7 @@ $lang['league_header_table_goals_diff'] = "GD";
 $lang['league_header_table_goals_for'] = "GF";
 $lang['league_header_table_goals_against'] = "GA";
 $lang['league_header_table_played'] = "PL";
+$lang['league_link_tables'] = "All tables";
 
 // MATCH VIEW
 $lang['match_day_title'] = "Matchday";
