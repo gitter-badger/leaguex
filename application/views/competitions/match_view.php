@@ -6,6 +6,9 @@
                 <div class="col-lg-7">
                     <div class="match-box">
                         <?php $this->load->view('modals/add_result_form');?>
+                        <div class="match-box-header">
+                            
+                        </div>
                         <div class="match-box-teams">
                             <div class="home team">
                                 <a href="#" class="team-logo-container">
@@ -43,33 +46,6 @@
                                 <div class="eventype <?php if($event->teamid == $team1){echo 'right';}else{echo 'left';} ?>"><?php if($event->teamid == $team1){?><span><?php echo $event->timevent;?></span><img class="event-icon" src="<?php echo base_url().'assets/img/icons/'.$event->evicon;?>"><?php } ?><img class="player-image" src="<?php echo $event->url_image.$event->playerimage ?>.png" onerror="imgError(this);"><?php echo $event->playername;?><?php if($event->teamid == $team2){?><img class="event-icon" src="<?php echo base_url().'assets/img/icons/'.$event->evicon?>"><span><?php echo $event->timevent;?></span><?php } ?></div>
                             </a>
                             <?php  endforeach; ?>
-                        </div>
-                    </div>
-                </div>
-                <?php endforeach; ?>  
-                <div class="col-lg-5">
-                    <div class="panel" id="table-mini">
-                        <header class="panel-heading-custom">
-                            <div class="panel-title-custom"><?php echo lang('league_title_table');?></div>
-                        </header>
-                        <div class="panel-body pad-t-0">
-                            <div class="table-custom">
-                                <div class="th">
-                                    <div class="td"><?php foreach($getable as $showtable): ?><img class="competition-logo-table-20" src="<?= base_url().'assets/img/competitions_logo/'.$showtable->competitionlogo;?>"><span class="competition-name-table"><?php echo $showtable->competitioname;?><?php break; endforeach; ?></span></div>
-                                    <div class="td"><?php echo lang('league_header_table_played');?></div>
-                                    <div class="td"><?php echo lang('league_header_table_goals_diff');?></div>
-                                    <div class="td"><?php echo lang('league_header_table_points');?></div>
-                                </div>
-                                <?php foreach($getable as $showtable): if($showtable->team == $teamname1 || $showtable->team == $teamname2){?>
-                                <div class="tr">
-                                    <div class="td"><div><?php echo $showtable->position;?></div></div>
-                                    <div class="td"><img class="team-logo-table-25" src="<?= base_url().'assets/img/teams_logo/'.$showtable->logo;?>"><div class="team-name-table"><span class="full-text"><?php echo $showtable->team;?></span><span class="truncate-box-text"><?php echo substr($showtable->team, 0, 3);?></span></div></div>
-                                    <div class="td"><?php echo $showtable->P;?></div>
-                                    <div class="td"><?php echo $showtable->GD;?></div>
-                                    <div class="td"><?php echo $showtable->Pts;?></div>
-                                </div>
-                                <?php  } endforeach; ?>
-                            </div>
                         </div>
                     </div>
                     <div class="panel">
@@ -155,6 +131,34 @@
                                 </li>
                                 <?php endforeach; ?>    
                             </ul>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>  
+                <div class="col-lg-5">
+                    <div class="panel" id="table-mini">
+                        <header class="panel-heading-custom">
+                            <div class="panel-title-custom"><?php echo lang('league_title_table');?></div>
+                        </header>
+                        <div class="panel-body pad-t-0">
+                            <div class="table-custom">
+                                <div class="th">
+                                    <div class="td"><?php foreach($getable as $showtable): ?><img class="competition-logo-table-20" src="<?= base_url().'assets/img/competitions_logo/'.$showtable->competitionlogo;?>"><span class="competition-name-table"><?php echo $showtable->competitioname;?><?php break; endforeach; ?></span></div>
+                                    <div class="td"><?php echo lang('league_header_table_played');?></div>
+                                    <div class="td"><?php echo lang('league_header_table_goals_diff');?></div>
+                                    <div class="td"><?php echo lang('league_header_table_points');?></div>
+                                </div>
+                                <?php foreach($getable as $showtable): if($showtable->team == $teamname1 || $showtable->team == $teamname2){?>
+                                <div class="tr">
+                                    <div class="td"><div><?php echo $showtable->position;?></div></div>
+                                    <div class="td"><img class="team-logo-table-25" src="<?= base_url().'assets/img/teams_logo/'.$showtable->logo;?>"><div class="team-name-table"><span class="full-text"><?php echo $showtable->team;?></span><span class="truncate-box-text"><?php echo substr($showtable->team, 0, 3);?></span></div></div>
+                                    <div class="td"><?php echo $showtable->P;?></div>
+                                    <div class="td"><?php echo $showtable->GD;?></div>
+                                    <div class="td"><?php echo $showtable->Pts;?></div>
+                                </div>
+                                <?php  } endforeach; ?>
+                            </div>
+                            <div class="tables-link"><a class="animsition-link" href="<?= base_url().'competitions/leagues#tab-tables';?>"><?php echo lang('league_link_tables');?></a></div>
                         </div>
                     </div>
                 </div>
