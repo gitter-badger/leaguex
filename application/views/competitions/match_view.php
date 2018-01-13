@@ -7,7 +7,8 @@
                     <div class="match-box">
                         <?php $this->load->view('modals/add_result_form');?>
                         <div class="match-box-header">
-                            
+                            <div class="match-box-header-title"><?php echo $matchid->competition_name;?></div>
+                            <div class="match-box-header-subtitle"><?php echo lang('match_day_title');?> <?php echo $matchid->match_matchday;?></div>
                         </div>
                         <div class="match-box-teams">
                             <div class="home team">
@@ -15,39 +16,39 @@
                                     <img class="team-logo" src="<?= base_url().'assets/img/teams_logo/'.$matchid->logo1;?>">
                                 </a>
                                 <a href="#" class="team-name"><?php echo $matchid->team1;?></a>
+                                <a href="#" class="team-manager"><?php echo $matchid->user1;?></a>
                             </div>
                             <div class="score-container">
-                                <div class="advice-text <?php if($matchid->match_status != 0){echo 'hide';}?>"><?php echo lang('match_day_advice_text');?></div>
+                                <div class="advice-text <?php if($matchid->match_status != 0){echo 'hide';}?>"><?php echo lang('match_day_advice_text_unplayed');?></div>
                                 <div class="unplayed <?php if($matchid->match_status != 0){echo 'hide';}?>"><img class="" src="<?= base_url().'assets/img/timer-clock.png';?>"></div>
                                 <div class="score <?php if($matchid->match_status == 0){echo 'hide';}?>"><span class="home-score"><?php echo ($matchid->match_status == 0 ? '' : $matchid->match_score1);?></span><span class="score-space">-</span><span class="away-score"><?php echo ($matchid->match_status == 0 ? '' : $matchid->match_score2);?></span></div>
-                                <div class="match-info <?php if($matchid->match_status == 0){echo 'hide';}?>"><?php echo lang('match_day_title');?> <?php echo $matchid->match_matchday;?></div>
+                                <div class="match-info <?php if($matchid->match_status == 0){echo 'hide';}?>"><?php echo lang('match_day_advice_text_final');?></div>
                             </div>
                             <div class="away team">
                                 <a href="#" class="team-logo-container">
                                     <img class="team-logo" src="<?= base_url().'assets/img/teams_logo/'.$matchid->logo2;?>">
                                 </a>
                                 <a href="#" class="team-name"><?php echo $matchid->team2;?></a>
+                                <div class="team-manager"><?php echo $matchid->user2;?></div>
+                            </div>
+                        </div>
+                        <div class="match-box-events">
+                            <div class="match-scorers">
+                                <?php foreach($getscorers as $scorer): ?>
+                                <a href="#" class="event">
+                                    <div class="scorer <?php if($scorer->teamid == $team1){echo 'right';}else{echo 'left';} ?>"><?php if($scorer->teamid == $team1){?><span><?php echo $scorer->timescore;?></span><img class="event-icon" src="<?php echo base_url().'assets/img/icons/soccerball.png'?>"><?php } ?><img class="player-image" src="<?php echo $scorer->url_image.$scorer->playerimage ?>.png" onerror="imgError(this);"><?php echo $scorer->playername;?><?php if($scorer->teamid == $team2){?><img class="event-icon" src="<?php echo base_url().'assets/img/icons/soccerball.png'?>"><span><?php echo $scorer->timescore;?></span><?php } ?></div>
+                                </a>
+                                <?php endforeach; ?>
+                            </div>
+                            <div class="match-events">
+                                <?php foreach($getevents as $event): ?>
+                                <a href="#" class="event">
+                                    <div class="eventype <?php if($event->teamid == $team1){echo 'right';}else{echo 'left';} ?>"><?php if($event->teamid == $team1){?><span><?php echo $event->timevent;?></span><img class="event-icon" src="<?php echo base_url().'assets/img/icons/'.$event->evicon;?>"><?php } ?><img class="player-image" src="<?php echo $event->url_image.$event->playerimage ?>.png" onerror="imgError(this);"><?php echo $event->playername;?><?php if($event->teamid == $team2){?><img class="event-icon" src="<?php echo base_url().'assets/img/icons/'.$event->evicon?>"><span><?php echo $event->timevent;?></span><?php } ?></div>
+                                </a>
+                                <?php  endforeach; ?>
                             </div>
                         </div>
                     </div> 
-                   
-                    <div class="match-box-events">
-                         <div class="match-box-header"><?php echo lang('match_day_info');?></div>
-                        <div class="match-scorers">
-                            <?php foreach($getscorers as $scorer): ?>
-                            <a href="#" class="event">
-                                <div class="scorer <?php if($scorer->teamid == $team1){echo 'right';}else{echo 'left';} ?>"><?php if($scorer->teamid == $team1){?><span><?php echo $scorer->timescore;?></span><img class="event-icon" src="<?php echo base_url().'assets/img/icons/soccerball.png'?>"><?php } ?><img class="player-image" src="<?php echo $scorer->url_image.$scorer->playerimage ?>.png" onerror="imgError(this);"><?php echo $scorer->playername;?><?php if($scorer->teamid == $team2){?><img class="event-icon" src="<?php echo base_url().'assets/img/icons/soccerball.png'?>"><span><?php echo $scorer->timescore;?></span><?php } ?></div>
-                            </a>
-                            <?php  endforeach; ?>
-                        </div>
-                        <div class="match-events">
-                            <?php foreach($getevents as $event): ?>
-                            <a href="#" class="event">
-                                <div class="eventype <?php if($event->teamid == $team1){echo 'right';}else{echo 'left';} ?>"><?php if($event->teamid == $team1){?><span><?php echo $event->timevent;?></span><img class="event-icon" src="<?php echo base_url().'assets/img/icons/'.$event->evicon;?>"><?php } ?><img class="player-image" src="<?php echo $event->url_image.$event->playerimage ?>.png" onerror="imgError(this);"><?php echo $event->playername;?><?php if($event->teamid == $team2){?><img class="event-icon" src="<?php echo base_url().'assets/img/icons/'.$event->evicon?>"><span><?php echo $event->timevent;?></span><?php } ?></div>
-                            </a>
-                            <?php  endforeach; ?>
-                        </div>
-                    </div>
                     <div class="panel">
                         <div class="comments-widget">
                             <div class="comment-form-container">
@@ -91,6 +92,11 @@
                             </div>
                         </div>    
                         <div class="comments-container">
+                            <?php if($more){?>
+                            <div class="more-comments">
+                                <span class="more-comments-link" onclick="loadMoreComments(<?php echo $matchid->match_id;?>, <?php echo $limit;?>)"><?php echo lang('match_day_more_comments');?> (<?php echo $remaining ?>)</span>
+                            </div>
+                            <?php } ?>
                             <ul class="comments-list">
                                 <?php foreach ($comments as $comment):
                                      $contentPost = htmlentities($comment->comment_content);
