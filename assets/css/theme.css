@@ -790,6 +790,8 @@ label.checkbox-inline .checkbox-material .check {
     right: 0;
     width: 100%;
     padding: 7px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
 }
 .bootbox-form .modal-dialog,
 .bootbox-form .modal-content{
@@ -1406,12 +1408,19 @@ label.checkbox-inline .checkbox-material .check {
     bottom: 117px;
 }
 #load-more-wrap{
-    display: inline-block;
-    width: 100%;
-    padding: 12px 0;
+    border-top: 1px solid #ebebeb;
+    border-bottom: 1px solid #ebebeb;
+    padding: 15px;
+}
+#load-more-wrap .more-message,
+#load-more-wrap .more-notes{
+    color: #03a9f4;
+    cursor: pointer;
+    font-size: 13px;
+    overflow: hidden;
+    -webkit-user-select: none;
 }
 .notification-body #load-more-wrap{
-    background-color: #fff;
     border-top: 1px solid #ddd;
 }
 .chat-container .media-list li{
@@ -1529,16 +1538,6 @@ label.checkbox-inline .checkbox-material .check {
     border-radius: 0;
     padding: 6px 0;
     margin: 2px 0;
-}
-#load-more-wrap .btn {
-    -webkit-border-radius: 0px !important;
-    border-radius: 0px !important;
-    border-bottom: 0px !important;
-    margin-bottom: 0;
-    font-size: 12px;
-}
-#load-more-wrap .btn:hover {
-    background-color: #fff;
 }
 .notification .media-meta i {
     color: #757575 !important;
@@ -1906,6 +1905,9 @@ div.dataTables_wrapper div.dataTables_paginate {
     display: -ms-flexbox;
     display: flex;
     text-align: right !important;
+}
+div.dataTables_wrapper div.dataTables_filter label{
+    float: right;
 }
 .table .table-icon {
     margin-bottom: 4px;
@@ -2310,7 +2312,8 @@ tbody .icon-link>i {
     font-size: 16px;
 }
 #table-mini .tables-link{
-    text-align: right;
+    font-size: 13px;
+    margin: 4px 0;
 }
 #table-mini .tables-link a{
     outline: none;
@@ -2599,14 +2602,12 @@ tbody .icon-link>i {
     display: flex;
     -webkit-border-radius: 2px;
     border-radius: 2px;
-    margin: 0 0 20px 0;
-    padding: 35px 0 25px 0;
+    padding: 25px 0;
     background-color: #fff;
 }
 .match-box .match-box-teams .team,
 .match-box .match-box-teams .score-container{
     width: 33.33%;
-    margin: 8px;
 }
 .match-box .match-box-teams .team-logo-container {
     display: block;
@@ -2629,9 +2630,15 @@ tbody .icon-link>i {
     font-size: 18px;
     color: rgba(0,0,0,0.87);
     font-weight: 400;
-    padding: 10px 5px;
+    padding: 10px 8px 0;
     text-align: center;
-    line-height: 24px;
+    line-height: 23px;
+}
+.match-box .team-manager{
+    display: block;
+    color: rgba(0,0,0,0.54);
+    text-align: center;
+    font-size: 13px;
 }
 .fixture-wrap .team-name .compare-text,
 .team-name-table .truncate-box-text{
@@ -2655,7 +2662,8 @@ tbody .icon-link>i {
 .match-box .score-container .unplayed,
 .match-box .score-container .match-info{
     text-align: center;
-    color: rgba(0,0,0,0.57);
+    color: rgba(0,0,0,0.54);
+    font-size: 13px;
 }
 .match-box .score-container .unplayed img {
     width: 35px;
@@ -2674,15 +2682,25 @@ tbody .icon-link>i {
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
     flex-direction: column;
-    background-color: #fafafa;
-    color: rgba(0,0,0,0.57);
+    background-color: #e53935;
+}
+.match-box-header-title{
+    color: #fff;
+    font-size: 17px;
     font-weight: 400;
+    text-align: center;
+    margin-top: 10px;
+}
+.match-box-header-subtitle{
+    color: rgba(255,255,255,0.54);
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 10px;
 }
 .match-box-events {
     position: relative;
     margin-bottom: 20px;
-    -webkit-box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
 }
 .match-box-events .match-scorers,
 .match-box-events .match-events {
@@ -2698,13 +2716,9 @@ tbody .icon-link>i {
     -webkit-align-items: center;
     -ms-flex-align: center;
     align-items: center;
-    -webkit-box-pack: justify;
-    -webkit-justify-content: space-between;
-    -ms-flex-pack: justify;
-    justify-content: space-between;
     padding: 12px 15px;
-    margin: 2px 0;
-    background-color: #fff;
+    background-color: #fafafa;
+    border-top: 1px solid #ebebeb;
 }
 .match-box-events .event .scorer,
 .match-box-events .event .eventype {
@@ -2728,6 +2742,7 @@ tbody .icon-link>i {
     -webkit-border-radius: 50%;
     border-radius: 50%;
     margin-right: 5px;
+    padding-bottom: 6px;
 }
 .match-box-events .scorer .event-icon,
 .match-box-events .eventype .event-icon {
@@ -2746,6 +2761,7 @@ tbody .icon-link>i {
     height: 100%;
     display: block;
     position: relative;
+    background-color: #fff;
 }
 .comments-widget .comment-form-container {
     width: 100%;
@@ -2774,23 +2790,28 @@ tbody .icon-link>i {
     -webkit-flex: auto;
     -ms-flex: auto;
     flex: auto;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
 }
 .comment-form .comment-box-container .comment-box {
     padding: 9px 12px 8px 0;
     -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
+    -webkit-flex-grow: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
 }
 .comment-form .comment-box-container .comment-box textarea {
     background: transparent;
     border: 0;
+    font-size: 14px;
     height: 100%;
+    line-height: 18px;
     margin: 0;
     padding: 0;
     width: 100%;
-    min-height: 70px;
-    letter-spacing: 0.3px;
+    min-height: 18px;
     resize: none;
     outline: none;
 }
@@ -2882,13 +2903,23 @@ tbody .icon-link>i {
     background: #fff;
     outline: none;
 }
+.comments-container .more-comments{
+    border-top: 1px solid #ebebeb;
+    padding: 15px;
+}
+.comments-container .more-comments .more-comments-link{
+    color: #03a9f4;
+    cursor: pointer;
+    font-size: 13px;
+    overflow: hidden;
+    text-align: left;
+    -webkit-user-select: none;
+}
 .comments-container .comments-list {
     border-top: 1px solid #ebebeb;
     list-style-type: none;
     margin: 0;
     padding: 0;
-    max-height: 400px;
-    overflow-y: auto;
     position: relative;
 }
 .comments-container .comments-list::-webkit-scrollbar-track {
@@ -2915,7 +2946,7 @@ tbody .icon-link>i {
     background: transparent;
 }
 .comments-container .comments-list .comment {
-    padding: 12px 16px;
+    padding: 12px 15px;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -3336,16 +3367,14 @@ tbody .icon-link>i {
     justify-content: center;
     height: 60px;
     border-bottom: 1px solid #ddd;
-    background-color: #fafafa;
+    background-color: #eee;
     color: rgba(0,0,0,0.87);
-    font-size: 16px;
 }
 .notes-widget .notification-footer{
     border-top: 1px solid #ddd;
 }
 .notes-widget .notification-footer a{
     color: rgba(0,0,0,0.87);
-    font-size: 16px;
 }
 .notification-body{
     height: 250px;
@@ -3369,7 +3398,7 @@ tbody .icon-link>i {
     padding: 16px;
     cursor: pointer;
     outline: none;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #ebebeb;
 }
 .notification-body .notification.unread {
     background-color: #fff;
@@ -3639,75 +3668,6 @@ tbody .icon-link>i {
     content: '';
     display: block;
     padding-top: 100%;
-}
-#circleG{
-    width: 52px;
-    margin: auto;
-    padding: 15px 0;
-}
-.circleG{
-    background-color: rgb(255,255,255);
-    float: left;
-    height: 11px;
-    margin-left: 6px;
-    width: 11px;
-    -webkit-animation-name: bounce_circleG;
-    animation-name: bounce_circleG;
-    -webkit-animation-duration: 2.24s;
-    animation-duration: 2.24s;
-    -webkit-animation-iteration-count: infinite;
-    animation-iteration-count: infinite;
-    -webkit-animation-direction: normal;
-    animation-direction: normal;
-    -webkit-border-radius: 7px;
-    border-radius: 7px;
-}
-#circleG_1{
-    -webkit-animation-delay: 0.45s;
-    animation-delay: 0.45s;
-}
-#circleG_2{
-    -webkit-animation-delay: 1.05s;
-    animation-delay: 1.05s;
-}
-#circleG_3{
-    -webkit-animation-delay: 1.35s;
-    animation-delay: 1.35s;
-}
-@keyframes bounce_circleG{
-    0%{}
-    50%{
-        background-color: #bdbdbd;
-    }
-    100%{}
-}
-@-o-keyframes bounce_circleG{
-    0%{}
-    50%{
-	background-color: #bdbdbd;
-    }
-    100%{}
-}
-@-ms-keyframes bounce_circleG{
-    0%{}
-    50%{
-        background-color: #bdbdbd;
-    }
-    100%{}
-}
-@-webkit-keyframes bounce_circleG{
-    0%{}
-    50%{
-        background-color: #bdbdbd;
-    }
-    100%{}
-}
-@-moz-keyframes bounce_circleG{
-    0%{}
-    50%{
-        background-color: #bdbdbd;
-    }
-    100%{}
 }
 .nav-tabs-bar {
     display: -webkit-box;
