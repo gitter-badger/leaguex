@@ -14,7 +14,7 @@ class Chat extends CI_Controller {
         $per_page = 10;
         $user = $this->session->userdata('userid');
         $buddy = $this->input->post('user');
-        $limit  = isset($_POST['limit']) ? $this->input->post('limit') : $per_page ;
+        $limit  = $this->input->post('limit') ? $this->input->post('limit') : $per_page ;
 
         $messages = array_reverse($this->message->conversation($user, $buddy, $limit));
         $total = $this->message->thread_len($user, $buddy);
