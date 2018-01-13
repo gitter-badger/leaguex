@@ -9,6 +9,7 @@
     var mask = '<?php echo lang('mask_page');?>';
     var moremsg = '<?php echo lang('sbar_chat_more_msg');?>';
     var morentf = '<?php echo lang('load_more_notifications');?>';
+    var morecmt = '<?php echo lang('match_day_more_comments');?>';
     var tableHeader = '<?php echo lang('table_headers_language');?>';
     var tableDateTimeFormat = '<?php echo lang('table_date_format_time');?>'; 
     var selectDefault = '<?php echo lang('select_default');?>';
