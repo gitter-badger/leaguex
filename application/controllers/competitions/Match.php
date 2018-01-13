@@ -25,18 +25,23 @@ class Match extends CI_Controller {
         $matchid = $this->uri->segment(4);
         $data['match'] = $this->match_model->getmatch($matchid);
         foreach($data['match'] as $scorer){
-            $matchname = $scorer->competition_name;
             $competitionid = $scorer->competition_id;
             $team1 = $scorer->match_team1_id;
             $team2 = $scorer->match_team2_id;
         }
-        $data['title'] = $matchname;
+        $data['title'] = $this->lang->line('site_title_match');
         $data['getmanagers'] = $this->match_model->getmanager($userID);
         $data['page'] = 'matchid';
         $data['backlink'] = 'competitions/leagues';
         $data['getscorers'] = $this->match_model->getscorers($matchid);
         $data['getevents'] = $this->match_model->getevents($matchid);
-        $data['comments'] = $this->match_model->getcomments($matchid); 
+        $limit = 5;
+        $per_page = 5;
+        $total = $this->match_model->count_comments($matchid);
+        $data['limit'] = $limit + $per_page;
+        $data['more'] = $total <= $limit ? false : true;
+        $data['remaining'] = $total - $limit;
+        $data['comments'] = $this->match_model->getcomments($matchid, $limit); 
         $data['getable'] = $this->match_model->getable($competitionid, $team1, $team2);
         echo add_css(array('plugins/jquery-asSpinner/asSpinner.min.css','plugins/bootstrap-lightbox/lightbox.min.css','plugins/formvalidation/formValidation.min.css'));
         echo addfooter_js(array('plugins/jquery-asSpinner/jquery-asSpinner.min.js','plugins/bootstrap-select/bootstrap-select.min.js','plugins/bootstrap-lightbox/lightbox.min.js','plugins/textarea-autosize/autosize.min.js','plugins/bootbox/bootbox.js','plugins/formvalidation/formValidation.min.js','plugins/formvalidation/framework/bootstrap.min.js','js/sections/site/matchplay.js'));
@@ -100,6 +105,41 @@ class Match extends CI_Controller {
         } else {
             echo 'failed';
         }    
+    }
+    
+    public function load_more_comments(){
+        $per_page = 10;
+        $matchid = $this->input->post('matchid');
+        $limit  = $this->input->post('limit') ? $this->input->post('limit') : $per_page ;
+        $total = $this->match_model->count_comments($matchid);
+        $getcomments = $this->match_model->getcomments($matchid, $limit);
+        $morecomments = array();
+        foreach ($getcomments as $comments){
+            $contentPost = htmlentities($comments->comment_content);
+            $commentslist = array(
+                'useravatar' => $comments->user_avatar,
+                'username' => $comments->user_name, 
+                'content' => auto_link($contentPost),
+                'time' => time_convert($comments->time),
+                'userimage' => $comments->comment_image_id,
+                'commentid' => $comments->comment_id,
+                'hidebox' => $comments->comment_image_id == null ? 'hide' : '',
+            );
+            array_push($morecomments, $commentslist);
+        }
+        $info = array(
+            'limit'=>$limit + $per_page,
+            'more' => $total  <= $limit ? false : true, 
+            'remaining'=> $total - $limit
+        );
+        $response = array(
+            'success' => true,
+            'errors' => '',
+            'info' => $info,
+            'morecomments' => $morecomments
+        );            
+        header('Content-Type: application/json');
+        echo json_encode( $response );
     }
     
     public function loadplayers(){
