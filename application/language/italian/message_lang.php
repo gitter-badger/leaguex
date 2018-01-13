@@ -7,7 +7,7 @@
 // TITOLI PAGINE
 $lang['site_title_settings'] = "Impostazioni";
 $lang['site_title_leagues'] = "Competizioni";
-$lang['site_title_matchleague'] = "Incontro";
+$lang['site_title_match'] = "Incontro";
 $lang['site_title_notifications'] = "Notifiche";
 $lang['admin_title_optionsmedia'] = "Impostazioni Media";
 $lang['admin_title_optionsgeneral'] = "Impostazioni Generali";
@@ -158,7 +158,7 @@ $lang['admin_sbar_menu_players'] = "Giocatori";
 //SIDEBAR CHAT
 $lang['sbar_chat_users_title'] = "Utenti";
 $lang['sbar_chat_textarea_placeholder'] = "Scrivi qualcosa";
-$lang['sbar_chat_more_msg'] = "Vedi messaggi pi&#249; vecchi";
+$lang['sbar_chat_more_msg'] = "Vedi messaggi precedenti";
 
 //------------------------------------------------------------------------------
 // FINE INCLUSI 
@@ -264,8 +264,9 @@ $lang['match_alert_message_comment_delete'] = "Sei sicuro di voler rimuovere que
 $lang['match_toastr_message_comment_add'] = "Commento pubblicato.";
 $lang['match_alert_message_comment_delete'] = "Sei sicuro di voler rimuovere questo commento?";
 $lang['match_own_goal'] = "(AG)";
-$lang['match_day_advice_text'] = "Da disputare";
-$lang['match_day_info'] = "Dettaglio partita";
+$lang['match_day_advice_text_unplayed'] = "Da disputare";
+$lang['match_day_advice_text_final'] = "Finale";
+$lang['match_day_more_comments'] = "Vedi commenti precedenti";
 
 // ADD RESULT VIEW
 $lang['addresult_title_goal_scorers'] = "Marcatori";
