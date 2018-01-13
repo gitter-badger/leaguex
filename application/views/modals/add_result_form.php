@@ -55,7 +55,7 @@
                                 </div>
                                 <div class="timescore form-group">
                                     <div class="timelabel">Min</div>
-                                    <input class="form-control" name="time[]" id="time" type="text" maxlength="3" value=""/>
+                                    <input class="form-control" id="time" type="text" maxlength="3" value=""/>
                                 </div>
                                 <div class="player-remove withripple"><i class="material-icons">clear</i></div>
                             </div>
