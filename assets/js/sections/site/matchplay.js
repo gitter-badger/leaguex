@@ -431,7 +431,6 @@ function addResult(){
 /* Comments system */
 
 function matchComments(){ 
-    
     autosize($('textarea'));
     lightbox.option({'showImageNumberLabel': false});
                 
@@ -522,6 +521,64 @@ function submitComment(){
        return false;
     });
 } 
+
+function loadMoreComments(matchid, limit){
+    $.ajax({
+        type: "POST",
+        url: base  + "competitions/match/load_more_comments",
+        data: {matchid: matchid, limit: limit},
+        cache: false,
+        success: function(response){
+            if(response.success){
+                $('.comments-list').empty();   
+                morecomments = response.morecomments; 
+                more = response.info;
+                $.each(morecomments, function(){
+                    div = '<li class="comment">'+
+                            '<a class="comment-avatar pull-left"><img src="'+base+'assets/img/avatars/'+this.useravatar+'"></a>'+
+                            '<div class="comment-text-container">'+
+                                '<div class="comment-user">'+
+                                    '<a class="comment-user-name">'+this.username+'</a>'+
+                                '</div>'+
+                                '<div class="comment-text">'+this.content+'</div>'+
+                                '<a class="imageBox '+this.hidebox+'" href="'+base+'assets/img/users_images/'+this.userimage+'" data-lightbox="'+this.userimage+'">'+
+                                    '<div class="resp-image-comment-wrap">'+
+                                        '<div class="resp-image-comment-container" style="max-width: 260px;">'+
+                                            '<div class="resp-image-comment">'+
+                                                '<img src="'+base+'assets/img/users_images/'+this.userimage+'" alt="userimage">'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</a>'+
+                                '<div class="comment-time">'+this.time+'</div>'+
+                            '</div>'+
+                            '<div class="comment-actions-container">'+
+                                '<ul class="comment-actions">'+
+                                    '<li class="dropdown comment-menu">'+
+                                        '<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"><i class="material-icons md-18">more_vert</i></a>'+
+                                        '<ul class="dropdown-menu dropdown-menu-right" role="menu" data-dropdown-in="zoomIn" data-dropdown-out="zoomOut">'+
+                                            '<li><a class="delete ripple-effect" data-id="'+this.commentid+'" href="#">Elimina</a></li>'+
+                                            '<li><a class="ripple-effect" href="#">Modifica</a></li>'+
+                                        '</ul>'+
+                                    '</li>'+
+                                '</ul>'+
+                            '</div>'+
+                          '</li>';
+                    $(div).prependTo('.comments-list');    
+                });
+                if(more.more){
+                    $('.more-comments').remove();
+                    $('<div class="more-comments">'+
+                            '<span class="more-comments-link" onclick="loadMoreComments('+matchid+', '+more.limit+')">'+morecmt+' ('+more.remaining+')</span>'+
+                        '</div>'    
+                    ).prependTo('.comments-container'); 
+                }else{
+                    $('.more-comments').remove();
+                }
+            }                  
+        }
+    });
+}
 
 function removeComment(){    
      // Remove comment
