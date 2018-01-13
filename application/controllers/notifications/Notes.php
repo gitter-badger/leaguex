@@ -99,7 +99,7 @@ class Notes extends CI_Controller {
     public function notifications(){                
         $per_page = 10;
         $user = $this->input->post('user');
-        $limit = isset($_POST['limit']) ? $this->input->post('limit') : $per_page;
+        $limit = $this->input->post('limit') ? $this->input->post('limit') : $per_page;
         $notifications = $this->notify->getunreadnotifications($user, $limit);
         $total = $this->notify->ntf_len_unread($user);        
         $ntf = array();
