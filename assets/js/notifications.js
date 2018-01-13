@@ -257,23 +257,16 @@ function load_widgetnote(userid,limit){
                 if(morenote.more){
                     $('.notification-body').append(
                         '<div id="load-more-wrap" style="text-align:center">'+
-                            '<div id="circleG" style="display:none">'+
-                                '<div id="circleG_1" class="circleG"></div>'+
-                                '<div id="circleG_2" class="circleG"></div>'+
-                                '<div id="circleG_3" class="circleG"></div>'+
-                            '</div>'+
-                            '<a class="btn btn-xs btn-info" id="loadmore" style="width:100%">'+morentf+' ('+morenote.remaining+')</a>'+
+                            '<span class="more-notes" id="loadmore" style="text-align: center;">'+morentf+' ('+morenote.remaining+')</span>'+
                         '</div>'
                     );
                     $('#loadmore').on('click', function(e){
                         e.stopPropagation();
-                        $('#circleG').show();
-                        $(this).hide();
-                        setTimeout(function() {
-                             load_widgetnote(morenote.id , morenote.limit);
-                            $('#circleG').hide();
-                        }, 1500);    
-                    });                    
+                        load_widgetnote(morenote.id , morenote.limit);
+                        if(!morenote.more){
+                            $(this).parent().hide();
+                        }
+                    });       
                 }
                 $("#loadnote").hide();
             }
