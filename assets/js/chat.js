@@ -139,22 +139,15 @@ function load_thread(user,limit){
                 $('.media-list-bubble').html('');
                 if(buddy.more){
                     $('.media-list-bubble').append(
-                        '<div id="load-more-wrap" style="text-align:center">'+
-                            '<div id="circleG" style="display:none">'+
-                                '<div id="circleG_1" class="circleG"></div>'+
-                                '<div id="circleG_2" class="circleG"></div>'+
-                                '<div id="circleG_3" class="circleG"></div>'+
-                            '</div>'+
-                            '<a class="btn btn-xs btn-info" id="moremessage" style="width:100%">'+moremsg+' ('+buddy.remaining+')</a>'+
+                        '<div id="load-more-wrap" style="text-align: center; margin-bottom: 10px;">'+
+                            '<span class="more-message" id="moremessage">'+moremsg+' ('+buddy.remaining+')</span>'+
                         '</div>'
                     );
                     $('#moremessage').on('click', function(){
-                        $('#load-more-wrap').find('#circleG').show();
-                        $(this).hide();
-                        setTimeout(function() {
-                            load_thread(buddy.id, buddy.limit);
-                            $('#load-more-wrap').find('#circleG').hide();
-                        }, 1500);    
+                        load_thread(buddy.id, buddy.limit);
+                        if(!buddy.more){
+                            $(this).parent().hide();
+                        }
                     });                      
                 }      
                 thread = response.thread;
