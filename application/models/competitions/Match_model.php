@@ -11,11 +11,15 @@ class Match_model extends CI_Model{
     } 
     
     function getmatch($matchid){
-        $this->db->select('a.match_id, a.match_status, a.match_team1_id, a.match_team2_id, b1.team_name as team1, b2.team_name as team2, b1.team_logo as logo1, b2.team_logo as logo2, a.match_score1, a.match_score2, a.match_matchday, c.competition_id, c.competition_name, c.competition_logo');
+        $this->db->select('a.match_id, a.match_status, a.match_team1_id, a.match_team2_id, b1.team_name as team1, b2.team_name as team2, b1.team_logo as logo1, b2.team_logo as logo2, a.match_score1, a.match_score2, a.match_matchday, c.competition_id, c.competition_name, c.competition_logo, e1.user_name as user1, e2.user_name as user2');
         $this->db->from('lex_matches as a');
         $this->db->join('lex_competitions as c', 'c.competition_id = a.match_competition_id');
-        $this->db->join('lex_teams as b1', 'a.match_team1_id = b1.team_id');
-        $this->db->join('lex_teams as b2', 'a.match_team2_id = b2.team_id');
+        $this->db->join('lex_teams as b1', 'a.match_team1_id = b1.team_id', 'left');
+        $this->db->join('lex_teams as b2', 'a.match_team2_id = b2.team_id', 'left');
+        $this->db->join('lex_managers as d1', 'b1.team_id = d1.manager_team_id', 'left');
+        $this->db->join('lex_managers as d2', 'b2.team_id = d2.manager_team_id', 'left');
+        $this->db->join('lex_users as e1', 'd1.manager_user_id = e1.user_id', 'left');
+        $this->db->join('lex_users as e2', 'd2.manager_user_id = e2.user_id', 'left');
         $this->db->where('match_id', $matchid);
         $this->db->group_by('match_id');
         $query = $this->db->get();
@@ -46,18 +50,23 @@ class Match_model extends CI_Model{
         $result = $query->result();
         return $result;
     }
-    function getcomments($matchid){
+    function getcomments($matchid, $limit){
         $this->db->select('comment_id, comment_match_id, comment_user_id, time, comment_content, user_name, user_id, user_avatar, comment_image_id');
         $this->db->from('lex_comments'); 
         $this->db->join('lex_users', 'user_id = comment_user_id');
         $this->db->join('lex_comments_images', 'match_comment_id = comment_id', 'left');
         $this->db->where('comment_match_id', $matchid);
         $this->db->order_by('comment_id','DESC');
+        $this->db->limit($limit);
         $query = $this->db->get();
         $result = $query->result();
         return $result;
     }
-    
+    function count_comments($matchid){
+        $this->db->where('comment_match_id', $matchid);
+        $comments = $this->db->count_all_results('lex_comments');
+        return $comments;
+    }
     function insert_comments($data, $imageid){ 
         $this->db->trans_start();
         $this->db->insert('lex_comments',$data);
@@ -145,7 +154,7 @@ class Match_model extends CI_Model{
         return $query->result();
     }
     
-    function getable($competitionid, $team1, $team2){
+    function getable($competitionid){
         $sql = 'SELECT @rowno:= @rowno+1 as position, total.*
                 from (SELECT 
                 (SELECT competition_name FROM lex_competitions WHERE competition_id = ('.$competitionid.'))as competitioname, (SELECT competition_logo FROM lex_competitions WHERE competition_id = ('.$competitionid.'))as competitionlogo, match_matchday, team_logo as logo, team_name AS team, IFNULL(Sum(P),0) AS P,IFNULL(Sum(W),0) AS W,IFNULL(Sum(D),0) AS D,IFNULL(Sum(L),0) AS L, 
