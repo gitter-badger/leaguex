@@ -25,18 +25,19 @@ class Match extends CI_Controller {
         $matchid = $this->uri->segment(4);
         $data['match'] = $this->match_model->getmatch($matchid);
         foreach($data['match'] as $scorer){
+            $competitionname = $scorer->competition_name;
             $competitionid = $scorer->competition_id;
             $team1 = $scorer->match_team1_id;
             $team2 = $scorer->match_team2_id;
         }
-        $data['title'] = $this->lang->line('site_title_match');
+        $data['title'] = $competitionname;
         $data['getmanagers'] = $this->match_model->getmanager($userID);
         $data['page'] = 'matchid';
         $data['backlink'] = 'competitions/leagues';
         $data['getscorers'] = $this->match_model->getscorers($matchid);
         $data['getevents'] = $this->match_model->getevents($matchid);
-        $limit = 5;
-        $per_page = 5;
+        $limit = 10;
+        $per_page = 10;
         $total = $this->match_model->count_comments($matchid);
         $data['limit'] = $limit + $per_page;
         $data['more'] = $total <= $limit ? false : true;

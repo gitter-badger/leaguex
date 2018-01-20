@@ -11,7 +11,7 @@ class Match_model extends CI_Model{
     } 
     
     function getmatch($matchid){
-        $this->db->select('a.match_id, a.match_status, a.match_team1_id, a.match_team2_id, b1.team_name as team1, b2.team_name as team2, b1.team_logo as logo1, b2.team_logo as logo2, a.match_score1, a.match_score2, a.match_matchday, c.competition_id, c.competition_name, c.competition_logo, e1.user_name as user1, e2.user_name as user2');
+        $this->db->select('a.match_id, a.match_status, a.match_team1_id, a.match_team2_id, b1.team_name as team1, b2.team_name as team2, b1.team_logo as logo1, b2.team_logo as logo2, a.match_score1, a.match_score2, a.match_matchday, c.competition_id, c.competition_name, c.competition_logo, e1.user_name as user1, e2.user_name as user2, e1.user_id as userid1, e2.user_id as userid2');
         $this->db->from('lex_matches as a');
         $this->db->join('lex_competitions as c', 'c.competition_id = a.match_competition_id');
         $this->db->join('lex_teams as b1', 'a.match_team1_id = b1.team_id', 'left');

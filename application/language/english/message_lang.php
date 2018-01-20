@@ -265,8 +265,7 @@ $lang['match_day_title'] = "Matchday";
 $lang['match_toastr_message_comment_add'] = "Comment added.";
 $lang['match_alert_message_comment_delete'] = "Are you sure that you want to delete this comment?";
 $lang['match_own_goal'] = "(OG)";
-$lang['match_day_advice_text_unplayed'] = "Match to be played";
-$lang['match_day_advice_text_final'] = "Final";
+$lang['match_day_placeholder_comments'] = "Add a comment";
 $lang['match_day_more_comments'] = "View previous comments";
 
 // ADD RESULT VIEW

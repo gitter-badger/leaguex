@@ -68,7 +68,7 @@
                                     <ul class="dropdown-menu dropdown-menu-right" role="menu">
                                     <?php if($this->session->userdata('permissions') == 1){?> 
                                     <li>
-                                        <a class="animsition-link" href="<?= base_url().'admin/home';?>"><span class="icon"><i class="material-icons">dashboard</i></span><?php echo lang('head_menu_admin');?></a>
+                                        <a style="color: #f44336 !important;" class="animsition-link" href="<?= base_url().'admin/home';?>"><span class="icon"><i class="material-icons" style="color: #f44336 !important;">dashboard</i></span><?php echo lang('head_menu_admin');?></a>
                                     </li>
                                     <?php } ?>
                                     <li>

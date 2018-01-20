@@ -11,7 +11,7 @@ class User_team extends CI_Controller {
         $this->load->model('users/get_user_data_model');         
     }
     
-    public function index(){               
+    public function userid(){               
         if(!$this->session->userdata('username')){
             redirect('sign/signin','refresh');
         }
@@ -20,12 +20,14 @@ class User_team extends CI_Controller {
         $data['unreadntf'] = total_unread_notifications();
         $data['countntf'] = total_notifications();
         $data['transition'] = read_transition();
-        $userID = $this->session->userdata('userid');
+        $userID = $this->uri->segment(4);
         $data['userPic'] = $this->get_user_data_model->get_user_img($userID);                      
         $data['userteam'] = $this->user_team_model->showuserteam($userID);
         foreach($data['userteam'] as $geteam){
-            $teamname = $geteam->team_name; 
+            $teamname = $geteam->team_name;
+            $teamid = $geteam->team_id; 
         }
+        $data['countplayed'] = $this->user_team_model->showstatsteam($teamid);
         $data['title'] = $teamname;
         $data['userplayer'] = $this->user_team_model->showuserplayer($userID);
         $data['countplayers'] = count($data['userplayer']);

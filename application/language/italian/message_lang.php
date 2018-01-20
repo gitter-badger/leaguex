@@ -264,8 +264,7 @@ $lang['match_alert_message_comment_delete'] = "Sei sicuro di voler rimuovere que
 $lang['match_toastr_message_comment_add'] = "Commento pubblicato.";
 $lang['match_alert_message_comment_delete'] = "Sei sicuro di voler rimuovere questo commento?";
 $lang['match_own_goal'] = "(AG)";
-$lang['match_day_advice_text_unplayed'] = "Da disputare";
-$lang['match_day_advice_text_final'] = "Finale";
+$lang['match_day_placeholder_comments'] = "Aggiungi un commento";
 $lang['match_day_more_comments'] = "Vedi commenti precedenti";
 
 // ADD RESULT VIEW

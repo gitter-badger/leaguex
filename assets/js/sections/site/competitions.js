@@ -67,15 +67,15 @@ function fixturesTable(){
                     } 
                     matchdayNull = matchdayName;
                     if((manager == item.teamid1 && item.match_status == 0)||(manager == item.teamid2 && item.match_status == 0)){
-                        var matchon = '<span class="material-icons match-game">games</span>';
+                        var score = '<span class="material-icons match-game">games</span>';
                     }else{
-                        var matchon = item.score1 === null ? " - " : item.score1+ ' - ' +item.score2;
+                        var score = item.score1 === null ? " - " : item.score1+ ' - ' +item.score2;
                     }
                     var list= ''+headtitle+'<li>\
                         <a href="'+base+'competitions/match/matchid/'+item.match_id+'" class="animsition-link fixture-wrap">\
                         <span class="fixture-match">\
                         <span class="fixture-teams">\
-                        <span class="teams"><span class="team-name"><span class="full-text">'+item.team1+'</span><span class="compare-text">'+compareText(item.team1,item.team2)+'</span></span><span class="fixture-team-logo"><img src="'+base+'assets/img/teams_logo/'+item.logo1+'"></span></span><span class="match-score">'+matchon+'</span><span class="teams"><span class="team-name"><span class="full-text">'+item.team2+'</span><span class="compare-text">'+item.team2.substr(0,3)+'</span></span><span class="fixture-team-logo"><img src="'+base+'assets/img/teams_logo/'+item.logo2+'"></span></span>\
+                        <span class="teams"><span class="team-name"><span class="full-text">'+item.team1+'</span><span class="compare-text">'+compareText(item.team1,item.team2)+'</span></span><span class="fixture-team-logo"><img src="'+base+'assets/img/teams_logo/'+item.logo1+'"></span></span><span class="match-score">'+score+'</span><span class="teams"><span class="team-name"><span class="full-text">'+item.team2+'</span><span class="compare-text">'+item.team2.substr(0,3)+'</span></span><span class="fixture-team-logo"><img src="'+base+'assets/img/teams_logo/'+item.logo2+'"></span></span>\
                         </span>\
                         </span>\
                         </a>\
@@ -140,16 +140,16 @@ function fixturesTable(){
                     } 
                     matchdayNull = matchdayName;
                     if((manager == item.teamid1 && item.match_status == 0)||(manager == item.teamid2 && item.match_status == 0)){
-                        var matchon = '<span class="material-icons match-game">games</span>';
+                        var score = '<span class="material-icons match-game">games</span>';
                     }else{
-                        var matchon = item.score1 === null ? " - " : item.score1+ ' - ' +item.score2;
+                        var score = item.score1 === null ? " - " : item.score1+ ' - ' +item.score2;
                     } 
                     var list= ''+headtitle+'\
                         <li>\
                         <a href="'+base+'competitions/match/matchid/'+item.match_id+'" class="animsition-link fixture-wrap">\
                         <span class="fixture-match">\
                         <span class="fixture-teams">\
-                        <span class="teams"><span class="team-name"><span class="full-text">'+item.team1+'</span><span class="compare-text">'+compareText(item.team1,item.team2)+'</span></span><span class="fixture-team-logo"><img src="'+base+'assets/img/teams_logo/'+item.logo1+'"></span></span><span class="match-score">'+matchon+'</span><span class="teams"><span class="team-name"><span class="full-text">'+item.team2+'</span><span class="compare-text">'+item.team2.substr(0,3)+'</span></span><span class="fixture-team-logo"><img src="'+base+'assets/img/teams_logo/'+item.logo2+'"></span></span>\
+                        <span class="teams"><span class="team-name"><span class="full-text">'+item.team1+'</span><span class="compare-text">'+compareText(item.team1,item.team2)+'</span></span><span class="fixture-team-logo"><img src="'+base+'assets/img/teams_logo/'+item.logo1+'"></span></span><span class="match-score">'+score+'</span><span class="teams"><span class="team-name"><span class="full-text">'+item.team2+'</span><span class="compare-text">'+item.team2.substr(0,3)+'</span></span><span class="fixture-team-logo"><img src="'+base+'assets/img/teams_logo/'+item.logo2+'"></span></span>\
                         </span>\
                         </span>\
                         </a>\

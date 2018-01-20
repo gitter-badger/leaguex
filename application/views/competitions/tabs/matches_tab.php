@@ -32,8 +32,15 @@
                         <?php
                         $matchdayNull = null; 
                         $div = '';
-                        if(is_array($getlastleague)){
                         foreach($getlastleague as $showmatches):
+                            $score = $showmatches->score1. ' - ' .$showmatches->score2;
+                                foreach($getmanagers as $manager):
+                            
+                                    if(($manager->manager_team_id == $showmatches->teamid1 && $showmatches->match_status == 0)||($manager->manager_team_id == $showmatches->teamid2 && $showmatches->match_status == 0)){
+                                        $score = '<span class="material-icons match-game">games</span>';
+                                    }
+                              endforeach;  
+                            
                             $matchdayName = $showmatches->match_matchday; 
                             if($matchdayName != $matchdayNull){ 
                                 echo $div;
@@ -51,12 +58,12 @@
                             <a href="<?= base_url().'competitions/match/matchid/'.$showmatches->match_id;?>" class="animsition-link fixture-wrap">
                                 <span class="fixture-match">
                                     <span class="fixture-teams">
-                                        <span class="teams"><span class="team-name"><span class="full-text"><?php echo $showmatches->team1;?></span><span class="compare-text"><?php echo compare_text($showmatches->team1, $showmatches->team2);?></span></span><span class="fixture-team-logo"><img src="<?= base_url().'assets/img/teams_logo/'.$showmatches->logo1;?>"></span></span><span class="match-score"><?php foreach($getmanagers as $manager):if(($manager->manager_team_id == $showmatches->teamid1 && $showmatches->match_status == 0)||($manager->manager_team_id == $showmatches->teamid2 && $showmatches->match_status == 0)){echo '<span class="material-icons match-game">games</span>';}else{echo $showmatches->score1. ' - ' .$showmatches->score2;}endforeach;?></span><span class="teams"><span class="team-name"><span class="full-text"><?php echo $showmatches->team2;?></span><span class="compare-text"><?php echo substr($showmatches->team2, 0,3);?></span></span><span class="fixture-team-logo"><img src="<?= base_url().'assets/img/teams_logo/'.$showmatches->logo2;?>"></span></span>
+                                        <span class="teams"><span class="team-name"><span class="full-text"><?php echo $showmatches->team1;?></span><span class="compare-text"><?php echo compare_text($showmatches->team1, $showmatches->team2);?></span></span><span class="fixture-team-logo"><img src="<?= base_url().'assets/img/teams_logo/'.$showmatches->logo1;?>"></span></span><span class="match-score"><?php echo $score ?></span><span class="teams"><span class="team-name"><span class="full-text"><?php echo $showmatches->team2;?></span><span class="compare-text"><?php echo substr($showmatches->team2, 0,3);?></span></span><span class="fixture-team-logo"><img src="<?= base_url().'assets/img/teams_logo/'.$showmatches->logo2;?>"></span></span>
                                     </span>
                                 </span>
                             </a>
                         </li>
-                        <?php $div = '</div></div>'; endforeach; } ?>
+                        <?php $div = '</div></div>'; endforeach;?>
                     </ul>
                     <?php } ?> 
                 </div>

@@ -370,7 +370,6 @@ function editMatch(matchid){
         dataType: 'JSON',
         data: 'match_id=' + matchid,
         success: function(response) {
-            $selectPlayers.append('<option selected value="0">'+selectDefault+'</option>');
             $.each(response.playerslist, function(key, val) {
                 var group = $('<optgroup>', {label:key});
                 $.each(val, function(i,item){
@@ -566,7 +565,7 @@ function editMatch(matchid){
                 $('.modal .modal-body-custom').getNiceScroll().resize();
                 var remove = $(this).closest('.modresult-scorer').find('.player-remove');
                 var removeclone = $clone.find('.player-remove');
-                $clone.find('.bootstrap-select').remove();
+                $clone.find('.bootstrap-select').replaceWith(function(){return $('select', this);});
                 $clone.find('#goalscore').attr('name','goalscore[]');
                 $clone.find('#selectPlayerName').attr('name','playername[]');
                 $clone.find('#owngoal').attr('name','owngoal[]');
@@ -590,7 +589,7 @@ function editMatch(matchid){
             button.hide();
             loadpic.show();
             setTimeout(function() {
-                var $template = $('#addeventTemplate'),
+                var $template = $('#addeventTemplate');
                 $clone = $template
                     .clone()
                     .removeClass('hide')
@@ -600,7 +599,7 @@ function editMatch(matchid){
                 $('.modal .modal-body-custom').getNiceScroll().resize();
                 var remove = $(this).closest('.modresult-event').find('.event-player-remove');
                 var removeclone = $clone.find('.event-player-remove');
-                $clone.find('.bootstrap-select').remove();
+                $clone.find('.bootstrap-select').replaceWith(function(){return $('select', this);});
                 $clone.find('#eventscore').attr('name','eventscore[]');
                 $clone.find('#selectEventPlayerName').attr('name','eventplayername[]');
                 $clone.find('#selectEvenType').attr('name','eventype[]');
@@ -633,7 +632,7 @@ function editMatch(matchid){
                 $('.modal .modal-body-custom').getNiceScroll().resize();    
                 var remove = $(this).closest('.modresult-walkover').find('.walkover-team-remove');
                 var removeclone = $clone.find('.walkover-team-remove');    
-                $clone.find('.bootstrap-select').remove();
+                $clone.find('.bootstrap-select').replaceWith(function(){return $('select', this);});
                 $clone.find('#selectWalkoverTeam').attr('name','walkoverteamname');
                 remove.show();
                 removeclone.show();
@@ -683,7 +682,6 @@ function editMatch(matchid){
             setTimeout(function() {
                 $row.animateCss('slideOutRight', function (obj) {
                     obj.remove();
-                    $('.modal .modal-body-custom').getNiceScroll().resize();
                     if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
                 });
             }, 400);
@@ -698,7 +696,6 @@ function editMatch(matchid){
             setTimeout(function() {
                 $row.animateCss('slideOutRight', function (obj) {
                     obj.remove();
-                    $('.modal .modal-body-custom').getNiceScroll().resize();
                     if(eventbox.length === 2){$('.no-events-wrap').show();}
                 });
             }, 400);
@@ -723,7 +720,6 @@ function editMatch(matchid){
                 .formValidation('removeField', $row.find('[name="walkoverteamname"]'));
             setTimeout(function() {
                 $row.remove();
-                $('.modal .modal-body-custom').getNiceScroll().resize();
                 $('.no-walkover-wrap').show();
                 $('.no-walkover-wrap img').show();
                 $(".modresult-addevent").slideDown(200);
@@ -936,12 +932,6 @@ function editMatch(matchid){
             $('.add-walkover .add-link').attr('disabled', false);
             $('.no-walkover-wrap').show();
             $('.no-walkover-wrap img').show();
-            $('.modal .modal-body-custom').niceScroll({
-                cursorwidth: '4px',
-                cursorborder: '0px',
-                cursorcolor: 'trasparent',
-                railalign: 'right'
-            });  
         }).on('hide.bs.modal', function(e){
             $('.selectscorer').selectpicker('hide');
             $('#editMatchForm').hide().appendTo('body');

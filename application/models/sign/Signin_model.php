@@ -5,9 +5,12 @@ class Signin_model extends CI_Model {
     
     public function login($email,$password){
         $sha_password = sha1($password);
+        $this->db->select('user_name, user_id, user_avatar, user_permissions, user_birthday, manager_user_id');
+        $this->db->from('lex_users');
+        $this->db->join('lex_managers', 'manager_user_id = user_id', 'left');
         $this->db->where('user_email',$email);
         $this->db->where('user_password',$sha_password);         
-        $query = $this->db->get('lex_users');
+        $query = $this->db->get();
         if($query->num_rows()==1){
             foreach($query->result() as $row){
                 $data = array(
@@ -16,6 +19,7 @@ class Signin_model extends CI_Model {
                     'avatar' => $row->user_avatar,
                     'permissions' => $row->user_permissions,
                     'birthday' => $row->user_birthday,
+                    'manager' => $row->manager_user_id,
                     'logged_in' => TRUE
                 );
             }

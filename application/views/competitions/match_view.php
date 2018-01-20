@@ -6,29 +6,24 @@
                 <div class="col-lg-7">
                     <div class="match-box">
                         <?php $this->load->view('modals/add_result_form');?>
-                        <div class="match-box-header">
-                            <div class="match-box-header-title"><?php echo $matchid->competition_name;?></div>
-                            <div class="match-box-header-subtitle"><?php echo lang('match_day_title');?> <?php echo $matchid->match_matchday;?></div>
-                        </div>
                         <div class="match-box-teams">
                             <div class="home team">
-                                <a href="#" class="team-logo-container">
+                                <a href="<?= base_url().'teams/user_team/userid/'.$matchid->userid1;?>" class="team-logo-container animsition-link">
                                     <img class="team-logo" src="<?= base_url().'assets/img/teams_logo/'.$matchid->logo1;?>">
                                 </a>
-                                <a href="#" class="team-name"><?php echo $matchid->team1;?></a>
-                                <a href="#" class="team-manager"><?php echo $matchid->user1;?></a>
+                                <a href="<?= base_url().'teams/user_team/userid/'.$matchid->userid1;?>" class="team-name animsition-link"><?php echo $matchid->team1;?></a>
+                                <div class="team-manager"><?php echo $matchid->user1;?></div>
                             </div>
                             <div class="score-container">
-                                <div class="advice-text <?php if($matchid->match_status != 0){echo 'hide';}?>"><?php echo lang('match_day_advice_text_unplayed');?></div>
-                                <div class="unplayed <?php if($matchid->match_status != 0){echo 'hide';}?>"><img class="" src="<?= base_url().'assets/img/timer-clock.png';?>"></div>
-                                <div class="score <?php if($matchid->match_status == 0){echo 'hide';}?>"><span class="home-score"><?php echo ($matchid->match_status == 0 ? '' : $matchid->match_score1);?></span><span class="score-space">-</span><span class="away-score"><?php echo ($matchid->match_status == 0 ? '' : $matchid->match_score2);?></span></div>
-                                <div class="match-info <?php if($matchid->match_status == 0){echo 'hide';}?>"><?php echo lang('match_day_advice_text_final');?></div>
+                                
+                                <div class="score"><span class="home-score"><?php echo ($matchid->match_status == 0 ? '-' : $matchid->match_score1);?></span><span class="score-space">:</span><span class="away-score"><?php echo ($matchid->match_status == 0 ? '-' : $matchid->match_score2);?></span></div>
+                                <div class="match-info"><?php echo lang('match_day_title');?> <?php echo $matchid->match_matchday;?></div>
                             </div>
                             <div class="away team">
-                                <a href="#" class="team-logo-container">
+                                <a href="<?= base_url().'teams/user_team/userid/'.$matchid->userid2;?>" class="team-logo-container animsition-link">
                                     <img class="team-logo" src="<?= base_url().'assets/img/teams_logo/'.$matchid->logo2;?>">
                                 </a>
-                                <a href="#" class="team-name"><?php echo $matchid->team2;?></a>
+                                <a href="<?= base_url().'teams/user_team/userid/'.$matchid->userid2;?>" class="team-name animsition-link"><?php echo $matchid->team2;?></a>
                                 <div class="team-manager"><?php echo $matchid->user2;?></div>
                             </div>
                         </div>
@@ -57,7 +52,7 @@
                                         <img class="user-image" src="<?php if (substr($userPic, 0, 5) === 'https'){echo $userPic;}else{echo base_url().'assets/img/avatars/'.$userPic;}?>" alt="userimage">
                                         <div class="comment-box-container">
                                             <div class="comment-box">
-                                                <textarea id="textcontent" autocomplete="off" placeholder="Aggiungi un commento..."></textarea>
+                                                <textarea id="textcontent" autocomplete="off" placeholder="<?php echo lang('match_day_placeholder_comments');?>..."></textarea>
                                                 <input type="hidden" id="userid" value="<?php echo $this->session->userdata('userid'); ?>">
                                                 <input type="hidden" id="matchid" value="<?php echo $matchid->match_id;?>">
                                                 <input type="hidden" id="imageid" value="">

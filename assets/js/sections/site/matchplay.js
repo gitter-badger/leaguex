@@ -35,18 +35,14 @@ function addResult(){
         dataType: 'JSON',
         data: 'match_id=' + matchid,
         success: function(response) {
-            $selectPlayers.append('<option selected value="0">'+selectDefault+'</option>');
             $.each(response.playerslist, function(key, val) {
                 var group = $('<optgroup>', {label:key});
                 $.each(val, function(i,item){
                     $('<option/>', {value:item.id+','+item.player_team_id, text:item.player_name})
                         .appendTo(group).selectpicker('refresh');
                 });
-                
                 $selectPlayers.append(group).selectpicker('refresh');
-                
             });
-           
         }
     });
     
@@ -56,7 +52,6 @@ function addResult(){
         url: base + "competitions/match/loadevents",
         dataType: 'JSON',
         success: function(response){
-            
             $.each(response.eventslist, function(key, val) {
                 $selectEvents.append('<option value="'+ val.eventid +'">' + val.eventdesc + '</option>').selectpicker('refresh');
                     });
@@ -186,17 +181,16 @@ function addResult(){
             button.hide();
             loadpic.show();
             setTimeout(function() {
-            var $template = $('#addresultTemplate'),
+            var $template = $('#addresultTemplate');
             $clone = $template
                 .clone()
                 .removeClass('hide')
                 .removeAttr('id')
                 .insertAfter($template);
             $clone.animateCss('slideInLeft', function (obj){obj;});
-            $('.modal .modal-body-custom').getNiceScroll().resize();
             var remove = $(this).closest('.modresult-scorer').find('.player-remove');
             var removeclone = $clone.find('.player-remove');
-            $clone.find('.bootstrap-select').remove();
+            $clone.find('.bootstrap-select').replaceWith(function(){return $('select', this);});
             $clone.find('#goalscore').attr('name','goalscore[]');
             $clone.find('#selectPlayerName').attr('name','playername[]');
             $clone.find('#owngoal').attr('name','owngoal[]');
@@ -227,10 +221,9 @@ function addResult(){
                 .removeAttr('id')
                 .insertAfter($template);
             $clone.animateCss('slideInLeft', function (obj){obj;});    
-            $('.modal .modal-body-custom').getNiceScroll().resize();
             var remove = $(this).closest('.modresult-event').find('.event-player-remove');
             var removeclone = $clone.find('.event-player-remove');
-            $clone.find('.bootstrap-select').remove();
+            $clone.find('.bootstrap-select').replaceWith(function(){return $('select', this);});
             $clone.find('#eventscore').attr('name','eventscore[]');
             $clone.find('#selectEventPlayerName').attr('name','eventplayername[]');
             $clone.find('#selectEvenType').attr('name','eventype[]');
@@ -253,13 +246,13 @@ function addResult(){
                     style: 'select-with-transition',
                     iconBase: 'material-icons',
                     tickIcon: 'done',
-                    dropupAuto: true,
-                    container: 'body',
+                    dropupAuto: false,
                     size: '6'
                 })
                 .on('change', function(e){
                      $('#addResultForm').formValidation('revalidateField', data.element);
                 });
+                
             }
         })
         .on('click', '.player-remove', function(){
@@ -282,7 +275,6 @@ function addResult(){
             setTimeout(function() {
                 $row.animateCss('slideOutRight', function (obj) {
                     obj.remove();
-                    $('.modal .modal-body-custom').getNiceScroll().resize();
                     if(scorerbox.length === 2){$('.no-scorers-wrap').show();}
                 });
             }, 400);
@@ -296,7 +288,6 @@ function addResult(){
             setTimeout(function() {
                 $row.animateCss('slideOutRight', function (obj) {
                     obj.remove();
-                    $('.modal .modal-body-custom').getNiceScroll().resize();
                     if(eventbox.length === 2){$('.no-events-wrap').show();}
                 });
             }, 400);
@@ -366,8 +357,6 @@ function addResult(){
                                 );
                             }); 
                                              
-                            $('.score-container .advice-text, .score-container .unplayed').remove();
-                            $('.match-box-teams .score, .match-box-teams .match-info').removeClass('hide');
                             $('.float-button').hide();
                         }
                         $form.parents('.bootbox').modal('hide');
@@ -416,12 +405,6 @@ function addResult(){
             }else{
                 $('.no-events-wrap').show();
             }
-            $('.modal .modal-body-custom').niceScroll({
-                cursorwidth: '4px',
-                cursorborder: '0px',
-                cursorcolor: 'trasparent',
-                railalign: 'right'
-            });    
         }).on('hide.bs.modal', function(e) {
             $('#addResultForm').hide().appendTo('body');
         }).modal('show');
@@ -564,7 +547,7 @@ function loadMoreComments(matchid, limit){
                                 '</ul>'+
                             '</div>'+
                           '</li>';
-                    $(div).prependTo('.comments-list');    
+                    $(div).appendTo('.comments-list');    
                 });
                 if(more.more){
                     $('.more-comments').remove();

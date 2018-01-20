@@ -20,12 +20,14 @@
                         <div class="text">Home</div>
                     </a>
                 </div>
+                <?php if($this->session->userdata('manager') != null){ ?>
                 <div class="content-menu withripple <?php if($this->uri->segment(1)=="teams"){echo "active";}?>">
-                    <a class="animsition-link" href="<?= base_url().'teams/user_team';?>">
-                        <div class="icon-wrap"><i class="flaticon flaticon-game" style="font-size: 22px"></i></div>
+                    <a style="color: #f44336 !important;" class="animsition-link" href="<?= base_url().'teams/user_team/userid/'.$this->session->userdata('userid');?>">
+                        <div class="icon-wrap"><i class="flaticon flaticon-game" style="font-size: 22px; color:#f44336 !important"></i></div>
                         <div class="text"><?php echo lang('sbar_menu_team');?></div>
                     </a>
                 </div>
+                <?php } ?>
                 <div class="content-menu withripple <?php if($this->uri->segment(1)=="competitions"){echo "menu-open active";}?>">
                     <a class="animsition-link" href="<?= base_url().'competitions/leagues';?>">
                         <div class="icon-wrap"><i class="flaticon flaticon-cup"></i></div>

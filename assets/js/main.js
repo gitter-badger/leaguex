@@ -13,13 +13,11 @@ function modalWidth(){
         $('.modal-body-custom').innerHeight( $(this).innerHeight() -56*2  );
     }
     calcVH();
-    $(window).on('resize orientationchange', function(){
-        if(windowSize < 750){
+    if(windowSize < 750){
             calcVH();
         }else{
             $('.modal-body-custom').css("height", "");
         }
-    });
 }
 
 /* Empty image */
@@ -190,11 +188,15 @@ function showLoading() {
 function selectPick() {
     if($('.selectpicker').length && $.fn.selectpicker) {
         $('.selectpicker').selectpicker({
+            container: 'body',
             style: 'select-with-transition',
             iconBase: 'material-icons',
             tickIcon: 'done',
             dropupAuto: true
         });
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+            $('.selectpicker').selectpicker('mobile');
+        }
     }
 }
 /* Navbar tabs */
